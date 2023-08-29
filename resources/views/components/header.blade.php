@@ -8,5 +8,11 @@
                 clip-rule="evenodd"></path>
         </svg>
     </div>
-    <div class="font-semibold">Dashboard</div>
+    <div class="font-semibold">
+        @hasSection('header')
+            @yield('header')
+        @else
+            Dashboard
+        @endif
+    </div>
 </div>
