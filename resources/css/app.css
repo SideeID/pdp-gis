@@ -1,3 +1,98 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    @font-face {
+        font-family: "poppins-regular";
+        src: url(./fonts/Poppins-Regular.ttf);
+    }
+
+    @font-face {
+        font-family: "poppins-medium";
+        src: url(./fonts/Poppins-Medium.ttf);
+    }
+
+    @font-face {
+        font-family: "poppins-semibold";
+        src: url(./fonts/Poppins-SemiBold.ttf);
+    }
+
+    @font-face {
+        font-family: "poppins-bold";
+        src: url(./fonts/Poppins-Bold.ttf);
+    }
+
+    html {
+        @apply font-poppins-regular box-border;
+    }
+
+    input[type="checkbox"] {
+        position: relative;
+        width: 18px;
+        height: 18px;
+        color: #363839;
+        border: 1px solid #bdc1c6;
+        border-radius: 4px;
+        appearance: none;
+        outline: 0;
+        cursor: pointer;
+        transition: background 175ms cubic-bezier(0.1, 0.1, 0.25, 1);
+        &::before {
+            position: absolute;
+            content: "";
+            display: block;
+            top: 1px;
+            left: 5px;
+            width: 6px;
+            height: 12px;
+            border-style: solid;
+            border-color: #fff;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+            opacity: 0;
+        }
+        &:checked {
+            color: #fff;
+            border-color: #00BDFE;
+            background: #00BDFE;
+            &::before {
+                opacity: 1;
+            }
+            ~ label::before {
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            }
+        }
+
+        
+    }
+}
+
+.loadingspinner {
+    pointer-events: none;
+    width: 2.5em;
+    height: 2.5em;
+    border: 0.4em solid transparent;
+    border-color: #eee;
+    border-top-color: #00BDFE;
+    border-radius: 50%;
+    outline: none;
+    animation: loadingspin 1s linear infinite;
+}
+
+@keyframes loadingspin {
+    100% {
+        transform: rotate(360deg)
+    }
+}
+
+.body-loading {
+    border: none;
+    overflow: hidden;
+
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
