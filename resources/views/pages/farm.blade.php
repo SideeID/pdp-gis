@@ -4,6 +4,15 @@
     Farms
 @endsection
 
+@section('othercss')
+    <link rel="stylesheet" href="{{ asset('library/leaflet/leaflet.css') }}" />
+@endsection
+
+@section('otherjs')
+    <script src="{{ asset('library/leaflet/leaflet.js') }}"></script>
+    <script src="{{ asset('js/farmController.js') }}"></script>
+@endsection
+
 @section('content')
     <nav class="flex mt-0 overflow-x-auto py-4" aria-label="Breadcrumb">
         <ol class="inline-flex items-center space-x-1 md:space-x-3">
@@ -39,7 +48,10 @@
                 href="#">Tambah</a>
         </div>
     </div>
-    <div class="w-full h-full flex flex-col bg-white flex-grow mt-8 rounded-lg px-6 py-4 border-[2px] overflow-x-auto"
+
+    
+
+    <div class="w-full h-full flex flex-col bg-white flex-grow mt-8 min-h-[400px] rounded-lg px-6 py-4 border-[2px] overflow-x-auto"
         style="opacity: 1;">
         <table class="border-separate border-spacing-y-3">
             <thead>
@@ -89,5 +101,12 @@
                 </tr>
             </tbody>
         </table>
+    </div>
+
+    <h1 class="font-poppins-semibold py-3 mt-7">Tampilan Kebun pada Peta</h1>
+
+    <div class="w-full h-[600px] flex flex-col bg-white rounded-lg px-6 py-4 border-[2px] overflow-x-auto"
+        style="opacity: 1;">
+        <div class="h-full" id="map"></div>
     </div>
 @endsection
