@@ -13,12 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('blocks', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('username')->unique();
-            $table->string('password');
-            $table->rememberToken();
+            $table->foreignId('afdeling_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->string('name', 40);
+            $table->text('description')->nullable();
+            $table->string('latitude', 20);
+            $table->string('longitude', 20);
+            $table->double('area');
+            $table->integer('elevation');
             $table->timestamps();
         });
     }
@@ -30,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('blocks');
     }
 };
