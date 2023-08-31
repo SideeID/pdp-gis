@@ -13,14 +13,19 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('farms', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('username')->unique();
-            $table->string('password');
-            $table->rememberToken();
+            $table->string('name', 40);
+            $table->text('address')->nullable();
+            $table->string('subdistrict', 50)->nullable();
+            $table->string('city', 50)->nullable();
+            $table->double('area')->nullable();
+            $table->text('geojson_data');
+            $table->string('color', 10)->nullable();
             $table->timestamps();
         });
+
+        
     }
 
     /**
@@ -30,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('farms');
     }
 };
