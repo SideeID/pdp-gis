@@ -11,13 +11,19 @@
         @endif PDP Jember
     </title>
     @yield('othercss')
-    @vite('resources/css/app.css')
+    @vite(['resources/css/app.css'])
 </head>
 
 <body>
     {{-- Sidebar --}}
     @include('components.sidebar')
     {{-- End sidebar --}}
+
+    {{-- Modal --}}
+    <div class="z-[999] fixed">
+        @yield('modal')
+    </div>
+    {{-- End Modal --}}
 
     <div class="flex flex-col w-full md:pl-[320px] lg:pl-[290px] min-h-screen duration-300 ease-in-out">
         @include('components.header')

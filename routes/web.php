@@ -18,4 +18,4 @@ Route::get('/', function () {
 });
 
 
-Route::view('/farm', 'pages.farm');
+Route::view('/farm', 'pages.farms.farm');

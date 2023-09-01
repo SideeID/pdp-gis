@@ -6,11 +6,22 @@
 
 @section('othercss')
     <link rel="stylesheet" href="{{ asset('library/leaflet/leaflet.css') }}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-draw@1.0.4/dist/leaflet.draw.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/3.4.0/css/bootstrap-colorpicker.min.css" integrity="sha512-m/uSzCYYP5f55d4nUi9mnY9m49I8T+GUEe4OQd3fYTpFU9CIaPazUG/f8yUkY0EWlXBJnpsA7IToT2ljMgB87Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 @endsection
 
 @section('otherjs')
     <script src="{{ asset('library/leaflet/leaflet.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet-draw@1.0.4/dist/leaflet.draw.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/3.4.0/js/bootstrap-colorpicker.min.js" integrity="sha512-94dgCw8xWrVcgkmOc2fwKjO4dqy/X3q7IjFru6MHJKeaAzCvhkVtOS6S+co+RbcZvvPBngLzuVMApmxkuWZGwQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="{{ asset('js/farmController.js') }}"></script>
+@endsection
+
+@section('modal')
+    @include('pages.farms.create')
+    @include('pages.farms.map')
 @endsection
 
 @section('content')
@@ -43,13 +54,13 @@
         <div class="flex flex-row gap-2 cursor-default mt-4 md:mt-0">
             <div class="bg-red-500 hover:bg-red-600 px-3 py-2 text-white rounded-md items-center justify-center">
                 <p>Hapus</p>
-            </div><a
-                class="bg-green-500 hover:bg-green-600 px-3 py-2 text-white rounded-md items-center justify-center"
-                href="#">Tambah</a>
+            </div>
+            <div onclick="handleModal()" class="bg-green-500 hover:bg-green-600 px-3 py-2 text-white rounded-md items-center justify-center">Tambah
+            </div>
         </div>
     </div>
 
-    
+
 
     <div class="w-full h-full flex flex-col bg-white flex-grow mt-8 min-h-[400px] rounded-lg px-6 py-4 border-[2px] overflow-x-auto"
         style="opacity: 1;">
@@ -79,8 +90,8 @@
                     <td class="text-left px-4">Jember3</td>
                     <td class="text-left px-4">50M2</td>
                     <td class="text-left px-4">Hijau</td>
-                    <td class="px-4 py-2 flex items-center justify-center">
-                        <div class="flex flex-row gap-2">
+                    <td class="px-4 py-2">
+                        <div class="flex flex-row gap-2 h-full">
                             <div class="flex bg-orange-400 px-3 py-3 rounded-md"><svg stroke="currentColor"
                                     fill="currentColor" stroke-width="0" viewBox="0 0 24 24" color="white"
                                     style="color:white" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
@@ -102,11 +113,11 @@
             </tbody>
         </table>
     </div>
-
+    {{-- 
     <h1 class="font-poppins-semibold py-3 mt-7">Tampilan Kebun pada Peta</h1>
 
     <div class="w-full h-[600px] flex flex-col bg-white rounded-lg px-6 py-4 border-[2px] overflow-x-auto"
         style="opacity: 1;">
         <div class="h-full" id="map"></div>
-    </div>
+    </div> --}}
 @endsection
