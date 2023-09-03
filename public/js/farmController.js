@@ -9,6 +9,13 @@ L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {}).addTo(map);
 var drawnItems = new L.FeatureGroup();
 map.addLayer(drawnItems);
 var drawControl = new L.Control.Draw({
+    draw: {
+        polygon: true,
+        polyline: true,
+        rectangle: true,
+        circle: false,
+        marker: true,
+    },
     edit: {
         featureGroup: drawnItems,
     },
@@ -177,7 +184,7 @@ const handleEdit = (item) => {
 
     var ly = L.geoJSON(JSON.parse(item.geojson_data), {
         style: {
-            color: "white",
+            color: item.color,
             fillColor: item.color,
             fillOpacity: 0.5,
         },
