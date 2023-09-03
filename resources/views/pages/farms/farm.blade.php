@@ -7,15 +7,20 @@
 @section('othercss')
     <link rel="stylesheet" href="{{ asset('library/leaflet/leaflet.css') }}" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-draw@1.0.4/dist/leaflet.draw.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/3.4.0/css/bootstrap-colorpicker.min.css" integrity="sha512-m/uSzCYYP5f55d4nUi9mnY9m49I8T+GUEe4OQd3fYTpFU9CIaPazUG/f8yUkY0EWlXBJnpsA7IToT2ljMgB87Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/3.4.0/css/bootstrap-colorpicker.min.css"
+        integrity="sha512-m/uSzCYYP5f55d4nUi9mnY9m49I8T+GUEe4OQd3fYTpFU9CIaPazUG/f8yUkY0EWlXBJnpsA7IToT2ljMgB87Q=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 @endsection
 
 @section('otherjs')
     <script src="{{ asset('library/leaflet/leaflet.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/leaflet-draw@1.0.4/dist/leaflet.draw.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/3.4.0/js/bootstrap-colorpicker.min.js" integrity="sha512-94dgCw8xWrVcgkmOc2fwKjO4dqy/X3q7IjFru6MHJKeaAzCvhkVtOS6S+co+RbcZvvPBngLzuVMApmxkuWZGwQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/3.4.0/js/bootstrap-colorpicker.min.js"
+        integrity="sha512-94dgCw8xWrVcgkmOc2fwKjO4dqy/X3q7IjFru6MHJKeaAzCvhkVtOS6S+co+RbcZvvPBngLzuVMApmxkuWZGwQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="{{ asset('js/farmController.js') }}"></script>
 @endsection
 
@@ -55,7 +60,8 @@
             <div class="bg-red-500 hover:bg-red-600 px-3 py-2 text-white rounded-md items-center justify-center">
                 <p>Hapus</p>
             </div>
-            <div onclick="handleModal()" class="bg-green-500 hover:bg-green-600 px-3 py-2 text-white rounded-md items-center justify-center">Tambah
+            <div onclick="handleModal()"
+                class="bg-green-500 hover:bg-green-600 px-3 py-2 text-white rounded-md items-center justify-center">Tambah
             </div>
         </div>
     </div>
@@ -80,38 +86,50 @@
                 </tr>
             </thead>
             <tbody class="bg-gray-100 rounded-xl">
-                <tr style="opacity: 1; transform: none;">
-                    <td class="px-4 w-16 text-center">
-                        <div class=""><input class="h-4 w-4" type="checkbox" id="" name=""></div>
-                    </td>
-                    <td class="text-left px-4">Kebun Teh</td>
-                    <td class="text-left px-4">Jln Letjend Mastrip No 20 Gg 21</td>
-                    <td class="text-left px-4">Sumbersari</td>
-                    <td class="text-left px-4">Jember3</td>
-                    <td class="text-left px-4">50M2</td>
-                    <td class="text-left px-4">Hijau</td>
-                    <td class="px-4 py-2">
-                        <div class="flex flex-row gap-2 h-full">
-                            <div class="flex bg-orange-400 px-3 py-3 rounded-md"><svg stroke="currentColor"
-                                    fill="currentColor" stroke-width="0" viewBox="0 0 24 24" color="white"
-                                    style="color:white" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill="none" d="M0 0h24v24H0z"></path>
-                                    <path
-                                        d="M14 19.88V22h2.12l5.17-5.17-2.12-2.12zM20 8l-6-6H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H12v-2.95l8-8V8zm-7 1V3.5L18.5 9H13zM22.71 14l-.71-.71a.996.996 0 00-1.41 0l-.71.71L22 16.12l.71-.71a.996.996 0 000-1.41z">
-                                    </path>
-                                </svg></div>
-                            <div class="flex bg-red-600 px-3 py-3 rounded-md"><svg stroke="currentColor" fill="currentColor"
-                                    stroke-width="0" viewBox="0 0 24 24" color="white" style="color:white" height="1em"
-                                    width="1em" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill="none" d="M0 0h24v24H0z"></path>
-                                    <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z">
-                                    </path>
-                                </svg></div>
-                        </div>
-                    </td>
-                </tr>
+                @foreach ($data as $item)
+                    <tr style="opacity: 1; transform: none;">
+                        <td class="px-4 w-16 text-center">
+                            <div class=""><input class="h-4 w-4" type="checkbox" id="" name=""></div>
+                        </td>
+                        <td class="text-left px-4">{{ $item->name }}</td>
+                        <td class="text-left px-4">{{ $item->address }}</td>
+                        <td class="text-left px-4">{{ $item->subdistrict }}</td>
+                        <td class="text-left px-4">{{ $item->city }}</td>
+                        <td class="text-left px-4">{{ $item->area }}</td>
+                        <td class="text-left px-4">
+                            <div class="h-6 w-full max-w-[80px] rounded-sm" style="background-color: {{ $item->color }}">
+                            </div>
+                        </td>
+                        <td class="px-4 py-2">
+                            <div class="flex flex-row gap-2 h-full">
+                                <div onclick="handleEdit({{$item}})" class="flex bg-orange-400 px-3 py-3 rounded-md"><svg stroke="currentColor"
+                                        fill="currentColor" stroke-width="0" viewBox="0 0 24 24" color="white"
+                                        style="color:white" height="1em" width="1em"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path fill="none" d="M0 0h24v24H0z"></path>
+                                        <path
+                                            d="M14 19.88V22h2.12l5.17-5.17-2.12-2.12zM20 8l-6-6H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H12v-2.95l8-8V8zm-7 1V3.5L18.5 9H13zM22.71 14l-.71-.71a.996.996 0 00-1.41 0l-.71.71L22 16.12l.71-.71a.996.996 0 000-1.41z">
+                                        </path>
+                                    </svg></div>
+                                <div class="flex bg-red-600 px-3 py-3 rounded-md"><svg stroke="currentColor"
+                                        fill="currentColor" stroke-width="0" viewBox="0 0 24 24" color="white"
+                                        style="color:white" height="1em" width="1em"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path fill="none" d="M0 0h24v24H0z"></path>
+                                        <path
+                                            d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z">
+                                        </path>
+                                    </svg></div>
+                            </div>
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
+    </div>
+    <div class="mt-4 flex  flex-col justify-center md:flex-row md:justify-between gap-2 py-2 items-center">
+
+        {{ $data->onEachSide(2)->links('components.CustomPagination') }}
     </div>
     {{-- 
     <h1 class="font-poppins-semibold py-3 mt-7">Tampilan Kebun pada Peta</h1>

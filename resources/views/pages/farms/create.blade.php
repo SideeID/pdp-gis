@@ -2,14 +2,14 @@
     class="flex duration-500 w-full h-full bg-black opacity-0 fixed justify-center items-center pointer-events-none">
 </div>
 
-<form id="form_create" action="#" method="POST">
+<form id="form_farm" action="{{ route('farm.create') }}" method="POST">
     @csrf
     <div class="flex flex-col w-full h-full justify-center items-center pointer-events-none fixed">
         <div id="konten_modal"
             class="flex scale-0 flex-col duration-500 ease-in-out w-[90%] lg:w-[500px] max-h-[90%] bg-white rounded-lg pointer-events-auto drop-shadow-lg overflow-hidden">
             <header>
                 <div class="flex w-full h-fit flex-row justify-between px-6 lg:px-12 py-6 items-center border-b-2">
-                    <h1 class="font-poppins-semibold">Tambah Data</h1>
+                    <h1 id="titleModal" class="font-poppins-semibold">Tambah Data</h1>
                     <div onclick="handleModal()" class="bg-[#ED3237] py-2 flex items-center px-2 rounded-md">
                         <svg width="11" height="11" viewBox="0 0 11 11" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
@@ -23,6 +23,9 @@
 
             <div class="flex flex-col flex-grow w-full px-6 lg:px-12 mt-4 overflow-y-auto">
                 <div class="grid grid-cols-1 h-full gap-4">
+                    <input maxlength="40"
+                                class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary" type="hidden"
+                                name="id" id="id" placeholder="">
                     <div class="flex flex-col w-full">
                         <p class="py-3">Nama Kebun <span class="text-red-600">*</span></p>
                         <div class=""><input maxlength="40"
@@ -49,39 +52,39 @@
                                         </path>
                                     </svg>
                                     <p>Klik disini</p>
-                                    
+
                                 </div>
                                 <p class="hidden"></p>
-                                
+
                             </div>
-                            <input maxlength="50"
-                                class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary" type="hidden"
-                                name="geojson" id="geojson" placeholder="">
+                            <input maxlength="50" class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary"
+                                type="hidden" name="geojson" id="geojson" placeholder="">
                         </div>
                     </div>
                     <div class="flex flex-col w-full">
                         <p class="py-3">Kecamatan <span class="text-red-600">*</span></p>
                         <div class="">
-                            <input maxlength="50"
-                                class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary" type="text"
-                                name="kecamatan" id="kecamatan" placeholder="">
+                            <input maxlength="50" class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary"
+                                type="text" name="kecamatan" id="kecamatan" placeholder="">
                         </div>
 
                     </div>
                     <div class="flex flex-col w-full">
                         <p class="py-3">Kota <span class="text-red-600">*</span></p>
                         <div class="">
-                            <input maxlength="50"
-                                class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary" type="text"
-                                name="kota" id="kota" placeholder="">
+                            <input maxlength="50" class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary"
+                                type="text" name="kota" id="kota" placeholder="">
                         </div>
 
                     </div>
                     <div class="flex flex-col w-full">
                         <p class="py-3">Luas <span class="text-red-600">*</span></p>
-                        <div class=""><input oninput="validateNumberInput(this)" maxlength="13"
+                        <div class="relative">
+                            <input oninput="validateNumberInput(this)" maxlength="13"
                                 class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary" type="text"
-                                name="luas" id="luas" placeholder=""></div>
+                                name="luas" id="luas" placeholder="">
+                                <p class="absolute right-4 top-0 h-full text-xs text-center items-center flex justify-center">m2</p>
+                        </div>
 
                     </div>
                     <div id="cp" class="flex flex-col w-full">
@@ -96,9 +99,9 @@
                 </div>
             </div>
             <div class="px-6 lg:px-12 py-8">
-                <button onclick="createData()" type="button"
+                <button onclick="handleData()" type="button"
                     class="flex bg-[#38D191] text-white w-full h-fit py-2 rounded-md items-center justify-center">
-                    <p class="">Tambah Data</p>
+                    <p id="titleButton">Tambah Data</p>
                 </button>
             </div>
         </div>

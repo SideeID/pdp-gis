@@ -25,21 +25,18 @@ map.on("draw:created", function (e) {
 });
 
 const setDataMap = () => {
-    const div_text = document.getElementById("geojsonCon");
-    const geojson_input = document.getElementById("geojson");
+    var geojsonMap = drawnItems.toGeoJSON();
 
-    
-    var geojson = drawnItems.toGeoJSON();
-    if(geojson.features.length != 0){
-        div_text.lastElementChild.innerHTML = JSON.stringify(geojson)
-        geojson_input.value = JSON.stringify(geojson)
-    
+    if (geojsonMap.features.length != 0) {
+        div_text.lastElementChild.innerHTML = JSON.stringify(geojsonMap);
+        geojson.value = JSON.stringify(geojsonMap);
+
         div_text.firstElementChild.classList.replace("flex", "hidden");
         div_text.lastElementChild.classList.replace("hidden", "flex");
     } else {
-        div_text.lastElementChild.innerHTML = ''
-        geojson_input.value = ''
-    
+        div_text.lastElementChild.innerHTML = "";
+        geojson.value = "";
+
         div_text.lastElementChild.classList.replace("flex", "hidden");
         div_text.firstElementChild.classList.replace("hidden", "flex");
     }
@@ -56,6 +53,13 @@ const handleModal = () => {
 
         konten.classList.replace("scale-0", "scale-100");
     } else {
+        title.innerHTML == "Ubah Data"
+            ? (resetForm(),
+              (title.innerHTML = "Tambah Data"),
+              (titleButton.innerHTML = "Tambah Data"),
+              (form.action = "/farm/create"))
+            : undefined;
+
         bg.classList.replace("opacity-30", "opacity-0");
         bg.classList.replace("pointer-events-auto", "pointer-events-none");
 
@@ -123,35 +127,120 @@ function validateNumberInput(input) {
     input.value = input.value.replace(/[^0-9]/g, ""); // Remove non-numeric characters
 }
 
-const createData = () => {
-    const form = document.getElementById('form_create')
-    const nama = document.getElementById('nama')
-    const alamat = document.getElementById('alamat')
-    const geojson = document.getElementById('geojson')
-    const kecamatan = document.getElementById('kecamatan')
-    const kota = document.getElementById('kota')
-    const luas = document.getElementById('luas')
-    const warna = document.getElementById('color')
+const handleData = () => {
+    const err = cekJikaKosong([
+        nama,
+        alamat,
+        geojson,
+        kecamatan,
+        kota,
+        luas,
+        warna,
+    ]);
 
-    const err = cekJikaKosong([nama, alamat, geojson, kecamatan, kota, luas, warna])
-
-    if(err){
-        console.log(err);
+    if (err) {
+        Swal.fire("Informasi", err, "warning");
     } else {
         // jika tidak kosong
-        console.log("ada semua");
+        Swal.fire({
+            title: "Konfirmasi",
+            text: `Apakah anda yakin ingin ${title == 'Tambah Data' ? 'menambah' : 'mengubah'} data?`,
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Ya",
+            cancelButtonText: "Tidak",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                form.submit();
+            }
+        });
     }
-
-    
-}
+};
 
 const cekJikaKosong = (array) => {
     for (let index = 0; index < array.length; index++) {
         const element = array[index];
-        if(element.value == ''){
-            return 'Field ' + element.name + ' tidak boleh kosong'
+        if (element.value == "") {
+            return "Field " + element.name + " tidak boleh kosong";
         }
     }
 
-    return
-}
+    return;
+};
+
+const handleEdit = (item) => {
+    drawnItems.eachLayer(function (layer) {
+        drawnItems.removeLayer(layer);
+    });
+
+    var ly = L.geoJSON(JSON.parse(item.geojson_data), {
+        style: {
+            color: "white",
+            fillColor: item.color,
+            fillOpacity: 0.5,
+        },
+    }).bindPopup(item.name);
+
+    // Aktifkan mode edit
+    ly.eachLayer(function (layer) {
+        drawnItems.addLayer(layer);
+    });
+
+    id.value = item.id;
+    nama.value = item.name;
+    alamat.value = item.address;
+    geojson.value = item.geojson_data;
+    kecamatan.value = item.subdistrict;
+    kota.value = item.city;
+    luas.value = item.area;
+    warna.value = item.color;
+
+    title.innerHTML = "Ubah Data";
+    titleButton.innerHTML = "Ubah Data";
+
+    div_text.lastElementChild.innerHTML = item.geojson_data;
+
+    div_text.firstElementChild.classList.replace("flex", "hidden");
+    div_text.lastElementChild.classList.replace("hidden", "flex");
+
+    form.action = "/farm/update";
+
+    handleModal();
+};
+
+const resetForm = () => {
+    drawnItems.eachLayer(function (layer) {
+        drawnItems.removeLayer(layer);
+    });
+
+    id.value = "";
+    nama.value = "";
+    alamat.value = "";
+    geojson.value = "";
+    kecamatan.value = "";
+    kota.value = "";
+    luas.value = "";
+    warna.value = "";
+
+    div_text.lastElementChild.innerHTML = "";
+
+    div_text.lastElementChild.classList.replace("flex", "hidden");
+    div_text.firstElementChild.classList.replace("hidden", "flex");
+};
+
+const div_text = document.getElementById("geojsonCon");
+
+const form = document.getElementById("form_farm");
+const id = document.getElementById("id");
+const nama = document.getElementById("nama");
+const alamat = document.getElementById("alamat");
+const geojson = document.getElementById("geojson");
+const kecamatan = document.getElementById("kecamatan");
+const kota = document.getElementById("kota");
+const luas = document.getElementById("luas");
+const warna = document.getElementById("color");
+
+const title = document.getElementById("titleModal");
+const titleButton = document.getElementById("titleButton");

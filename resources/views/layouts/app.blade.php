@@ -15,6 +15,7 @@
 </head>
 
 <body>
+    @include('sweetalert::alert')
     {{-- Sidebar --}}
     @include('components.sidebar')
     {{-- End sidebar --}}
@@ -34,6 +35,7 @@
     </div>
 
     <script src="{{ asset('js/sidebar.js') }}"></script>
+    <script src="{{ asset('vendor/sweetalert/sweetalert.all.js') }}"></script>
     @yield('otherjs')
 </body>
 
