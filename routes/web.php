@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FarmController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,4 +19,11 @@ Route::get('/', function () {
 });
 
 
-Route::view('/farm', 'pages.farm');
+Route::prefix('farm')->group(function () {
+    Route::get('/', [FarmController::class, 'index'])->name('farm');
+    Route::post('/create', [FarmController::class, 'create'])->name('farm.create');
+    Route::post('/update', [FarmController::class, 'update'])->name('farm.update');
+    Route::post('/delete-selection', [FarmController::class, 'deleteSelection'])->name('farm.delete.selection');
+    Route::get('/delete/{kode}', [FarmController::class, 'deleteData']);
+    Route::get('/{search}', [FarmController::class, 'search'])->where('search', '.*');
+});
