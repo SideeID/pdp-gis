@@ -151,7 +151,9 @@ const handleData = () => {
         // jika tidak kosong
         Swal.fire({
             title: "Konfirmasi",
-            text: `Apakah anda yakin ingin ${title == 'Tambah Data' ? 'menambah' : 'mengubah'} data?`,
+            text: `Apakah anda yakin ingin ${
+                title.innerHTML == "Tambah Data" ? "menambah" : "mengubah"
+            } data?`,
             icon: "question",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
@@ -251,3 +253,70 @@ const warna = document.getElementById("color");
 
 const title = document.getElementById("titleModal");
 const titleButton = document.getElementById("titleButton");
+
+$("#checkAll").on("click", function () {
+    $(this)
+        .closest("table")
+        .find("tbody :checkbox")
+        .prop("checked", this.checked)
+        .closest("tr")
+        .toggleClass("selected", this.checked);
+});
+
+$("tbody :checkbox").on("click", function () {
+    $(this).closest("tr").toggleClass("selected", this.checked); //Classe de seleção na row
+
+    $(this)
+        .closest("table")
+        .find("#checkAll")
+        .prop(
+            "checked",
+            $(this).closest("table").find("tbody :checkbox:checked").length ==
+                $(this).closest("table").find("tbody :checkbox").length
+        ); //Tira / coloca a seleção no .checkAll
+});
+
+const deleteSelection = () => {
+    if ($("table").find("tbody :checkbox:checked").length == 0) {
+        Swal.fire("Informasi", "Pilih data yang ingin dihapus", "info");
+    } else {
+        Swal.fire({
+            title: "Konfirmasi",
+            text: "Apakah anda yakin ingin menghapus data yang dipilih?",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Ya",
+            cancelButtonText: "Tidak",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $("#form_delete").trigger("submit");
+            }
+        });
+    }
+};
+
+const deleteData = (url) => {
+    Swal.fire({
+        title: "Hapus Data",
+        text: "Apakah anda yakin ingin menghapus data?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonText: "Tidak",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Ya",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            location.href = window.location.origin + url;
+        }
+    });
+};
+
+
+$(document).keyup(function (event) {
+    if ($("#keyword").is(":focus") && event.key == "Enter") {
+        location.replace("/farm/" + $("#keyword").val());
+    }
+});
