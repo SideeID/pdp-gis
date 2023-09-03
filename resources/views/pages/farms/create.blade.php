@@ -38,7 +38,7 @@
                     <div class="flex flex-col w-full">
                         <p class="py-3">Geojson Data <span class="text-red-600">*</span></p>
                         <div class="">
-                            <div onclick="handleMap()" id="geojson"
+                            <div onclick="handleMap()" id="geojsonCon"
                                 class="w-full border-[2px] h-[140px] px-3 py-2 rounded-lg outline-primary overflow-y-auto relative">
                                 <div
                                     class="bg-white flex flex-col gap-1 items-center justify-center w-full h-full absolute left-0 top-0">
@@ -49,9 +49,14 @@
                                         </path>
                                     </svg>
                                     <p>Klik disini</p>
+                                    
                                 </div>
                                 <p class="hidden"></p>
+                                
                             </div>
+                            <input maxlength="50"
+                                class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary" type="hidden"
+                                name="geojson" id="geojson" placeholder="">
                         </div>
                     </div>
                     <div class="flex flex-col w-full">
@@ -82,7 +87,7 @@
                     <div id="cp" class="flex flex-col w-full">
                         <p class="py-3">Warna <span class="text-red-600">*</span></p>
                         <div class="">
-                            <input type="text" readonly value="#000000" id="color"
+                            <input type="text" readonly id="color"
                                 class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary" name="color"
                                 placeholder="">
                         </div>

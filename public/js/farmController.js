@@ -25,17 +25,20 @@ map.on("draw:created", function (e) {
 });
 
 const setDataMap = () => {
-    const div_text = document.getElementById("geojson");
+    const div_text = document.getElementById("geojsonCon");
+    const geojson_input = document.getElementById("geojson");
 
     
     var geojson = drawnItems.toGeoJSON();
     if(geojson.features.length != 0){
         div_text.lastElementChild.innerHTML = JSON.stringify(geojson)
+        geojson_input.value = JSON.stringify(geojson)
     
         div_text.firstElementChild.classList.replace("flex", "hidden");
         div_text.lastElementChild.classList.replace("hidden", "flex");
     } else {
         div_text.lastElementChild.innerHTML = ''
+        geojson_input.value = ''
     
         div_text.lastElementChild.classList.replace("flex", "hidden");
         div_text.firstElementChild.classList.replace("hidden", "flex");
@@ -118,4 +121,37 @@ $(function () {
 
 function validateNumberInput(input) {
     input.value = input.value.replace(/[^0-9]/g, ""); // Remove non-numeric characters
+}
+
+const createData = () => {
+    const form = document.getElementById('form_create')
+    const nama = document.getElementById('nama')
+    const alamat = document.getElementById('alamat')
+    const geojson = document.getElementById('geojson')
+    const kecamatan = document.getElementById('kecamatan')
+    const kota = document.getElementById('kota')
+    const luas = document.getElementById('luas')
+    const warna = document.getElementById('color')
+
+    const err = cekJikaKosong([nama, alamat, geojson, kecamatan, kota, luas, warna])
+
+    if(err){
+        console.log(err);
+    } else {
+        // jika tidak kosong
+        console.log("ada semua");
+    }
+
+    
+}
+
+const cekJikaKosong = (array) => {
+    for (let index = 0; index < array.length; index++) {
+        const element = array[index];
+        if(element.value == ''){
+            return 'Field ' + element.name + ' tidak boleh kosong'
+        }
+    }
+
+    return
 }
