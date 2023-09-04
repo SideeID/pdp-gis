@@ -15,8 +15,8 @@
     </div>
     <div class="flex flex-col px-4 gap-1 lg:mt-0 h-full">
         <h1 class="mt-4 text-sm ml-4 py-2">Menu</h1>
-        <a class="flex flex-row justify-between h-fit py-2 cursor-pointer menu flex-none bg-primary text-white px-4 rounded-md"
-            href="/dashboard">
+        <a class="flex flex-row justify-between h-fit py-2 cursor-pointer menu flex-none {{ Request::segment(1) == '' ? 'bg-primary text-white' : 'hover:bg-gray-200' }} px-4 rounded-md"
+            href="/">
             <div class="flex flex-row items-center w-full">
                 <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="1em"
                     width="1em" xmlns="http://www.w3.org/2000/svg">
@@ -41,8 +41,8 @@
                     Management</p>
             </div>
         </a>
-        <a class="flex flex-row justify-between h-fit py-2 cursor-pointer menu flex-none hover:bg-gray-200 px-4 rounded-md"
-            href="/dashboard">
+        <a class="flex flex-row justify-between h-fit py-2 cursor-pointer menu flex-none {{ Request::segment(1) == 'farm' ? 'bg-primary text-white' : 'hover:bg-gray-200' }} px-4 rounded-md"
+            href="{{ route('farm') }}">
             <div class="flex flex-row items-center w-full"><svg stroke="currentColor" fill="currentColor"
                     stroke-width="0" viewBox="0 0 24 24" aria-hidden="true" height="1em" width="1em"
                     xmlns="http://www.w3.org/2000/svg">
@@ -56,8 +56,8 @@
             </div>
         </a>
 
-        <a class="flex flex-row justify-between h-fit py-2 cursor-pointer menu flex-none hover:bg-gray-200 px-4 rounded-md"
-            href="/dashboard">
+        <a class="flex flex-row justify-between h-fit py-2 cursor-pointer menu flex-none {{ Request::segment(1) == 'afdeling' ? 'bg-primary text-white' : 'hover:bg-gray-200' }} px-4 rounded-md"
+            href="{{ route('afdeling') }}">
             <div class="flex flex-row items-center w-full">
                 <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="1em"
                     width="1em" xmlns="http://www.w3.org/2000/svg">

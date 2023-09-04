@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('name', 40);
             $table->double('area')->nullable();
             $table->string('latitude', 20)->nullable();
-            $table->string('longitude', 20)->nullable();
+            $table->string('longtitude', 20)->nullable();
             $table->integer('elevation')->nullable();
             $table->text('geojson_data')->nullable();
             $table->string('color', 10)->nullable();
