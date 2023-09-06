@@ -3,8 +3,53 @@ var map = L.map("container_map", {}).setView(
     12
 );
 
-L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {}).addTo(map);
+L.control
+    .fullscreen({
+        position: "topright",
+        title: "View Fullscreen",
+    })
+    .addTo(map);
 
+var street = L.tileLayer(
+    "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+    {}
+).addTo(map);
+var dark = L.tileLayer(
+    "https://{s}.tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token={accessToken}",
+    {
+        attribution: "",
+        minZoom: 0,
+        maxZoom: 22,
+        subdomains: "abcd",
+        accessToken:
+            "PyTJUlEU1OPJwCJlW1k0NC8JIt2CALpyuj7uc066O7XbdZCjWEL3WYJIk6dnXtps",
+    }
+);
+var light = L.tileLayer(
+    "https://{s}.tile.jawg.io/jawg-light/{z}/{x}/{y}{r}.png?access-token={accessToken}",
+    {
+        attribution: "",
+        minZoom: 0,
+        maxZoom: 22,
+        subdomains: "abcd",
+        accessToken:
+            "PyTJUlEU1OPJwCJlW1k0NC8JIt2CALpyuj7uc066O7XbdZCjWEL3WYJIk6dnXtps",
+    }
+);
+
+var world = L.tileLayer(
+    "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    {}
+);
+
+var baseMap = {
+    Street: street,
+    Light: light,
+    Dark: dark,
+    World: world,
+};
+
+L.control.layers(baseMap).addTo(map);
 // FeatureGroup is to store editable layers
 var drawnItems = new L.FeatureGroup();
 var allMap = new L.layerGroup();
@@ -16,7 +61,7 @@ var drawControl = new L.Control.Draw({
         rectangle: true,
         circle: false,
         marker: true,
-        circlemarker: false
+        circlemarker: false,
     },
     edit: {
         featureGroup: drawnItems,
@@ -79,25 +124,25 @@ const handleModal = () => {
 const handleMap = () => {
     const bg = document.getElementById("bg_modal_map");
     const konten = document.getElementById("konten_modal_map");
-    map.removeLayer(allMap)
-    
+    map.removeLayer(allMap);
+
     if (bg.classList.contains("opacity-0")) {
-        divmap.lastElementChild.classList.replace('hidden', 'flex')
-        map.addControl(drawControl)
+        divmap.lastElementChild.classList.replace("hidden", "flex");
+        map.addControl(drawControl);
         bg.classList.replace("opacity-0", "opacity-30");
         bg.classList.replace("pointer-events-none", "pointer-events-auto");
 
         konten.classList.replace("scale-0", "scale-100");
     } else {
-        map.removeControl(drawControl)
+        map.removeControl(drawControl);
         bg.classList.replace("opacity-30", "opacity-0");
         bg.classList.replace("pointer-events-auto", "pointer-events-none");
 
         konten.classList.replace("scale-100", "scale-0");
 
-        allMap.eachLayer(function(layer){
-            allMap.removeLayer(layer)
-        })
+        allMap.eachLayer(function (layer) {
+            allMap.removeLayer(layer);
+        });
     }
 };
 
@@ -209,7 +254,7 @@ const handleEdit = (item) => {
     });
 
     id.value = item.id;
-    kebun.value= item.farm.id
+    kebun.value = item.farm.id;
     afdeling.value = item.name;
     latitude.value = item.latitude;
     longtitude.value = item.longtitude;
@@ -237,7 +282,7 @@ const resetForm = () => {
     });
 
     id.value = "";
-    kebun.value= ""
+    kebun.value = "";
     afdeling.value = "";
     latitude.value = "";
     longtitude.value = "";
@@ -268,7 +313,7 @@ const warna = document.getElementById("color");
 const title = document.getElementById("titleModal");
 const titleButton = document.getElementById("titleButton");
 
-const divmap = document.getElementById("konten_modal_map")
+const divmap = document.getElementById("konten_modal_map");
 
 $("#checkAll").on("click", function () {
     $(this)
@@ -330,7 +375,6 @@ const deleteData = (url) => {
     });
 };
 
-
 $(document).keyup(function (event) {
     if ($("#keyword").is(":focus") && event.key == "Enter") {
         location.replace("/afdeling/" + $("#keyword").val());
@@ -338,35 +382,43 @@ $(document).keyup(function (event) {
 });
 
 const showMap = (data) => {
-    
-    handleMap()
-    map.removeControl(drawControl)
-    map.addLayer(allMap)
+    handleMap();
+    map.removeControl(drawControl);
+    map.addLayer(allMap);
     drawnItems.eachLayer(function (layer) {
         drawnItems.removeLayer(layer);
     });
 
-    divmap.lastElementChild.classList.replace('flex', 'hidden')
+    divmap.lastElementChild.classList.replace("flex", "hidden");
 
-    data.forEach(element => {
+    data.forEach((element) => {
         var layer = L.geoJSON(JSON.parse(element.geojson_data), {
             style: {
                 color: element.color,
                 fillColor: element.color,
                 fillOpacity: 0.5,
             },
-        }).bindPopup(element.name).addTo(allMap)
+        })
+            .bindTooltip(element.name, {
+                permanent: true,
+            })
+            .bindPopup(element.name)
+            .addTo(allMap);
     });
-}
+};
 const dataFarm = (data, afdeling) => {
     console.log(afdeling);
-    data.forEach(element => {
+    data.forEach((element) => {
         var layer = L.geoJSON(JSON.parse(element.geojson_data), {
             style: {
                 color: element.color,
                 fillColor: element.color,
                 fillOpacity: 0.5,
             },
-        }).bindPopup(element.name).addTo(map)
+        })
+            .bindTooltip(element.name, {
+                permanent: true,
+            })
+            .addTo(map);
     });
-}
+};

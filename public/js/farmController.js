@@ -3,7 +3,40 @@ var map = L.map("container_map", {}).setView(
     12
 );
 
-L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {}).addTo(map);
+L.control
+    .fullscreen({
+        position: "topright",
+        title: "View Fullscreen",
+    })
+    .addTo(map);
+
+var street = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {}).addTo(map)
+var dark =  L.tileLayer('https://{s}.tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token={accessToken}', {
+	attribution: '',
+	minZoom: 0,
+	maxZoom: 22,
+	subdomains: 'abcd',
+	accessToken: 'PyTJUlEU1OPJwCJlW1k0NC8JIt2CALpyuj7uc066O7XbdZCjWEL3WYJIk6dnXtps'
+});
+var light = L.tileLayer('https://{s}.tile.jawg.io/jawg-light/{z}/{x}/{y}{r}.png?access-token={accessToken}', {
+	attribution: '',
+	minZoom: 0,
+	maxZoom: 22,
+	subdomains: 'abcd',
+	accessToken: 'PyTJUlEU1OPJwCJlW1k0NC8JIt2CALpyuj7uc066O7XbdZCjWEL3WYJIk6dnXtps'
+});
+
+var world = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{}); 
+
+var baseMap = {
+    "Street": street,
+    "Light": light,
+    "Dark": dark,
+    "World": world
+}
+
+L.control.layers(baseMap).addTo(map);
+
 
 // FeatureGroup is to store editable layers
 var drawnItems = new L.FeatureGroup();
@@ -351,6 +384,8 @@ const showMap = (data) => {
                 fillColor: element.color,
                 fillOpacity: 0.5,
             },
+        }).bindTooltip(element.name, {
+            permanent: true,
         }).bindPopup(element.name).addTo(allMap)
     });
 }

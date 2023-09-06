@@ -17,9 +17,10 @@ class BlockController extends Controller
         $data = Block::with('afdeling.farm')->orderBy('created_at', 'desc')->paginate(10);
 
         $kebun = Farm::with('afdeling')->get();
+        $afdeling = Afdeling::all();
 
 
-        return view('pages.blocks.block', compact('data', 'kebun'));
+        return view('pages.blocks.block', compact('data', 'kebun', 'afdeling'));
     }
 
     public function create(Request $request)
@@ -140,7 +141,8 @@ class BlockController extends Controller
             ->paginate(10);
 
         $kebun = Farm::with('afdeling')->get();
+        $afdeling = Afdeling::all();
 
-        return view('pages.blocks.block', compact('data', 'kebun', 'search'));
+        return view('pages.blocks.block', compact('data', 'kebun', 'afdeling', 'search'));
     }
 }

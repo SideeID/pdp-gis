@@ -6,6 +6,8 @@
 
 @section('othercss')
     <link rel="stylesheet" href="{{ asset('library/leaflet/leaflet.css') }}" />
+    <link rel="stylesheet" href="{{ asset('library/leaflet/leaflet-fullscreen.css') }}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-label@0.2.1-0/dist/leaflet.label.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-draw@1.0.4/dist/leaflet.draw.min.css">
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/3.4.0/css/bootstrap-colorpicker.min.css"
@@ -15,6 +17,8 @@
 
 @section('otherjs')
     <script src="{{ asset('library/leaflet/leaflet.js') }}"></script>
+    <script src="{{ asset('library/leaflet/leaflet-fullscreen.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet-label@0.2.1-0/dist/leaflet.label.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/leaflet-draw@1.0.4/dist/leaflet.draw.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,7 +34,7 @@
 @endsection
 
 @section('onstart')
-    dataFarm({{ json_encode($kebun) }}, {{ json_encode($data->items()) }})
+    dataFarm({{ json_encode($kebun) }}, {{ json_encode($afdeling) }} )
 @endsection
 
 @section('content')

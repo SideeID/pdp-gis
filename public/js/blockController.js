@@ -1,9 +1,43 @@
-var map = L.map("container_map", {}).setView(
+var map = L.map("container_map", {
+}).setView(
     [-8.171530486265675, 113.69888061802416],
     12
 );
 
-L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {}).addTo(map);
+L.control
+    .fullscreen({
+        position: "topright",
+        title: "View Fullscreen",
+    })
+    .addTo(map);
+
+var street = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {}).addTo(map)
+var dark =  L.tileLayer('https://{s}.tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token={accessToken}', {
+	attribution: '',
+	minZoom: 0,
+	maxZoom: 22,
+	subdomains: 'abcd',
+	accessToken: 'PyTJUlEU1OPJwCJlW1k0NC8JIt2CALpyuj7uc066O7XbdZCjWEL3WYJIk6dnXtps'
+});
+var light = L.tileLayer('https://{s}.tile.jawg.io/jawg-light/{z}/{x}/{y}{r}.png?access-token={accessToken}', {
+	attribution: '',
+	minZoom: 0,
+	maxZoom: 22,
+	subdomains: 'abcd',
+	accessToken: 'PyTJUlEU1OPJwCJlW1k0NC8JIt2CALpyuj7uc066O7XbdZCjWEL3WYJIk6dnXtps'
+});
+
+var world = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{}); 
+
+var baseMap = {
+    "Street": street,
+    "Light": light,
+    "Dark": dark,
+    "World": world
+}
+
+L.control.layers(baseMap).addTo(map);
+
 
 // FeatureGroup is to store editable layers
 var drawnItems = new L.FeatureGroup();
@@ -16,7 +50,7 @@ var drawControl = new L.Control.Draw({
         rectangle: false,
         circle: false,
         marker: true,
-        circlemarker: false
+        circlemarker: false,
     },
     edit: {
         featureGroup: drawnItems,
@@ -41,8 +75,8 @@ const setDataMap = () => {
         div_text.lastElementChild.innerHTML = JSON.stringify(geojsonMap);
         geojson.value = JSON.stringify(geojsonMap);
 
-        latitude.value = geojsonMap.features[0].geometry.coordinates[1]
-        longtitude.value = geojsonMap.features[0].geometry.coordinates[0]
+        latitude.value = geojsonMap.features[0].geometry.coordinates[1];
+        longtitude.value = geojsonMap.features[0].geometry.coordinates[0];
 
         div_text.firstElementChild.classList.replace("flex", "hidden");
         div_text.lastElementChild.classList.replace("hidden", "flex");
@@ -50,8 +84,8 @@ const setDataMap = () => {
         div_text.lastElementChild.innerHTML = "";
         geojson.value = "";
 
-        latitude.value = ""
-        longtitude.value = ""
+        latitude.value = "";
+        longtitude.value = "";
 
         div_text.lastElementChild.classList.replace("flex", "hidden");
         div_text.firstElementChild.classList.replace("hidden", "flex");
@@ -162,24 +196,27 @@ const handleEdit = (item, kebunnn) => {
         drawnItems.removeLayer(layer);
     });
 
-    var ly = L.marker([item.latitude, item.longtitude])
+    var ly = L.marker([item.latitude, item.longtitude]);
 
-    const afdel = kebunnn.filter((elemen) => elemen.id == item.afdeling.farm.id)[0];
-    var kontenHtml = ''
 
-    if(afdel){
-        afdel.afdeling.forEach(element => {
-            kontenHtml += `<option value="${element.id}">${element.name}</option>`
+    const afdel = kebunnn.filter(
+        (elemen) => elemen.id == item.afdeling.farm.id
+    )[0];
+    var kontenHtml = "";
+
+    if (afdel) {
+        afdel.afdeling.forEach((element) => {
+            kontenHtml += `<option value="${element.id}">${element.name}</option>`;
         });
     }
 
-    afdeling.innerHTML = kontenHtml
+    afdeling.innerHTML = kontenHtml;
 
     drawnItems.addLayer(ly);
     id.value = item.id;
     kebun.value = item.afdeling.farm.id;
     afdeling.value = item.afdeling.id;
-    
+
     deskripsi.value = item.description;
     blok.value = item.name;
     latitude.value = item.latitude;
@@ -189,7 +226,6 @@ const handleEdit = (item, kebunnn) => {
 
     title.innerHTML = "Ubah Data";
     titleButton.innerHTML = "Ubah Data";
-
 
     form.action = "/block/update";
 
@@ -212,7 +248,7 @@ const resetForm = () => {
     ketinggian.value = "";
     luas.value = "";
 
-    afdeling.innerHTML = ''
+    afdeling.innerHTML = "";
 
     div_text.lastElementChild.innerHTML = "";
 
@@ -317,14 +353,31 @@ const showMap = (data) => {
 
     console.log(data);
 
-    
     data.forEach((element) => {
-        L.marker([element.latitude, element.longtitude]).bindPopup(element.name).addTo(allMap)
-        
+        L.marker([element.latitude, element.longtitude])
+            .bindPopup(element.name)
+            .bindTooltip(element.name, {
+                permanent: true,
+            })
+            .addTo(allMap);
     });
 };
 const dataFarm = (data, afdeling) => {
-    // console.log(afdeling);
+    afdeling.forEach((element) => {
+        var layer = L.geoJSON(JSON.parse(element.geojson_data), {
+            style: {
+                color: element.color,
+                fillColor: element.color,
+                fillOpacity: 0.5,
+            },
+        })
+            .bindTooltip(element.name, {
+                permanent: true,
+            })
+            .bindPopup(element.name)
+            .addTo(map);
+    });
+
     data.forEach((element) => {
         var layer = L.geoJSON(JSON.parse(element.geojson_data), {
             style: {
@@ -333,6 +386,9 @@ const dataFarm = (data, afdeling) => {
                 fillOpacity: 0.5,
             },
         })
+            .bindTooltip(element.name, {
+                permanent: true,
+            })
             .bindPopup(element.name)
             .addTo(map);
     });
@@ -344,21 +400,19 @@ const pilihAfdeling = (e) => {
             "Informasi",
             "Tidak ada data afdeling pada kebun yang dipilih",
             "info"
-        )
+        );
     }
 };
 
 const pilihKebun = (e) => {
     const afdel = e.filter((elemen) => elemen.id == kebun.value)[0];
-    var kontenHtml = ''
+    var kontenHtml = "";
 
-    if(afdel){
-        afdel.afdeling.forEach(element => {
-            kontenHtml += `<option value="${element.id}">${element.name}</option>`
+    if (afdel) {
+        afdel.afdeling.forEach((element) => {
+            kontenHtml += `<option value="${element.id}">${element.name}</option>`;
         });
     }
 
-
-    afdeling.innerHTML = kontenHtml
-
-}
+    afdeling.innerHTML = kontenHtml;
+};
