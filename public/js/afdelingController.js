@@ -65,7 +65,7 @@ const handleModal = () => {
             ? (resetForm(),
               (title.innerHTML = "Tambah Data"),
               (titleButton.innerHTML = "Tambah Data"),
-              (form.action = "/farm/create"))
+              (form.action = "/afdeling/create"))
             : undefined;
 
         bg.classList.replace("opacity-30", "opacity-0");
@@ -145,11 +145,12 @@ function validateNumberInput(input) {
 
 const handleData = () => {
     const err = cekJikaKosong([
-        nama,
-        alamat,
+        kebun,
+        afdeling,
+        latitude,
+        longtitude,
         geojson,
-        kecamatan,
-        kota,
+        ketinggian,
         luas,
         warna,
     ]);
@@ -207,11 +208,12 @@ const handleEdit = (item) => {
     });
 
     id.value = item.id;
-    nama.value = item.name;
-    alamat.value = item.address;
+    kebun.value= item.farm.id
+    afdeling.value = item.name;
+    latitude.value = item.latitude;
+    longtitude.value = item.longtitude;
     geojson.value = item.geojson_data;
-    kecamatan.value = item.subdistrict;
-    kota.value = item.city;
+    ketinggian.value = item.elevation;
     luas.value = item.area;
     warna.value = item.color;
 
@@ -223,7 +225,7 @@ const handleEdit = (item) => {
     div_text.firstElementChild.classList.replace("flex", "hidden");
     div_text.lastElementChild.classList.replace("hidden", "flex");
 
-    form.action = "/farm/update";
+    form.action = "/afdeling/update";
 
     handleModal();
 };
@@ -234,11 +236,12 @@ const resetForm = () => {
     });
 
     id.value = "";
-    nama.value = "";
-    alamat.value = "";
+    kebun.value= ""
+    afdeling.value = "";
+    latitude.value = "";
+    longtitude.value = "";
     geojson.value = "";
-    kecamatan.value = "";
-    kota.value = "";
+    ketinggian.value = "";
     luas.value = "";
     warna.value = "";
 
@@ -250,13 +253,14 @@ const resetForm = () => {
 
 const div_text = document.getElementById("geojsonCon");
 
-const form = document.getElementById("form_farm");
+const form = document.getElementById("form_afdeling");
 const id = document.getElementById("id");
-const nama = document.getElementById("nama");
-const alamat = document.getElementById("alamat");
+const kebun = document.getElementById("kebun");
+const afdeling = document.getElementById("afdeling");
+const latitude = document.getElementById("latitude");
 const geojson = document.getElementById("geojson");
-const kecamatan = document.getElementById("kecamatan");
-const kota = document.getElementById("kota");
+const longtitude = document.getElementById("longtitude");
+const ketinggian = document.getElementById("ketinggian");
 const luas = document.getElementById("luas");
 const warna = document.getElementById("color");
 
@@ -328,7 +332,7 @@ const deleteData = (url) => {
 
 $(document).keyup(function (event) {
     if ($("#keyword").is(":focus") && event.key == "Enter") {
-        location.replace("/farm/" + $("#keyword").val());
+        location.replace("/afdeling/" + $("#keyword").val());
     }
 });
 
@@ -351,5 +355,17 @@ const showMap = (data) => {
                 fillOpacity: 0.5,
             },
         }).bindPopup(element.name).addTo(allMap)
+    });
+}
+const dataFarm = (data, afdeling) => {
+    console.log(afdeling);
+    data.forEach(element => {
+        var layer = L.geoJSON(JSON.parse(element.geojson_data), {
+            style: {
+                color: element.color,
+                fillColor: element.color,
+                fillOpacity: 0.5,
+            },
+        }).bindPopup(element.name).addTo(map)
     });
 }

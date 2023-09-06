@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AfdelingController;
 use App\Http\Controllers\FarmController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,4 +27,13 @@ Route::prefix('farm')->group(function () {
     Route::post('/delete-selection', [FarmController::class, 'deleteSelection'])->name('farm.delete.selection');
     Route::get('/delete/{kode}', [FarmController::class, 'deleteData']);
     Route::get('/{search}', [FarmController::class, 'search'])->where('search', '.*');
+});
+
+Route::prefix('afdeling')->group(function () {
+    Route::get('/', [AfdelingController::class, 'index'])->name('afdeling');
+    Route::post('/create', [AfdelingController::class, 'create'])->name('afdeling.create');
+    Route::post('/update', [AfdelingController::class, 'update'])->name('afdeling.update');
+    Route::post('/delete-selection', [AfdelingController::class, 'deleteSelection'])->name('afdeling.delete.selection');
+    Route::get('/delete/{kode}', [AfdelingController::class, 'deleteData']);
+    Route::get('/{search}', [AfdelingController::class, 'search'])->where('search', '.*');
 });

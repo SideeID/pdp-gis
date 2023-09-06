@@ -14,7 +14,7 @@
     @vite(['resources/css/app.css'])
 </head>
 
-<body>
+<body onload="@yield('onstart')">
     @include('sweetalert::alert')
     {{-- Sidebar --}}
     @include('components.sidebar')
