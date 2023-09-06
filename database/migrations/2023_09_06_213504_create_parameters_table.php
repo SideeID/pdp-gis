@@ -13,15 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('blocks', function (Blueprint $table) {
+        Schema::create('parameters', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('afdeling_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->string('name', 40);
-            $table->text('description')->nullable();
-            $table->string('latitude', 20);
-            $table->string('longtitude', 20);
-            $table->double('area');
-            $table->integer('elevation');
+            $table->string('color', 10);
+            $table->double('ph_a');
+            $table->double('ph_b');
+            $table->double('suhu_a');
+            $table->double('suhu_b');
+            $table->double('hujan_a');
+            $table->double('hujan_b');
+            $table->double('tinggi_a');
+            $table->double('tinggi_b');
             $table->timestamps();
         });
     }
@@ -33,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('blocks');
+        Schema::dropIfExists('parameters');
     }
 };

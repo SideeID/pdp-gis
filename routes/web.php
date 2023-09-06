@@ -3,6 +3,7 @@
 use App\Http\Controllers\AfdelingController;
 use App\Http\Controllers\BlockController;
 use App\Http\Controllers\FarmController;
+use App\Http\Controllers\ParameterController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -46,4 +47,13 @@ Route::prefix('block')->group(function () {
     Route::post('/delete-selection', [BlockController::class, 'deleteSelection'])->name('block.delete.selection');
     Route::get('/delete/{kode}', [BlockController::class, 'deleteData']);
     Route::get('/{search}', [BlockController::class, 'search'])->where('search', '.*');
+});
+
+Route::prefix('parameter')->group(function () {
+    Route::get('/', [ParameterController::class, 'index'])->name('parameter');
+    Route::post('/create', [ParameterController::class, 'create'])->name('parameter.create');
+    Route::post('/update', [ParameterController::class, 'update'])->name('parameter.update');
+    Route::post('/delete-selection', [ParameterController::class, 'deleteSelection'])->name('parameter.delete.selection');
+    Route::get('/delete/{kode}', [ParameterController::class, 'deleteData']);
+    Route::get('/{search}', [ParameterController::class, 'search'])->where('search', '.*');
 });
