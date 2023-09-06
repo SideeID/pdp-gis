@@ -113,7 +113,7 @@
                             <td class="text-left px-4">{{ $item->address }}</td>
                             <td class="text-left px-4">{{ $item->subdistrict }}</td>
                             <td class="text-left px-4">{{ $item->city }}</td>
-                            <td class="text-left px-4">{{ $item->area }}</td>
+                            <td class="text-left px-4">{{ $item->area }} m2</td>
                             <td class="text-left px-4">
                                 <div class="h-6 w-full max-w-[80px] rounded-sm"
                                     style="background-color: {{ $item->color }}">

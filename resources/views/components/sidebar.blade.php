@@ -72,8 +72,8 @@
             </div>
         </a>
 
-        <a class="flex flex-row justify-between h-fit py-2 cursor-pointer menu flex-none hover:bg-gray-200 px-4 rounded-md"
-            href="/dashboard">
+        <a class="flex flex-row justify-between h-fit py-2 cursor-pointer menu flex-none {{ Request::segment(1) == 'block' ? 'bg-primary text-white' : 'hover:bg-gray-200' }} px-4 rounded-md"
+            href="/block">
             <div class="flex flex-row items-center w-full">
                 <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="1em"
                     width="1em" xmlns="http://www.w3.org/2000/svg">
