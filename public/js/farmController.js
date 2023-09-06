@@ -16,6 +16,7 @@ var drawControl = new L.Control.Draw({
         rectangle: true,
         circle: false,
         marker: true,
+        circlemarker: false
     },
     edit: {
         featureGroup: drawnItems,
