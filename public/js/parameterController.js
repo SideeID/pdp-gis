@@ -1,4 +1,3 @@
-
 const handleModal = () => {
     const bg = document.getElementById("bg_modal");
     const konten = document.getElementById("konten_modal");
@@ -22,7 +21,6 @@ const handleModal = () => {
         konten.classList.replace("scale-100", "scale-0");
     }
 };
-
 
 $(function () {
     $("#cp")
@@ -64,22 +62,41 @@ $(function () {
 });
 
 function validateNumberInput(input) {
-    input.value = input.value.replace(/[^0-9\d.]/g, ""); // Remove non-numeric characters
+    var inputValue = input.value;
+
+    // Menghilangkan semua karakter selain angka dan titik (.)
+    inputValue = inputValue.replace(/[^0-9.]/g, "");
+
+    // Memastikan hanya ada satu titik (.) dalam input
+    if (inputValue.startsWith(".")) {
+        inputValue = inputValue.substring(1); // Hapus titik di awal karakter
+    }
+
+    var parts = inputValue.split(".");
+    if (parts.length > 2) {
+        // Jika terdapat lebih dari satu titik (.), maka hanya gunakan yang pertama
+        inputValue = parts[0] + "." + parts.slice(1).join("");
+    }
+
+    // Mengganti nilai input dengan hasil yang sudah diubah
+    input.value = inputValue;
 }
 
 const handleData = () => {
     const err = cekJikaKosong([
-        nama,
-        alamat,
-        geojson,
-        kecamatan,
-        kota,
-        luas,
+        ph_bawah, 
+        ph_atas,
+        suhu_bawah,
+        suhu_atas,
+        hujan_bawah,
+        hujan_atas,
+        ketinggian_bawah,
+        ketinggian_atas,
         warna,
     ]);
 
     if (err) {
-        Swal.fire("Informasi", err, "warning");
+        Swal.fire("Informasi", err, "warning")
     } else {
         // jika tidak kosong
         Swal.fire({
@@ -105,7 +122,7 @@ const cekJikaKosong = (array) => {
     for (let index = 0; index < array.length; index++) {
         const element = array[index];
         if (element.value == "") {
-            return "Field " + element.name + " tidak boleh kosong";
+            return "Field " + element.getAttribute('key') + " tidak boleh kosong";
         }
     }
 
@@ -113,18 +130,20 @@ const cekJikaKosong = (array) => {
 };
 
 const handleEdit = (item) => {
-
+    console.log(item);
     id.value = item.id;
-    nama.value = item.name;
-    alamat.value = item.address;
-    kecamatan.value = item.subdistrict;
-    kota.value = item.city;
-    luas.value = item.area;
+    ph_bawah.value = item.ph_a
+    ph_atas.value = item.ph_b
+    suhu_bawah.value = item.suhu_a
+    suhu_atas.value = item.suhu_b
+    hujan_bawah.value = item.hujan_a
+    hujan_atas.value = item.hujan_b
+    ketinggian_bawah.value = item.tinggi_a
+    ketinggian_atas.value = item.tinggi_b
     warna.value = item.color;
 
     title.innerHTML = "Ubah Data";
     titleButton.innerHTML = "Ubah Data";
-
 
     form.action = "/parameter/update";
 
@@ -132,32 +151,33 @@ const handleEdit = (item) => {
 };
 
 const resetForm = () => {
-    drawnItems.eachLayer(function (layer) {
-        drawnItems.removeLayer(layer);
-    });
 
     id.value = "";
-    nama.value = "";
-    alamat.value = "";
-    kecamatan.value = "";
-    kota.value = "";
-    luas.value = "";
+    ph_bawah.value = ""
+    ph_atas.value = ""
+    suhu_bawah.value = ""
+    suhu_atas.value = ""
+    hujan_bawah.value = ""
+    hujan_atas.value = ""
+    ketinggian_bawah.value = ""
+    ketinggian_atas.value = ""
     warna.value = "";
-
 };
 
-const form = document.getElementById("form_farm");
+const form = document.getElementById("form_parameter");
 const id = document.getElementById("id");
-const nama = document.getElementById("nama");
-const alamat = document.getElementById("alamat");
-const kecamatan = document.getElementById("kecamatan");
-const kota = document.getElementById("kota");
-const luas = document.getElementById("luas");
+const ph_bawah = document.getElementById("ph_bawah");
+const ph_atas = document.getElementById("ph_atas");
+const suhu_bawah = document.getElementById("suhu_bawah");
+const suhu_atas = document.getElementById("suhu_atas");
+const hujan_bawah = document.getElementById("hujan_bawah");
+const hujan_atas = document.getElementById("hujan_atas");
+const ketinggian_bawah = document.getElementById("ketinggian_bawah");
+const ketinggian_atas = document.getElementById("ketinggian_atas");
 const warna = document.getElementById("color");
 
 const title = document.getElementById("titleModal");
 const titleButton = document.getElementById("titleButton");
-
 
 $("#checkAll").on("click", function () {
     $(this)
@@ -219,9 +239,8 @@ const deleteData = (url) => {
     });
 };
 
-
 $(document).keyup(function (event) {
     if ($("#keyword").is(":focus") && event.key == "Enter") {
-        location.replace("/farm/" + $("#keyword").val());
+        location.replace("/parameter/" + $("#keyword").val());
     }
 });

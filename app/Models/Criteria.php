@@ -15,4 +15,8 @@ class Criteria extends Model
 
     // fillable mendevinisikan field mana saja yang dapat kita isikan
     protected $guarded = [];
+
+    public function detail_criteria(){
+        return $this->hasMany(DetailCriteria::class, 'criteria_id', 'id');
+    }
 }

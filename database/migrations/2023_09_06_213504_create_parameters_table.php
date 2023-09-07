@@ -24,6 +24,10 @@ return new class extends Migration
             $table->double('hujan_b');
             $table->double('tinggi_a');
             $table->double('tinggi_b');
+            $table->tinyInteger('ph_kelas');
+            $table->tinyInteger('suhu_kelas');
+            $table->tinyInteger('hujan_kelas');
+            $table->tinyInteger('tinggi_kelas');
             $table->timestamps();
         });
     }

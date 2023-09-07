@@ -89,7 +89,7 @@
                 @if (count($data->items()) == 0)
                     <td class="text-center px-4 py-2" colspan="8">Tidak ada data</td>
                 @endif
-                <form class="" id="form_delete" action="{{ route('farm.delete.selection') }}" method="post">
+                <form class="" id="form_delete" action="{{ route('parameter.delete.selection') }}" method="post">
                     @csrf
                     @foreach ($data as $index => $item)
                         <tr style="opacity: 1; transform: none;">
@@ -119,7 +119,7 @@
                                                 d="M14 19.88V22h2.12l5.17-5.17-2.12-2.12zM20 8l-6-6H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H12v-2.95l8-8V8zm-7 1V3.5L18.5 9H13zM22.71 14l-.71-.71a.996.996 0 00-1.41 0l-.71.71L22 16.12l.71-.71a.996.996 0 000-1.41z">
                                             </path>
                                         </svg></div>
-                                    <div onclick="deleteData('/farm/delete/{{ $item->id }}?token={{ csrf_token() }}')""
+                                    <div onclick="deleteData('/parameter/delete/{{ $item->id }}?token={{ csrf_token() }}')""
                                         class="flex bg-red-600 px-3 py-3 rounded-md"><svg stroke="currentColor"
                                             fill="currentColor" stroke-width="0" viewBox="0 0 24 24" color="white"
                                             style="color:white" height="1em" width="1em"

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Farm;
+use App\Http\Controllers\HitungLvq;
 use App\Models\Parameter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -10,6 +10,14 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class ParameterController extends Controller
 {
+
+    private $hitungLvq;
+
+    public function __construct()
+    {
+        $this->hitungLvq = new HitungLvq();
+    }
+
     public function index()
     {
         $data = Parameter::orderBy('created_at', 'desc')->paginate(10);
@@ -19,13 +27,16 @@ class ParameterController extends Controller
 
     public function create(Request $request)
     {
+
         $validator = Validator::make($request->all(), [
-            'nama' => 'required|max:40',
-            'alamat' => 'required',
-            'geojson' => 'required',
-            'kecamatan' => 'required|max:50',
-            'kota' => 'required|max:50',
-            'luas' => 'required',
+            'ph_bawah' => 'required',
+            'ph_atas' => 'required',
+            'suhu_bawah' => 'required',
+            'suhu_atas' => 'required',
+            'hujan_bawah' => 'required',
+            'hujan_atas' => 'required',
+            'ketinggian_bawah' => 'required',
+            'ketinggian_atas' => 'required',
             'color' => 'required|max:10',
         ], [
             'required' => 'Field wajib diisi!'
@@ -36,29 +47,38 @@ class ParameterController extends Controller
             return redirect()->back()->withInput();
         }
 
-        Farm::create([
-            "name" => $request->nama,
-            "address" => $request->alamat,
-            "subdistrict" => $request->kecamatan,
-            "city" => $request->kota,
-            "area" => $request->luas,
-            "geojson_data" => $request->geojson,
-            "color" => $request->color
+        Parameter::create([
+            "color" => $request->color,
+            "ph_a" => $request->ph_bawah,
+            "ph_b" => $request->ph_atas,
+            "suhu_a" => $request->suhu_bawah,
+            "suhu_b" => $request->suhu_atas,
+            "hujan_a" => $request->hujan_bawah,
+            "hujan_b" => $request->hujan_atas,
+            "tinggi_a" => $request->ketinggian_bawah,
+            "tinggi_b" => $request->ketinggian_atas,
+            "ph_kelas" => $this->hitungLvq->process_hitung_kriteria('pH Tanah', $request->ph_bawah, $request->ph_atas),
+            "suhu_kelas" => $this->hitungLvq->process_hitung_kriteria('Suhu', $request->suhu_bawah, $request->suhu_atas),
+            "hujan_kelas" => $this->hitungLvq->process_hitung_kriteria('Curah Hujan', $request->hujan_bawah, $request->hujan_atas),
+            "tinggi_kelas" => $this->hitungLvq->process_hitung_kriteria('Tinggi Tanah', $request->ketinggian_bawah, $request->ketinggian_atas),
         ]);
+        
 
         Alert::success('Berhasil', 'Berhasil menambahkan data');
-        return redirect()->route('farm');
+        return redirect()->route('parameter');
     }
 
     public function update(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'nama' => 'required|max:40',
-            'alamat' => 'required',
-            'geojson' => 'required',
-            'kecamatan' => 'required|max:50',
-            'kota' => 'required|max:50',
-            'luas' => 'required',
+            'ph_bawah' => 'required',
+            'ph_atas' => 'required',
+            'suhu_bawah' => 'required',
+            'suhu_atas' => 'required',
+            'hujan_bawah' => 'required',
+            'hujan_atas' => 'required',
+            'ketinggian_bawah' => 'required',
+            'ketinggian_atas' => 'required',
             'color' => 'required|max:10',
         ], [
             'required' => 'Field wajib diisi!'
@@ -69,28 +89,34 @@ class ParameterController extends Controller
             return redirect()->back()->withInput();
         }
 
-        Farm::where('id', $request->id)->update([
-            "name" => $request->nama,
-            "address" => $request->alamat,
-            "subdistrict" => $request->kecamatan,
-            "city" => $request->kota,
-            "area" => $request->luas,
-            "geojson_data" => $request->geojson,
-            "color" => $request->color
+        Parameter::where('id', $request->id)->update([
+            "color" => $request->color,
+            "ph_a" => $request->ph_bawah,
+            "ph_b" => $request->ph_atas,
+            "suhu_a" => $request->suhu_bawah,
+            "suhu_b" => $request->suhu_atas,
+            "hujan_a" => $request->hujan_bawah,
+            "hujan_b" => $request->hujan_atas,
+            "tinggi_a" => $request->ketinggian_bawah,
+            "tinggi_b" => $request->ketinggian_atas,
+            "ph_kelas" => $this->hitungLvq->process_hitung_kriteria('pH Tanah', $request->ph_bawah, $request->ph_atas),
+            "suhu_kelas" => $this->hitungLvq->process_hitung_kriteria('Suhu', $request->suhu_bawah, $request->suhu_atas),
+            "hujan_kelas" => $this->hitungLvq->process_hitung_kriteria('Curah Hujan', $request->hujan_bawah, $request->hujan_atas),
+            "tinggi_kelas" => $this->hitungLvq->process_hitung_kriteria('Tinggi Tanah', $request->ketinggian_bawah, $request->ketinggian_atas),
         ]);
 
         Alert::success('Berhasil', 'Berhasil mengubah data');
-        return redirect()->route('farm');
+        return redirect()->route('parameter');
     }
 
     public function deleteSelection(Request $request)
     {
         for ($i = 0; $i < count($request->ids); $i++) {
-            Farm::where('id', '=', $request->ids[$i])->delete();
+            Parameter::where('id', '=', $request->ids[$i])->delete();
         }
 
         Alert::success('Berhasil', 'Berhasil menghapus data');
-        return redirect()->route('farm');
+        return redirect()->route('parameter');
     }
 
     public function deleteData($kode, Request $request)
@@ -105,25 +131,21 @@ class ParameterController extends Controller
                 // seperti memaksa menggunakan token yang telah dipakai sebelumnya untuk menghapus data yang lain
                 $request->session()->regenerateToken();
 
-                Farm::find($kode)->delete();
+                Parameter::find($kode)->delete();
 
                 alert()->success('Berhasil', 'Berhasil Menghapus Data');
-                return redirect()->route('farm');
+                return redirect()->route('parameter');
             } else {
-                return redirect()->route('farm');
+                return redirect()->route('parameter');
             }
         } else {
-            return redirect()->route('farm');
+            return redirect()->route('parameter');
         }
     }
 
     public function search($search)
     {
-        $data = Farm::where(function ($query) use ($search) {
-            $query->Where('name', 'LIKE', '%' . $search . '%');
-        })
-            ->orderBy('created_at', 'desc')
-            ->paginate(10);
+        $data = Parameter::orderBy('created_at', 'desc')->paginate(10);
 
         return view('pages.parameter.parameter', compact('data', 'search'));
     }

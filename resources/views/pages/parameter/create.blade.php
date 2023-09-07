@@ -2,7 +2,7 @@
     class="flex duration-500 w-full h-full bg-black opacity-0 fixed justify-center items-center pointer-events-none">
 </div>
 
-<form id="form_farm" action="{{ route('farm.create') }}" method="POST">
+<form id="form_parameter" action="{{ route('parameter.create') }}" method="POST">
     @csrf
     <div class="flex flex-col w-full h-full justify-center items-center pointer-events-none fixed">
         <div id="konten_modal"
@@ -30,18 +30,18 @@
                         <p class="py-1 font-poppins-semibold">PH Tanah <span class="text-red-600">*</span></p>
                         <div class="flex md:flex-row gap-2 w-full flex-col">
                             <div class="relative pt-4 flex-1 ">
-                                <input oninput="validateNumberInput(this)" maxlength="13"
+                                <input key="batas bawah pH" oninput="validateNumberInput(this)" maxlength="13"
                                     class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary" type="text"
-                                    name="luas" id="luas" placeholder="">
+                                    name="ph_bawah" id="ph_bawah" placeholder="">
                                 <p class="absolute top-2 px-2 bg-white left-6 text-xs">Batas Bawah</p>
                                 <p
                                     class="absolute right-4 top-2 h-full text-xs text-center items-center flex justify-center">
                                     m2</p>
                             </div>
                             <div class="relative pt-4 flex-1">
-                                <input oninput="validateNumberInput(this)" maxlength="13"
+                                <input key="batas atas pH" oninput="validateNumberInput(this)" maxlength="13"
                                     class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary" type="text"
-                                    name="luas" id="luas" placeholder="">
+                                    name="ph_atas" id="ph_atas" placeholder="">
                                 <p class="absolute top-2 px-2 bg-white left-6 text-xs">Batas Atas</p>
                                 <p
                                     class="absolute right-4 top-2 h-full text-xs text-center items-center flex justify-center">
@@ -54,18 +54,18 @@
                         <p class="py-1 font-poppins-semibold">Suhu <span class="text-red-600">*</span></p>
                         <div class="flex md:flex-row gap-2 w-full flex-col">
                             <div class="relative pt-4 flex-1 ">
-                                <input oninput="validateNumberInput(this)" maxlength="13"
+                                <input key="batas bawah suhu" oninput="validateNumberInput(this)" maxlength="13"
                                     class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary" type="text"
-                                    name="luas" id="luas" placeholder="">
+                                    name="suhu_bawah" id="suhu_bawah" placeholder="">
                                 <p class="absolute top-2 px-2 bg-white left-6 text-xs">Batas Bawah</p>
                                 <p
                                     class="absolute right-4 top-2 h-full text-xs text-center items-center flex justify-center">
                                     °C</p>
                             </div>
                             <div class="relative pt-4 flex-1">
-                                <input oninput="validateNumberInput(this)" maxlength="13"
+                                <input key="batas atas suhu" oninput="validateNumberInput(this)" maxlength="13"
                                     class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary" type="text"
-                                    name="luas" id="luas" placeholder="">
+                                    name="suhu_atas" id="suhu_atas" placeholder="">
                                 <p class="absolute top-2 px-2 bg-white left-6 text-xs">Batas Atas</p>
                                 <p
                                     class="absolute right-4 top-2 h-full text-xs text-center items-center flex justify-center">
@@ -79,15 +79,15 @@
                         <p class="py-1 font-poppins-semibold">Curah Hujan <span class="text-red-600">*</span></p>
                         <div class="flex md:flex-row gap-2 w-full flex-col">
                             <div class="relative pt-4 flex-1 ">
-                                <input oninput="validateNumberInput(this)" maxlength="13"
+                                <input key="batas bawah curah hujan" oninput="validateNumberInput(this)" maxlength="13"
                                     class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary" type="text"
-                                    name="luas" id="luas" placeholder="">
+                                    name="hujan_bawah" id="hujan_bawah" placeholder="">
                                 <p class="absolute top-2 px-2 bg-white left-6 text-xs">Batas Bawah</p>
                             </div>
                             <div class="relative pt-4 flex-1">
-                                <input oninput="validateNumberInput(this)" maxlength="13"
+                                <input key="batas atas curah hujan" oninput="validateNumberInput(this)" maxlength="13"
                                     class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary" type="text"
-                                    name="luas" id="luas" placeholder="">
+                                    name="hujan_atas" id="hujan_atas" placeholder="">
                                 <p class="absolute top-2 px-2 bg-white left-6 text-xs">Batas Atas</p>
                             </div>
                         </div>
@@ -98,18 +98,18 @@
                         <p class="py-1 font-poppins-semibold">Ketinggian <span class="text-red-600">*</span></p>
                         <div class="flex md:flex-row gap-2 w-full flex-col">
                             <div class="relative pt-4 flex-1 ">
-                                <input oninput="validateNumberInput(this)" maxlength="13"
+                                <input key="batas bawah ketinggian" oninput="validateNumberInput(this)" maxlength="13"
                                     class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary" type="text"
-                                    name="luas" id="luas" placeholder="">
+                                    name="ketinggian_bawah" id="ketinggian_bawah" placeholder="">
                                 <p class="absolute top-2 px-2 bg-white left-6 text-xs">Batas Bawah</p>
                                 <p
                                     class="absolute right-4 top-2 h-full text-xs text-center items-center flex justify-center">
                                     MDPL</p>
                             </div>
                             <div class="relative pt-4 flex-1">
-                                <input oninput="validateNumberInput(this)" maxlength="13"
+                                <input key="batas atas ketinggian" oninput="validateNumberInput(this)" maxlength="13"
                                     class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary" type="text"
-                                    name="luas" id="luas" placeholder="">
+                                    name="ketinggian_atas" id="ketinggian_atas" placeholder="">
                                 <p class="absolute top-2 px-2 bg-white left-6 text-xs">Batas Atas</p>
                                 <p
                                     class="absolute right-4 top-2 h-full text-xs text-center items-center flex justify-center">
@@ -123,7 +123,7 @@
                     <div id="cp" class="flex flex-col w-full">
                         <p class="py-3">Warna <span class="text-red-600">*</span></p>
                         <div class="">
-                            <input type="text" readonly id="color"
+                            <input key="warna" type="text" readonly id="color"
                                 class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary" name="color"
                                 placeholder="">
                         </div>
