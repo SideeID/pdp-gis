@@ -3,6 +3,7 @@
 use App\Http\Controllers\AfdelingController;
 use App\Http\Controllers\BlockController;
 use App\Http\Controllers\FarmController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ParameterController;
 use App\Http\Controllers\PerhitunganController;
 use Illuminate\Support\Facades\Route;
@@ -19,8 +20,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('layouts.app');
+    return redirect()->route('home');
 });
+
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 
 Route::prefix('farm')->group(function () {

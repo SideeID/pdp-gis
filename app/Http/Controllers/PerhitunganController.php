@@ -92,7 +92,7 @@ class PerhitunganController extends Controller
             }
         }
 
-        $v_param = array($tinggikelas, $hujankelas, $suhukelas, $phkelas);
+        $v_param = array($phkelas, $suhukelas, $hujankelas, $tinggikelas);
 
         $hasil = $this->hitungLvq->LVQ(1, 0.5, $v_bot, $v_lat, $v_param, $paramm);
 
@@ -171,7 +171,7 @@ class PerhitunganController extends Controller
             }
         }
 
-        $v_param = array($tinggikelas, $hujankelas, $suhukelas, $phkelas);
+        $v_param = array($phkelas, $suhukelas, $hujankelas, $tinggikelas);
 
         $hasil = $this->hitungLvq->LVQ(1, 0.5, $v_bot, $v_lat, $v_param, $paramm);
 
