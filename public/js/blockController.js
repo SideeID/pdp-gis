@@ -142,8 +142,30 @@ const handleMap = () => {
     }
 };
 
+
+function onlyNumber(input) {
+    input.value = input.value.replace(/[^0-9]/g, ""); // Remove non-numeric characters
+}
+
 function validateNumberInput(input) {
-    input.value = input.value.replace(/[^0-9\d.]/g, ""); // Remove non-numeric characters
+    var inputValue = input.value;
+
+    // Menghilangkan semua karakter selain angka dan titik (.)
+    inputValue = inputValue.replace(/[^0-9.]/g, "");
+
+    // Memastikan hanya ada satu titik (.) dalam input
+    if (inputValue.startsWith(".")) {
+        inputValue = inputValue.substring(1); // Hapus titik di awal karakter
+    }
+
+    var parts = inputValue.split(".");
+    if (parts.length > 2) {
+        // Jika terdapat lebih dari satu titik (.), maka hanya gunakan yang pertama
+        inputValue = parts[0] + "." + parts.slice(1).join("");
+    }
+
+    // Mengganti nilai input dengan hasil yang sudah diubah
+    input.value = inputValue;
 }
 
 const handleData = () => {

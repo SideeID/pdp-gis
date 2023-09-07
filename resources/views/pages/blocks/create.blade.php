@@ -28,7 +28,7 @@
                     <div class="flex flex-col w-full">
                         <p class="py-3">Nama Kebun <span class="text-red-600">*</span></p>
                         <div class="relative">
-                            <select onchange="pilihKebun({{$kebun}})" maxlength="40"
+                            <select onchange="pilihKebun({{ $kebun }})" maxlength="40"
                                 class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary appearance-none bg-transparent pr-10"
                                 type="text" name="kebun" id="kebun" placeholder="">
                                 <option disabled selected value=""></option>
@@ -36,8 +36,9 @@
                                     <option value="{{ $item->id }}">{{ $item->name }}</option>
                                 @endforeach
                             </select>
-                            <svg class="absolute  flex h-full top-0 right-0 mr-4" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024"
-                                height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                            <svg class="absolute  flex h-full top-0 right-0 mr-4" stroke="currentColor"
+                                fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024" height="1em"
+                                width="1em" xmlns="http://www.w3.org/2000/svg">
                                 <path
                                     d="M840.4 300H183.6c-19.7 0-30.7 20.8-18.5 35l328.4 380.8c9.4 10.9 27.5 10.9 37 0L858.9 335c12.2-14.2 1.2-35-18.5-35z">
                                 </path>
@@ -52,15 +53,16 @@
                                 class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary appearance-none bg-transparent pr-10"
                                 type="text" name="afdeling" id="afdeling" placeholder="">
                             </select>
-                            <svg class="absolute  flex h-full top-0 right-0 mr-4" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024"
-                                height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                            <svg class="absolute  flex h-full top-0 right-0 mr-4" stroke="currentColor"
+                                fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024" height="1em"
+                                width="1em" xmlns="http://www.w3.org/2000/svg">
                                 <path
                                     d="M840.4 300H183.6c-19.7 0-30.7 20.8-18.5 35l328.4 380.8c9.4 10.9 27.5 10.9 37 0L858.9 335c12.2-14.2 1.2-35-18.5-35z">
                                 </path>
                             </svg>
                         </div>
                     </div>
-                    
+
                     <div class="flex flex-col w-full">
                         <p class="py-3">Nama Blok <span class="text-red-600">*</span></p>
                         <div class="">
@@ -73,8 +75,8 @@
                     <div class="flex flex-col w-full">
                         <p class="py-3">Deskripsi <span class="text-red-600">*</span></p>
                         <div class="">
-                            <textarea class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary h-[150px]"
-                                type="text" name="deskripsi" id="deskripsi" placeholder=""></textarea>
+                            <textarea class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary h-[150px]" type="text" name="deskripsi"
+                                id="deskripsi" placeholder=""></textarea>
                         </div>
 
                     </div>
@@ -119,12 +121,16 @@
                                 type="text" name="longtitude" id="longtitude" placeholder="">
                         </div>
                     </div>
-                    
+
                     <div class="flex flex-col w-full">
                         <p class="py-3">Ketinggian <span class="text-red-600">*</span></p>
-                        <div class="">
-                            <input maxlength="50" class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary"
-                                type="text" name="ketinggian" id="ketinggian" placeholder="">
+                        <div class="relative">
+                            <input oninput="onlyNumber(this)" maxlength="50"
+                                class="w-full border-[2px] px-3 py-2 rounded-lg pr-12 outline-primary" type="text"
+                                name="ketinggian" id="ketinggian" placeholder="">
+                            <p
+                                class="absolute right-4 top-0 h-full text-xs text-center items-center flex justify-center">
+                                Mdpl</p>
                         </div>
 
                     </div>
@@ -132,7 +138,7 @@
                         <p class="py-3">Luas <span class="text-red-600">*</span></p>
                         <div class="relative">
                             <input oninput="validateNumberInput(this)" maxlength="13"
-                                class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary" type="text"
+                                class="w-full border-[2px] px-3 py-2 rounded-lg pr-12 outline-primary" type="text"
                                 name="luas" id="luas" placeholder="">
                             <p
                                 class="absolute right-4 top-0 h-full text-xs text-center items-center flex justify-center">
