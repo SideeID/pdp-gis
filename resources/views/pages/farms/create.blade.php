@@ -81,7 +81,7 @@
                         <p class="py-3">Luas <span class="text-red-600">*</span></p>
                         <div class="relative">
                             <input oninput="validateNumberInput(this)" maxlength="13"
-                                class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary" type="text"
+                                class="w-full border-[2px] px-3 py-2 pr-12 rounded-lg outline-primary" type="text"
                                 name="luas" id="luas" placeholder="">
                                 <p class="absolute right-4 top-0 h-full text-xs text-center items-center flex justify-center">m2</p>
                         </div>

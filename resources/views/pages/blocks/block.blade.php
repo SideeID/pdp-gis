@@ -1,12 +1,13 @@
 @extends('layouts.app')
 
 @section('header')
-    Farms
+    Blocks
 @endsection
 
 @section('othercss')
     <link rel="stylesheet" href="{{ asset('library/leaflet/leaflet.css') }}" />
     <link rel="stylesheet" href="{{ asset('library/leaflet/leaflet-fullscreen.css') }}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-label@0.2.1-0/dist/leaflet.label.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-draw@1.0.4/dist/leaflet.draw.min.css">
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/3.4.0/css/bootstrap-colorpicker.min.css"
@@ -17,18 +18,23 @@
 @section('otherjs')
     <script src="{{ asset('library/leaflet/leaflet.js') }}"></script>
     <script src="{{ asset('library/leaflet/leaflet-fullscreen.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet-label@0.2.1-0/dist/leaflet.label.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/leaflet-draw@1.0.4/dist/leaflet.draw.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/3.4.0/js/bootstrap-colorpicker.min.js"
         integrity="sha512-94dgCw8xWrVcgkmOc2fwKjO4dqy/X3q7IjFru6MHJKeaAzCvhkVtOS6S+co+RbcZvvPBngLzuVMApmxkuWZGwQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="{{ asset('js/farmController.js') }}"></script>
+    <script src="{{ asset('js/blockController.js') }}"></script>
 @endsection
 
 @section('modal')
-    @include('pages.farms.create')
-    @include('pages.farms.map')
+    @include('pages.blocks.create')
+    @include('pages.blocks.map')
+@endsection
+
+@section('onstart')
+    dataFarm({{ json_encode($kebun) }}, {{ json_encode($afdeling) }} )
 @endsection
 
 @section('content')
@@ -49,8 +55,8 @@
                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="m1 9 4-4-4-4"></path>
-                    </svg><a href="{{ route('farm') }}"
-                        class="ml-1 text-sm font-medium text-gray-700 hover:text-primary md:ml-2 dark:text-gray-400 dark:hover:text-white">Farm
+                    </svg><a href="{{ route('block') }}"
+                        class="ml-1 text-sm font-medium text-gray-700 hover:text-primary md:ml-2 dark:text-gray-400 dark:hover:text-white">Blocks
                         Management</a></div>
             </li>
         </ol>
@@ -90,12 +96,12 @@
                     <th class="px-4 py-4 text-center">
                         <div class=""><input class="h-4 w-4" type="checkbox" id="checkAll" name=""></div>
                     </th>
-                    <th class="px-4 py-4 text-left">Nama</th>
-                    <th class="px-4 py-4 text-left">Alamat</th>
-                    <th class="px-4 py-4 text-left">Kecamatan</th>
-                    <th class="px-4 py-4 text-left">Kota</th>
+                    <th class="px-4 py-4 text-left">Nama Blok</th>
+                    <th class="px-4 py-4 text-left">Nama Afdeling</th>
+                    <th class="px-4 py-4 text-left">Nama Kebun</th>
+                    <th class="px-4 py-4 text-left">Deskripsi</th>
                     <th class="px-4 py-4 text-left">Luas</th>
-                    <th class="px-4 py-4 text-left">Warna</th>
+                    <th class="px-4 py-4 text-left">Ketinggian</th>
                     <th class="px-4 py-4 text-center">Aksi</th>
                 </tr>
             </thead>
@@ -103,8 +109,9 @@
                 @if (count($data->items()) == 0)
                     <td class="text-center px-4 py-2" colspan="8">Tidak ada data</td>
                 @endif
-                <form class="" id="form_delete" action="{{ route('farm.delete.selection') }}" method="post">
+                <form class="" id="form_delete" action="{{ route('block.delete.selection') }}" method="post">
                     @csrf
+
                     @foreach ($data as $item)
                         <tr style="opacity: 1; transform: none;">
                             <td class="px-4 w-16 text-center">
@@ -112,18 +119,16 @@
                                         value="{{ $item->id }}"></div>
                             </td>
                             <td class="text-left px-4">{{ $item->name }}</td>
-                            <td class="text-left px-4">{{ $item->address }}</td>
-                            <td class="text-left px-4">{{ $item->subdistrict }}</td>
-                            <td class="text-left px-4">{{ $item->city }}</td>
-                            <td class="text-left px-4">{{ $item->area }} m2</td>
-                            <td class="text-left px-4">
-                                <div class="h-6 w-full max-w-[80px] rounded-sm"
-                                    style="background-color: {{ $item->color }}">
-                                </div>
-                            </td>
+                            <td class="text-left px-4">{{ $item->afdeling->name }}</td>
+                            <td class="text-left px-4">{{ $item->afdeling->farm->name }}</td>
+                            <td class="text-left px-4 line-clamp-3 py-2">{{ $item->description }} Lorem ipsum dolor sit,
+                                amet consectetur adipisicing elit. Quasi blanditiis voluptas quo quod eius commodi, officiis
+                                aut possimus distinctio sed.</td>
+                            <td class="text-left px-4">{{ $item->area }}m2</td>
+                            <td class="text-left px-4">{{ $item->elevation }}mdpl</td>
                             <td class="px-4 py-2">
-                                <div class="flex flex-row gap-2 justify-center h-full">
-                                    <div onclick="handleEdit({{ $item }})"
+                                <div class="flex flex-row gap-2 h-full justify-center">
+                                    <div onclick="handleEdit({{ $item }}, {{ $kebun }})"
                                         class="flex bg-orange-400 px-3 py-3 rounded-md"><svg stroke="currentColor"
                                             fill="currentColor" stroke-width="0" viewBox="0 0 24 24" color="white"
                                             style="color:white" height="1em" width="1em"
@@ -133,7 +138,7 @@
                                                 d="M14 19.88V22h2.12l5.17-5.17-2.12-2.12zM20 8l-6-6H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H12v-2.95l8-8V8zm-7 1V3.5L18.5 9H13zM22.71 14l-.71-.71a.996.996 0 00-1.41 0l-.71.71L22 16.12l.71-.71a.996.996 0 000-1.41z">
                                             </path>
                                         </svg></div>
-                                    <div onclick="deleteData('/farm/delete/{{ $item->id }}?token={{ csrf_token() }}')""
+                                    <div onclick="deleteData('/block/delete/{{ $item->id }}?token={{ csrf_token() }}')""
                                         class="flex bg-red-600 px-3 py-3 rounded-md"><svg stroke="currentColor"
                                             fill="currentColor" stroke-width="0" viewBox="0 0 24 24" color="white"
                                             style="color:white" height="1em" width="1em"

@@ -1,7 +1,11 @@
 <?php
 
 use App\Http\Controllers\AfdelingController;
+use App\Http\Controllers\BlockController;
 use App\Http\Controllers\FarmController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ParameterController;
+use App\Http\Controllers\PerhitunganController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,8 +20,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('layouts.app');
+    return redirect()->route('home');
 });
+
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 
 Route::prefix('farm')->group(function () {
@@ -36,4 +42,30 @@ Route::prefix('afdeling')->group(function () {
     Route::post('/delete-selection', [AfdelingController::class, 'deleteSelection'])->name('afdeling.delete.selection');
     Route::get('/delete/{kode}', [AfdelingController::class, 'deleteData']);
     Route::get('/{search}', [AfdelingController::class, 'search'])->where('search', '.*');
+});
+
+Route::prefix('block')->group(function () {
+    Route::get('/', [BlockController::class, 'index'])->name('block');
+    Route::post('/create', [BlockController::class, 'create'])->name('block.create');
+    Route::post('/update', [BlockController::class, 'update'])->name('block.update');
+    Route::post('/delete-selection', [BlockController::class, 'deleteSelection'])->name('block.delete.selection');
+    Route::get('/delete/{kode}', [BlockController::class, 'deleteData']);
+    Route::get('/{search}', [BlockController::class, 'search'])->where('search', '.*');
+});
+
+Route::prefix('parameter')->group(function () {
+    Route::get('/', [ParameterController::class, 'index'])->name('parameter');
+    Route::post('/create', [ParameterController::class, 'create'])->name('parameter.create');
+    Route::post('/update', [ParameterController::class, 'update'])->name('parameter.update');
+    Route::post('/delete-selection', [ParameterController::class, 'deleteSelection'])->name('parameter.delete.selection');
+    Route::get('/delete/{kode}', [ParameterController::class, 'deleteData']);
+    Route::get('/{search}', [ParameterController::class, 'search'])->where('search', '.*');
+});
+Route::prefix('perhitungan')->group(function () {
+    Route::get('/', [PerhitunganController::class, 'index'])->name('perhitungan');
+    Route::post('/create', [PerhitunganController::class, 'create'])->name('perhitungan.create');
+    Route::post('/update', [PerhitunganController::class, 'update'])->name('perhitungan.update');
+    Route::post('/delete-selection', [PerhitunganController::class, 'deleteSelection'])->name('perhitungan.delete.selection');
+    Route::get('/delete/{kode}', [PerhitunganController::class, 'deleteData']);
+    Route::get('/{search}', [PerhitunganController::class, 'search'])->where('search', '.*');
 });

@@ -6,6 +6,7 @@
 
 @section('othercss')
     <link rel="stylesheet" href="{{ asset('library/leaflet/leaflet.css') }}" />
+    <link rel="stylesheet" href="{{ asset('library/leaflet/leaflet-fullscreen.css') }}" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-draw@1.0.4/dist/leaflet.draw.min.css">
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/3.4.0/css/bootstrap-colorpicker.min.css"
@@ -15,6 +16,7 @@
 
 @section('otherjs')
     <script src="{{ asset('library/leaflet/leaflet.js') }}"></script>
+    <script src="{{ asset('library/leaflet/leaflet-fullscreen.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/leaflet-draw@1.0.4/dist/leaflet.draw.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -133,7 +135,7 @@
                                                 d="M14 19.88V22h2.12l5.17-5.17-2.12-2.12zM20 8l-6-6H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H12v-2.95l8-8V8zm-7 1V3.5L18.5 9H13zM22.71 14l-.71-.71a.996.996 0 00-1.41 0l-.71.71L22 16.12l.71-.71a.996.996 0 000-1.41z">
                                             </path>
                                         </svg></div>
-                                    <div onclick="deleteData('/farm/delete/{{ $item->id }}?token={{ csrf_token() }}')""
+                                    <div onclick="deleteData('/afdeling/delete/{{ $item->id }}?token={{ csrf_token() }}')""
                                         class="flex bg-red-600 px-3 py-3 rounded-md"><svg stroke="currentColor"
                                             fill="currentColor" stroke-width="0" viewBox="0 0 24 24" color="white"
                                             style="color:white" height="1em" width="1em"

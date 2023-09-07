@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Farm extends Model
+class Block extends Model
 {
     use HasFactory;
-    protected $table = 'farms'; // mendevinisikan nama table
+    protected $table = 'blocks'; // mendevinisikan nama table
     protected $primaryKey = 'id'; // mendevinisikan primary key
     public $incrementing = true; // auto pada primaryKey incremment true
     public $timestamps = true; // create_at dan update_at false
@@ -17,6 +17,6 @@ class Farm extends Model
     protected $guarded = [];
 
     public function afdeling(){
-        return $this->hasMany(Afdeling::class, 'farm_id', 'id');
+        return $this->belongsTo(Afdeling::class, 'afdeling_id', 'id');
     }
 }

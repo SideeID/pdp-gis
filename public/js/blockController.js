@@ -1,4 +1,5 @@
-var map = L.map("container_map", {}).setView(
+var map = L.map("container_map", {
+}).setView(
     [-8.171530486265675, 113.69888061802416],
     12
 );
@@ -10,55 +11,43 @@ L.control
     })
     .addTo(map);
 
-var street = L.tileLayer(
-    "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-    {}
-).addTo(map);
-var dark = L.tileLayer(
-    "https://{s}.tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token={accessToken}",
-    {
-        attribution: "",
-        minZoom: 0,
-        maxZoom: 22,
-        subdomains: "abcd",
-        accessToken:
-            "PyTJUlEU1OPJwCJlW1k0NC8JIt2CALpyuj7uc066O7XbdZCjWEL3WYJIk6dnXtps",
-    }
-);
-var light = L.tileLayer(
-    "https://{s}.tile.jawg.io/jawg-light/{z}/{x}/{y}{r}.png?access-token={accessToken}",
-    {
-        attribution: "",
-        minZoom: 0,
-        maxZoom: 22,
-        subdomains: "abcd",
-        accessToken:
-            "PyTJUlEU1OPJwCJlW1k0NC8JIt2CALpyuj7uc066O7XbdZCjWEL3WYJIk6dnXtps",
-    }
-);
+var street = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {}).addTo(map)
+var dark =  L.tileLayer('https://{s}.tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token={accessToken}', {
+	attribution: '',
+	minZoom: 0,
+	maxZoom: 22,
+	subdomains: 'abcd',
+	accessToken: 'PyTJUlEU1OPJwCJlW1k0NC8JIt2CALpyuj7uc066O7XbdZCjWEL3WYJIk6dnXtps'
+});
+var light = L.tileLayer('https://{s}.tile.jawg.io/jawg-light/{z}/{x}/{y}{r}.png?access-token={accessToken}', {
+	attribution: '',
+	minZoom: 0,
+	maxZoom: 22,
+	subdomains: 'abcd',
+	accessToken: 'PyTJUlEU1OPJwCJlW1k0NC8JIt2CALpyuj7uc066O7XbdZCjWEL3WYJIk6dnXtps'
+});
 
-var world = L.tileLayer(
-    "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-    {}
-);
+var world = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{}); 
 
 var baseMap = {
-    Street: street,
-    Light: light,
-    Dark: dark,
-    World: world,
-};
+    "Street": street,
+    "Light": light,
+    "Dark": dark,
+    "World": world
+}
 
 L.control.layers(baseMap).addTo(map);
+
+
 // FeatureGroup is to store editable layers
 var drawnItems = new L.FeatureGroup();
 var allMap = new L.layerGroup();
 map.addLayer(drawnItems);
 var drawControl = new L.Control.Draw({
     draw: {
-        polygon: true,
-        polyline: true,
-        rectangle: true,
+        polygon: false,
+        polyline: false,
+        rectangle: false,
         circle: false,
         marker: true,
         circlemarker: false,
@@ -80,16 +69,23 @@ map.on("draw:created", function (e) {
 
 const setDataMap = () => {
     var geojsonMap = drawnItems.toGeoJSON();
+    // console.log(geojsonMap);
 
     if (geojsonMap.features.length != 0) {
         div_text.lastElementChild.innerHTML = JSON.stringify(geojsonMap);
         geojson.value = JSON.stringify(geojsonMap);
+
+        latitude.value = geojsonMap.features[0].geometry.coordinates[1];
+        longtitude.value = geojsonMap.features[0].geometry.coordinates[0];
 
         div_text.firstElementChild.classList.replace("flex", "hidden");
         div_text.lastElementChild.classList.replace("hidden", "flex");
     } else {
         div_text.lastElementChild.innerHTML = "";
         geojson.value = "";
+
+        latitude.value = "";
+        longtitude.value = "";
 
         div_text.lastElementChild.classList.replace("flex", "hidden");
         div_text.firstElementChild.classList.replace("hidden", "flex");
@@ -111,7 +107,7 @@ const handleModal = () => {
             ? (resetForm(),
               (title.innerHTML = "Tambah Data"),
               (titleButton.innerHTML = "Tambah Data"),
-              (form.action = "/afdeling/create"))
+              (form.action = "/block/create"))
             : undefined;
 
         bg.classList.replace("opacity-30", "opacity-0");
@@ -146,44 +142,6 @@ const handleMap = () => {
     }
 };
 
-$(function () {
-    $("#cp")
-        .colorpicker({
-            inline: true,
-            container: true,
-            extensions: [
-                {
-                    name: "swatches",
-                    options: {
-                        colors: {
-                            tetrad1: "#000",
-                            tetrad2: "#000",
-                            tetrad3: "#000",
-                            tetrad4: "#000",
-                        },
-                        namesAsValues: false,
-                    },
-                },
-            ],
-        })
-        .on("colorpickerChange colorpickerCreate", function (e) {
-            e.preventDefault();
-            var colors = e.color.generate("tetrad");
-
-            colors.forEach(function (color, i) {
-                var colorStr = color.string(),
-                    swatch = e.colorpicker.picker.find(
-                        '.colorpicker-swatch[data-name="tetrad' + (i + 1) + '"]'
-                    );
-
-                swatch
-                    .attr("data-value", colorStr)
-                    .attr("title", colorStr)
-                    .find("> i")
-                    .css("background-color", colorStr);
-            });
-        });
-});
 
 function onlyNumber(input) {
     input.value = input.value.replace(/[^0-9]/g, ""); // Remove non-numeric characters
@@ -214,12 +172,11 @@ const handleData = () => {
     const err = cekJikaKosong([
         kebun,
         afdeling,
+        deskripsi,
         latitude,
         longtitude,
-        geojson,
         ketinggian,
         luas,
-        warna,
     ]);
 
     if (err) {
@@ -256,43 +213,43 @@ const cekJikaKosong = (array) => {
     return;
 };
 
-const handleEdit = (item) => {
+const handleEdit = (item, kebunnn) => {
     drawnItems.eachLayer(function (layer) {
         drawnItems.removeLayer(layer);
     });
 
-    var ly = L.geoJSON(JSON.parse(item.geojson_data), {
-        style: {
-            color: item.color,
-            fillColor: item.color,
-            fillOpacity: 0.5,
-        },
-    }).bindPopup(item.name);
+    var ly = L.marker([item.latitude, item.longtitude]);
 
-    // Aktifkan mode edit
-    ly.eachLayer(function (layer) {
-        drawnItems.addLayer(layer);
-    });
 
+    const afdel = kebunnn.filter(
+        (elemen) => elemen.id == item.afdeling.farm.id
+    )[0];
+    var kontenHtml = "";
+
+    if (afdel) {
+        afdel.afdeling.forEach((element) => {
+            kontenHtml += `<option value="${element.id}">${element.name}</option>`;
+        });
+    }
+
+    afdeling.innerHTML = kontenHtml;
+
+    drawnItems.addLayer(ly);
     id.value = item.id;
-    kebun.value = item.farm.id;
-    afdeling.value = item.name;
+    kebun.value = item.afdeling.farm.id;
+    afdeling.value = item.afdeling.id;
+
+    deskripsi.value = item.description;
+    blok.value = item.name;
     latitude.value = item.latitude;
     longtitude.value = item.longtitude;
-    geojson.value = item.geojson_data;
     ketinggian.value = item.elevation;
     luas.value = item.area;
-    warna.value = item.color;
 
     title.innerHTML = "Ubah Data";
     titleButton.innerHTML = "Ubah Data";
 
-    div_text.lastElementChild.innerHTML = item.geojson_data;
-
-    div_text.firstElementChild.classList.replace("flex", "hidden");
-    div_text.lastElementChild.classList.replace("hidden", "flex");
-
-    form.action = "/afdeling/update";
+    form.action = "/block/update";
 
     handleModal();
 };
@@ -305,12 +262,15 @@ const resetForm = () => {
     id.value = "";
     kebun.value = "";
     afdeling.value = "";
+    deskripsi.value = "";
+    blok.value = "";
     latitude.value = "";
     longtitude.value = "";
     geojson.value = "";
     ketinggian.value = "";
     luas.value = "";
-    warna.value = "";
+
+    afdeling.innerHTML = "";
 
     div_text.lastElementChild.innerHTML = "";
 
@@ -320,16 +280,17 @@ const resetForm = () => {
 
 const div_text = document.getElementById("geojsonCon");
 
-const form = document.getElementById("form_afdeling");
+const form = document.getElementById("form_block");
 const id = document.getElementById("id");
+const blok = document.getElementById("blok");
 const kebun = document.getElementById("kebun");
+const deskripsi = document.getElementById("deskripsi");
 const afdeling = document.getElementById("afdeling");
 const latitude = document.getElementById("latitude");
 const geojson = document.getElementById("geojson");
 const longtitude = document.getElementById("longtitude");
 const ketinggian = document.getElementById("ketinggian");
 const luas = document.getElementById("luas");
-const warna = document.getElementById("color");
 
 const title = document.getElementById("titleModal");
 const titleButton = document.getElementById("titleButton");
@@ -398,7 +359,7 @@ const deleteData = (url) => {
 
 $(document).keyup(function (event) {
     if ($("#keyword").is(":focus") && event.key == "Enter") {
-        location.replace("/afdeling/" + $("#keyword").val());
+        location.replace("/block/" + $("#keyword").val());
     }
 });
 
@@ -412,6 +373,33 @@ const showMap = (data) => {
 
     divmap.lastElementChild.classList.replace("flex", "hidden");
 
+    console.log(data);
+
+    data.forEach((element) => {
+        L.marker([element.latitude, element.longtitude])
+            .bindPopup(element.name)
+            .bindTooltip(element.name, {
+                permanent: true,
+            })
+            .addTo(allMap);
+    });
+};
+const dataFarm = (data, afdeling) => {
+    afdeling.forEach((element) => {
+        var layer = L.geoJSON(JSON.parse(element.geojson_data), {
+            style: {
+                color: element.color,
+                fillColor: element.color,
+                fillOpacity: 0.5,
+            },
+        })
+            .bindTooltip(element.name, {
+                permanent: true,
+            })
+            .bindPopup(element.name)
+            .addTo(map);
+    });
+
     data.forEach((element) => {
         var layer = L.geoJSON(JSON.parse(element.geojson_data), {
             style: {
@@ -424,22 +412,29 @@ const showMap = (data) => {
                 permanent: true,
             })
             .bindPopup(element.name)
-            .addTo(allMap);
-    });
-};
-const dataFarm = (data, afdeling) => {
-    console.log(afdeling);
-    data.forEach((element) => {
-        var layer = L.geoJSON(JSON.parse(element.geojson_data), {
-            style: {
-                color: element.color,
-                fillColor: element.color,
-                fillOpacity: 0.5,
-            },
-        })
-            .bindTooltip(element.name, {
-                permanent: true,
-            })
             .addTo(map);
     });
+};
+
+const pilihAfdeling = (e) => {
+    if (e.children.length == 0) {
+        Swal.fire(
+            "Informasi",
+            "Tidak ada data afdeling pada kebun yang dipilih",
+            "info"
+        );
+    }
+};
+
+const pilihKebun = (e) => {
+    const afdel = e.filter((elemen) => elemen.id == kebun.value)[0];
+    var kontenHtml = "";
+
+    if (afdel) {
+        afdel.afdeling.forEach((element) => {
+            kontenHtml += `<option value="${element.id}">${element.name}</option>`;
+        });
+    }
+
+    afdeling.innerHTML = kontenHtml;
 };

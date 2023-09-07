@@ -1,8 +1,8 @@
 <div class="flex flex-col w-[80%] -translate-x-[400px]  md:translate-x-0 duration-500 ease-in-out max-w-[400px] md:w-[320px] lg:w-[290px] h-full bg-white border-r-[1px] border-r-[#DCDADA] box-border fixed z-[100] pb-10 2xl:pb-10 overflow-y-auto md:scrollbar-hide"
     id="sidebar">
     <div class="flex flex-col w-full px-8 py-6 gap-3">
-        <div class="h-14 w-14 bg-black rounded-full overflow-hidden">
-            <img class="w-full h-full object-cover" src="{{ asset('images/ic_profile.png') }}" alt="profile">
+        <div class="h-16 w-16 bg-black rounded-full overflow-hidden">
+            <img class="w-full h-full object-cover" src="{{ asset('images/logo.png') }}" alt="profile">
         </div>
         <div class="flex flex-row 2xl:flex-col justify-between items-center 2xl:items-start w-full gap-3">
             <div class="flex flex-col justify-center">
@@ -15,8 +15,8 @@
     </div>
     <div class="flex flex-col px-4 gap-1 lg:mt-0 h-full">
         <h1 class="mt-4 text-sm ml-4 py-2">Menu</h1>
-        <a class="flex flex-row justify-between h-fit py-2 cursor-pointer menu flex-none {{ Request::segment(1) == '' ? 'bg-primary text-white' : 'hover:bg-gray-200' }} px-4 rounded-md"
-            href="/">
+        <a class="flex flex-row justify-between h-fit py-2 cursor-pointer menu flex-none {{ Request::segment(1) == 'home' ? 'bg-primary text-white' : 'hover:bg-gray-200' }} px-4 rounded-md"
+            href="{{ route('home') }}">
             <div class="flex flex-row items-center w-full">
                 <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="1em"
                     width="1em" xmlns="http://www.w3.org/2000/svg">
@@ -72,8 +72,8 @@
             </div>
         </a>
 
-        <a class="flex flex-row justify-between h-fit py-2 cursor-pointer menu flex-none hover:bg-gray-200 px-4 rounded-md"
-            href="/dashboard">
+        <a class="flex flex-row justify-between h-fit py-2 cursor-pointer menu flex-none {{ Request::segment(1) == 'block' ? 'bg-primary text-white' : 'hover:bg-gray-200' }} px-4 rounded-md"
+            href="/block">
             <div class="flex flex-row items-center w-full">
                 <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="1em"
                     width="1em" xmlns="http://www.w3.org/2000/svg">
@@ -87,8 +87,8 @@
         </a>
 
         <h1 class="mt-4 text-sm ml-4 py-2">Lainnya</h1>
-        <a class="flex flex-row justify-between h-fit py-2 cursor-pointer menu flex-none hover:bg-gray-200 px-4 rounded-md"
-            href="/dashboard">
+        <a class="flex flex-row justify-between h-fit py-2 cursor-pointer menu flex-none {{ Request::segment(1) == 'parameter' ? 'bg-primary text-white' : 'hover:bg-gray-200' }} px-4 rounded-md"
+            href="{{ route('parameter') }}">
             <div class="flex flex-row items-center w-full">
                 <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="1em"
                     width="1em" xmlns="http://www.w3.org/2000/svg">
@@ -100,8 +100,8 @@
                     Parameter</p>
             </div>
         </a>
-        <a class="flex flex-row justify-between h-fit py-2 cursor-pointer menu flex-none hover:bg-gray-200 px-4 rounded-md"
-            href="/dashboard">
+        <a class="flex flex-row justify-between h-fit py-2 cursor-pointer menu flex-none {{ Request::segment(1) == 'perhitungan' ? 'bg-primary text-white' : 'hover:bg-gray-200' }} px-4 rounded-md"
+            href="{{ route('perhitungan') }}">
             <div class="flex flex-row items-center w-full">
                 <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="1em"
                     width="1em" xmlns="http://www.w3.org/2000/svg">
