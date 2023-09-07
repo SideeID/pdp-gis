@@ -4,6 +4,7 @@ use App\Http\Controllers\AfdelingController;
 use App\Http\Controllers\BlockController;
 use App\Http\Controllers\FarmController;
 use App\Http\Controllers\ParameterController;
+use App\Http\Controllers\PerhitunganController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -56,4 +57,12 @@ Route::prefix('parameter')->group(function () {
     Route::post('/delete-selection', [ParameterController::class, 'deleteSelection'])->name('parameter.delete.selection');
     Route::get('/delete/{kode}', [ParameterController::class, 'deleteData']);
     Route::get('/{search}', [ParameterController::class, 'search'])->where('search', '.*');
+});
+Route::prefix('perhitungan')->group(function () {
+    Route::get('/', [PerhitunganController::class, 'index'])->name('perhitungan');
+    Route::post('/create', [PerhitunganController::class, 'create'])->name('perhitungan.create');
+    Route::post('/update', [PerhitunganController::class, 'update'])->name('perhitungan.update');
+    Route::post('/delete-selection', [PerhitunganController::class, 'deleteSelection'])->name('perhitungan.delete.selection');
+    Route::get('/delete/{kode}', [PerhitunganController::class, 'deleteData']);
+    Route::get('/{search}', [PerhitunganController::class, 'search'])->where('search', '.*');
 });

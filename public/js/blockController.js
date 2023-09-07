@@ -107,7 +107,7 @@ const handleModal = () => {
             ? (resetForm(),
               (title.innerHTML = "Tambah Data"),
               (titleButton.innerHTML = "Tambah Data"),
-              (form.action = "/afdeling/create"))
+              (form.action = "/block/create"))
             : undefined;
 
         bg.classList.replace("opacity-30", "opacity-0");

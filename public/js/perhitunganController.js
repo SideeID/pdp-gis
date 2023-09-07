@@ -1,3 +1,4 @@
+
 const handleModal = () => {
     const bg = document.getElementById("bg_modal");
     const konten = document.getElementById("konten_modal");
@@ -12,55 +13,15 @@ const handleModal = () => {
             ? (resetForm(),
               (title.innerHTML = "Tambah Data"),
               (titleButton.innerHTML = "Tambah Data"),
-              (form.action = "/parameter/create"))
+              (form.action = "/perhitungan/create"))
             : undefined;
 
         bg.classList.replace("opacity-30", "opacity-0");
         bg.classList.replace("pointer-events-auto", "pointer-events-none");
 
         konten.classList.replace("scale-100", "scale-0");
-
     }
 };
-
-$(function () {
-    $("#cp")
-        .colorpicker({
-            inline: true,
-            container: true,
-            extensions: [
-                {
-                    name: "swatches",
-                    options: {
-                        colors: {
-                            tetrad1: "#000",
-                            tetrad2: "#000",
-                            tetrad3: "#000",
-                            tetrad4: "#000",
-                        },
-                        namesAsValues: false,
-                    },
-                },
-            ],
-        })
-        .on("colorpickerChange colorpickerCreate", function (e) {
-            e.preventDefault();
-            var colors = e.color.generate("tetrad");
-
-            colors.forEach(function (color, i) {
-                var colorStr = color.string(),
-                    swatch = e.colorpicker.picker.find(
-                        '.colorpicker-swatch[data-name="tetrad' + (i + 1) + '"]'
-                    );
-
-                swatch
-                    .attr("data-value", colorStr)
-                    .attr("title", colorStr)
-                    .find("> i")
-                    .css("background-color", colorStr);
-            });
-        });
-});
 
 function validateNumberInput(input) {
     var inputValue = input.value;
@@ -85,15 +46,13 @@ function validateNumberInput(input) {
 
 const handleData = () => {
     const err = cekJikaKosong([
-        ph_bawah, 
-        ph_atas,
+        kebun,
+        afdeling,
+        ph,
         suhu_bawah,
         suhu_atas,
-        hujan_bawah,
-        hujan_atas,
-        ketinggian_bawah,
-        ketinggian_atas,
-        warna,
+        hujan,
+        ketinggian
     ]);
 
     if (err) {
@@ -130,23 +89,35 @@ const cekJikaKosong = (array) => {
     return;
 };
 
-const handleEdit = (item) => {
-    console.log(item);
+const handleEdit = (item, kebunnn) => {
+    const afdel = kebunnn.filter(
+        (elemen) => elemen.id == item.afdeling.farm.id
+    )[0];
+    var kontenHtml = "";
+
+    if (afdel) {
+        afdel.afdeling.forEach((element) => {
+            kontenHtml += `<option value="${element.id}">${element.name}</option>`;
+        });
+    }
+
+    kontenHtml += `<option value="${item.afdeling.id}">${item.afdeling.name}</option>`
+
+    afdeling.innerHTML = kontenHtml;
+
     id.value = item.id;
-    ph_bawah.value = item.ph_a
-    ph_atas.value = item.ph_b
+    kebun.value = item.afdeling.farm.id;
+    afdeling.value = item.afdeling.id;
+    ph.value = item.ph
     suhu_bawah.value = item.suhu_a
     suhu_atas.value = item.suhu_b
-    hujan_bawah.value = item.hujan_a
-    hujan_atas.value = item.hujan_b
-    ketinggian_bawah.value = item.tinggi_a
-    ketinggian_atas.value = item.tinggi_b
-    warna.value = item.color;
+    hujan.value = item.hujan
+    ketinggian.value = item.tinggi
 
     title.innerHTML = "Ubah Data";
     titleButton.innerHTML = "Ubah Data";
 
-    form.action = "/parameter/update";
+    form.action = "/perhitungan/update";
 
     handleModal();
 };
@@ -154,28 +125,27 @@ const handleEdit = (item) => {
 const resetForm = () => {
 
     id.value = "";
-    ph_bawah.value = ""
-    ph_atas.value = ""
+    kebun.value = "";
+    afdeling.value = "";
+    ph.value = ""
     suhu_bawah.value = ""
     suhu_atas.value = ""
-    hujan_bawah.value = ""
-    hujan_atas.value = ""
-    ketinggian_bawah.value = ""
-    ketinggian_atas.value = ""
-    warna.value = "";
+    hujan.value = ""
+    ketinggian.value = ""
+
+    afdeling.innerHTML = "";
+
 };
 
-const form = document.getElementById("form_parameter");
+const form = document.getElementById("form_perhitungan");
 const id = document.getElementById("id");
-const ph_bawah = document.getElementById("ph_bawah");
-const ph_atas = document.getElementById("ph_atas");
+const kebun = document.getElementById("kebun");
+const afdeling = document.getElementById("afdeling");
+const ph = document.getElementById("ph");
 const suhu_bawah = document.getElementById("suhu_bawah");
 const suhu_atas = document.getElementById("suhu_atas");
-const hujan_bawah = document.getElementById("hujan_bawah");
-const hujan_atas = document.getElementById("hujan_atas");
-const ketinggian_bawah = document.getElementById("ketinggian_bawah");
-const ketinggian_atas = document.getElementById("ketinggian_atas");
-const warna = document.getElementById("color");
+const hujan = document.getElementById("hujan");
+const ketinggian = document.getElementById("ketinggian");
 
 const title = document.getElementById("titleModal");
 const titleButton = document.getElementById("titleButton");
@@ -242,6 +212,50 @@ const deleteData = (url) => {
 
 $(document).keyup(function (event) {
     if ($("#keyword").is(":focus") && event.key == "Enter") {
-        location.replace("/parameter/" + $("#keyword").val());
+        location.replace("/perhitungan/" + $("#keyword").val());
     }
 });
+
+const pilihAfdeling = (e) => {
+    if (e.children.length == 0) {
+        Swal.fire(
+            "Informasi",
+            "Tidak ada data afdeling pada kebun yang dipilih",
+            "info"
+        );
+    }
+};
+
+const pilihKebun = (e) => {
+    const afdel = e.filter((elemen) => elemen.id == kebun.value)[0];
+    var kontenHtml = "";
+
+    if (afdel) {
+        afdel.afdeling.forEach((element) => {
+            kontenHtml += `<option value="${element.id}">${element.name}</option>`;
+        });
+    }
+
+    afdeling.innerHTML = kontenHtml;
+};
+
+const addPerhitungan = (value) => {
+    if(value == 0){
+        Swal.fire({
+            title: "Tidak ada parameter",
+            text: "Butuh setidaknya terdapat satu data parameter",
+            icon: "info",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonText: "Tutup",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Tambah parameter",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                location.href = '/parameter'
+            }
+        });
+    } else {
+        handleModal()
+    }
+}
