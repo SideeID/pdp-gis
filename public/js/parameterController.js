@@ -28,6 +28,7 @@ $(function () {
         .colorpicker({
             inline: true,
             container: true,
+            customClass: 'colorpicker-2x',
             extensions: [
                 {
                     name: "swatches",

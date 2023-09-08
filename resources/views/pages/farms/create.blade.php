@@ -8,7 +8,7 @@
         <div id="konten_modal"
             class="flex scale-0 flex-col duration-500 ease-in-out w-[90%] lg:w-[500px] max-h-[90%] bg-white rounded-lg pointer-events-auto drop-shadow-lg overflow-hidden">
             <header>
-                <div class="flex w-full h-fit flex-row justify-between px-6 lg:px-12 py-6 items-center border-b-2">
+                <div class="flex w-full h-fit flex-row justify-between px-6 lg:px-12 py-6 items-center border-b-2 dark:border-b-gray-600">
                     <h1 id="titleModal" class="font-poppins-semibold">Tambah Data</h1>
                     <div onclick="handleModal()" class="bg-[#ED3237] py-2 flex items-center px-2 rounded-md">
                         <svg width="11" height="11" viewBox="0 0 11 11" fill="none"

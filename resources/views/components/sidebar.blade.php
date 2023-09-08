@@ -1,21 +1,34 @@
-<div class="flex flex-col w-[80%] -translate-x-[400px]  md:translate-x-0 duration-500 ease-in-out max-w-[400px] md:w-[320px] lg:w-[290px] h-full bg-white border-r-[1px] border-r-[#DCDADA] box-border fixed z-[100] pb-10 2xl:pb-10 overflow-y-auto md:scrollbar-hide"
+<div class="flex flex-col w-[80%] -translate-x-[400px]  md:translate-x-0 duration-300 ease-in-out max-w-[400px] md:w-[320px] lg:w-[290px] h-full bg-white dark:bg-slate-700 border-r-[1px] border-r-[#DCDADA] dark:border-r-gray-600 box-border fixed z-[100] pb-10 2xl:pb-10 overflow-y-auto md:scrollbar-hide"
     id="sidebar">
-    <div class="flex flex-col w-full px-8 py-6 gap-3">
+    <div class="flex flex-col w-full px-8 py-6 gap-3 relative">
+        <button id="theme-toggle" type="button"
+            class="text-gray-500 dark:text-gray-400 right-3 top-3 absolute hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-sm p-2.5">
+            <svg id="theme-toggle-dark-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg">
+                <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+            </svg>
+            <svg id="theme-toggle-light-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+                    fill-rule="evenodd" clip-rule="evenodd"></path>
+            </svg>
+        </button>
         <div class="h-16 w-16 bg-black rounded-full overflow-hidden">
             <img class="w-full h-full object-cover" src="{{ asset('images/logo.png') }}" alt="profile">
         </div>
         <div class="flex flex-row 2xl:flex-col justify-between items-center 2xl:items-start w-full gap-3">
             <div class="flex flex-col justify-center">
                 <h3
-                    class="text-[15px] md:text-[18px] text-gray-800 font-bold lg:text-[16px] w-full2xl:w-full whitespace-nowrap text-ellipsis overflow-hidden">
+                    class="text-[15px] md:text-[18px] text-gray-800 dark:text-gray-50 font-bold lg:text-[16px] w-full2xl:w-full whitespace-nowrap text-ellipsis overflow-hidden">
                     PDP Jember</h3>
-                <p class="text-[#535353] text-sm">Admin</p>
+                <p class="text-[#535353] dark:text-gray-200 text-sm">Admin</p>
             </div>
         </div>
     </div>
     <div class="flex flex-col px-4 gap-1 lg:mt-0 h-full">
-        <h1 class="mt-4 text-sm ml-4 py-2">Menu</h1>
-        <a class="flex flex-row justify-between h-fit py-2 cursor-pointer menu flex-none {{ Request::segment(1) == 'home' ? 'bg-primary text-white' : 'hover:bg-gray-200' }} px-4 rounded-md"
+        <h1 class="mt-4 text-sm ml-4 py-2 dark:text-slate-50">Menu</h1>
+        <a class="flex flex-row dark:text-white justify-between h-fit py-2 cursor-pointer menu flex-none {{ Request::segment(1) == 'home' ? 'bg-primary text-white' : 'hover:bg-gray-200 dark:hover:bg-slate-600' }} px-4 rounded-md"
             href="{{ route('home') }}">
             <div class="flex flex-row items-center w-full">
                 <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="1em"
@@ -28,7 +41,7 @@
                     Dashboard</p>
             </div>
         </a>
-        <a class="flex flex-row justify-between h-fit py-2 cursor-pointer menu flex-none hover:bg-gray-200 px-4 rounded-md"
+        <a class="flex flex-row dark:text-white justify-between h-fit py-2 cursor-pointer menu flex-none hover:bg-gray-200 dark:hover:bg-slate-600 px-4 rounded-md"
             href="/dashboard">
             <div class="flex flex-row items-center w-full">
                 <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="1em"
@@ -41,7 +54,7 @@
                     Management</p>
             </div>
         </a>
-        <a class="flex flex-row justify-between h-fit py-2 cursor-pointer menu flex-none {{ Request::segment(1) == 'farm' ? 'bg-primary text-white' : 'hover:bg-gray-200' }} px-4 rounded-md"
+        <a class="flex flex-row dark:text-white justify-between h-fit py-2 cursor-pointer menu flex-none {{ Request::segment(1) == 'farm' ? 'bg-primary text-white' : 'hover:bg-gray-200 dark:hover:bg-slate-600' }} px-4 rounded-md"
             href="{{ route('farm') }}">
             <div class="flex flex-row items-center w-full"><svg stroke="currentColor" fill="currentColor"
                     stroke-width="0" viewBox="0 0 24 24" aria-hidden="true" height="1em" width="1em"
@@ -56,7 +69,7 @@
             </div>
         </a>
 
-        <a class="flex flex-row justify-between h-fit py-2 cursor-pointer menu flex-none {{ Request::segment(1) == 'afdeling' ? 'bg-primary text-white' : 'hover:bg-gray-200' }} px-4 rounded-md"
+        <a class="flex flex-row dark:text-white justify-between h-fit py-2 cursor-pointer menu flex-none {{ Request::segment(1) == 'afdeling' ? 'bg-primary text-white' : 'hover:bg-gray-200 dark:hover:bg-slate-600' }} px-4 rounded-md"
             href="{{ route('afdeling') }}">
             <div class="flex flex-row items-center w-full">
                 <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="1em"
@@ -72,7 +85,7 @@
             </div>
         </a>
 
-        <a class="flex flex-row justify-between h-fit py-2 cursor-pointer menu flex-none {{ Request::segment(1) == 'block' ? 'bg-primary text-white' : 'hover:bg-gray-200' }} px-4 rounded-md"
+        <a class="flex flex-row dark:text-white justify-between h-fit py-2 cursor-pointer menu flex-none {{ Request::segment(1) == 'block' ? 'bg-primary text-white' : 'hover:bg-gray-200 dark:hover:bg-slate-600' }} px-4 rounded-md"
             href="/block">
             <div class="flex flex-row items-center w-full">
                 <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="1em"
@@ -86,8 +99,8 @@
             </div>
         </a>
 
-        <h1 class="mt-4 text-sm ml-4 py-2">Lainnya</h1>
-        <a class="flex flex-row justify-between h-fit py-2 cursor-pointer menu flex-none {{ Request::segment(1) == 'parameter' ? 'bg-primary text-white' : 'hover:bg-gray-200' }} px-4 rounded-md"
+        <h1 class="mt-4 text-sm ml-4 py-2 dark:text-slate-50">Lainnya</h1>
+        <a class="flex flex-row dark:text-white justify-between h-fit py-2 cursor-pointer menu flex-none {{ Request::segment(1) == 'parameter' ? 'bg-primary text-white' : 'hover:bg-gray-200 dark:hover:bg-slate-600' }} px-4 rounded-md"
             href="{{ route('parameter') }}">
             <div class="flex flex-row items-center w-full">
                 <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="1em"
@@ -100,7 +113,7 @@
                     Parameter</p>
             </div>
         </a>
-        <a class="flex flex-row justify-between h-fit py-2 cursor-pointer menu flex-none {{ Request::segment(1) == 'perhitungan' ? 'bg-primary text-white' : 'hover:bg-gray-200' }} px-4 rounded-md"
+        <a class="flex flex-row dark:text-white justify-between h-fit py-2 cursor-pointer menu flex-none {{ Request::segment(1) == 'perhitungan' ? 'bg-primary text-white' : 'hover:bg-gray-200 dark:hover:bg-slate-600' }} px-4 rounded-md"
             href="{{ route('perhitungan') }}">
             <div class="flex flex-row items-center w-full">
                 <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="1em"

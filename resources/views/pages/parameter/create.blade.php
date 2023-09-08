@@ -6,9 +6,9 @@
     @csrf
     <div class="flex flex-col w-full h-full justify-center items-center pointer-events-none fixed">
         <div id="konten_modal"
-            class="flex scale-0 flex-col duration-500 ease-in-out w-[90%] lg:w-[1000px] max-h-[90%] bg-white rounded-lg pointer-events-auto drop-shadow-lg overflow-hidden">
+            class="flex scale-0 flex-col duration-500 ease-in-out w-[90%] lg:w-[1000px] max-h-[90%] bg-white rounded-lg pointer-events-auto drop-shadow-lg overflow-hidden dark:bg-slate-700 dark:text-white">
             <header>
-                <div class="flex w-full h-fit flex-row justify-between px-6 lg:px-12 py-6 items-center border-b-2">
+                <div class="flex w-full h-fit flex-row justify-between px-6 lg:px-12 py-6 items-center border-b-2 dark:border-b-gray-600">
                     <h1 id="titleModal" class="font-poppins-semibold">Tambah Data</h1>
                     <div onclick="handleModal()" class="bg-[#ED3237] py-2 flex items-center px-2 rounded-md">
                         <svg width="11" height="11" viewBox="0 0 11 11" fill="none"
@@ -33,7 +33,7 @@
                                 <input key="batas bawah pH" oninput="validateNumberInput(this)" maxlength="13"
                                     class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary" type="text"
                                     name="ph_bawah" id="ph_bawah" placeholder="">
-                                <p class="absolute top-2 px-2 bg-white left-6 text-xs">Batas Bawah</p>
+                                <p class="absolute top-2 px-2 bg-white dark:bg-slate-700 left-6 text-xs">Batas Bawah</p>
                                 <p
                                     class="absolute right-4 top-2 h-full text-xs text-center items-center flex justify-center">
                                     m2</p>
@@ -42,7 +42,7 @@
                                 <input key="batas atas pH" oninput="validateNumberInput(this)" maxlength="13"
                                     class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary" type="text"
                                     name="ph_atas" id="ph_atas" placeholder="">
-                                <p class="absolute top-2 px-2 bg-white left-6 text-xs">Batas Atas</p>
+                                <p class="absolute top-2 px-2 bg-white dark:bg-slate-700 left-6 text-xs">Batas Atas</p>
                                 <p
                                     class="absolute right-4 top-2 h-full text-xs text-center items-center flex justify-center">
                                     m2</p>
@@ -57,7 +57,7 @@
                                 <input key="batas bawah suhu" oninput="validateNumberInput(this)" maxlength="13"
                                     class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary" type="text"
                                     name="suhu_bawah" id="suhu_bawah" placeholder="">
-                                <p class="absolute top-2 px-2 bg-white left-6 text-xs">Batas Bawah</p>
+                                <p class="absolute top-2 px-2 bg-white dark:bg-slate-700 left-6 text-xs">Batas Bawah</p>
                                 <p
                                     class="absolute right-4 top-2 h-full text-xs text-center items-center flex justify-center">
                                     °C</p>
@@ -66,7 +66,7 @@
                                 <input key="batas atas suhu" oninput="validateNumberInput(this)" maxlength="13"
                                     class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary" type="text"
                                     name="suhu_atas" id="suhu_atas" placeholder="">
-                                <p class="absolute top-2 px-2 bg-white left-6 text-xs">Batas Atas</p>
+                                <p class="absolute top-2 px-2 bg-white dark:bg-slate-700 left-6 text-xs">Batas Atas</p>
                                 <p
                                     class="absolute right-4 top-2 h-full text-xs text-center items-center flex justify-center">
                                     °C</p>
@@ -82,13 +82,13 @@
                                 <input key="batas bawah curah hujan" oninput="validateNumberInput(this)" maxlength="13"
                                     class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary" type="text"
                                     name="hujan_bawah" id="hujan_bawah" placeholder="">
-                                <p class="absolute top-2 px-2 bg-white left-6 text-xs">Batas Bawah</p>
+                                <p class="absolute top-2 px-2 bg-white dark:bg-slate-700 left-6 text-xs">Batas Bawah</p>
                             </div>
                             <div class="relative pt-4 flex-1">
                                 <input key="batas atas curah hujan" oninput="validateNumberInput(this)" maxlength="13"
                                     class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary" type="text"
                                     name="hujan_atas" id="hujan_atas" placeholder="">
-                                <p class="absolute top-2 px-2 bg-white left-6 text-xs">Batas Atas</p>
+                                <p class="absolute top-2 px-2 bg-white dark:bg-slate-700 left-6 text-xs">Batas Atas</p>
                             </div>
                         </div>
 
@@ -101,7 +101,7 @@
                                 <input key="batas bawah ketinggian" oninput="validateNumberInput(this)" maxlength="13"
                                     class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary" type="text"
                                     name="ketinggian_bawah" id="ketinggian_bawah" placeholder="">
-                                <p class="absolute top-2 px-2 bg-white left-6 text-xs">Batas Bawah</p>
+                                <p class="absolute top-2 px-2 bg-white dark:bg-slate-700 left-6 text-xs">Batas Bawah</p>
                                 <p
                                     class="absolute right-4 top-2 h-full text-xs text-center items-center flex justify-center">
                                     MDPL</p>
@@ -110,7 +110,7 @@
                                 <input key="batas atas ketinggian" oninput="validateNumberInput(this)" maxlength="13"
                                     class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary" type="text"
                                     name="ketinggian_atas" id="ketinggian_atas" placeholder="">
-                                <p class="absolute top-2 px-2 bg-white left-6 text-xs">Batas Atas</p>
+                                <p class="absolute top-2 px-2 bg-white dark:bg-slate-700 left-6 text-xs">Batas Atas</p>
                                 <p
                                     class="absolute right-4 top-2 h-full text-xs text-center items-center flex justify-center">
                                     MDPL</p>
