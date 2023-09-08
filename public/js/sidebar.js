@@ -73,3 +73,7 @@ themeToggleBtn.addEventListener("click", function () {
         }
     }
 });
+
+window.addEventListener('load', function(){
+    $("#loading").hide();
+})
