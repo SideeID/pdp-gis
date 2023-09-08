@@ -168,6 +168,37 @@ function validateNumberInput(input) {
     input.value = inputValue;
 }
 
+function validateLatitude(input) {
+    var inputValue = input.value;
+
+    // Menghilangkan semua karakter selain angka dan titik (.)
+    inputValue = inputValue.replace(/[^0-9.-]/g, "");
+
+    // Memastikan hanya ada satu titik (.) dalam input
+    if (inputValue.startsWith(".")) {
+        inputValue = inputValue.substring(1); // Hapus titik di awal karakter
+    }
+    
+    var parts = inputValue.split(".");
+    if (parts.length > 2) {
+        // Jika terdapat lebih dari satu titik (.), maka hanya gunakan yang pertama
+        inputValue = parts[0] + "." + parts.slice(1).join("");
+    }
+
+    var minupart = inputValue.split("-");
+    if (minupart.length > 2) {
+        inputValue = minupart[0] + "-" + minupart.slice(1).join("");
+    }
+    if(minupart[0] != ''){
+        if(minupart[1] == ''){
+            inputValue = minupart[0]
+        }
+    }
+
+    // Mengganti nilai input dengan hasil yang sudah diubah
+    input.value = inputValue;
+}
+
 const handleData = () => {
     const err = cekJikaKosong([
         kebun,

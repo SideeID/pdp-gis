@@ -109,7 +109,7 @@
                     <div class="flex flex-col w-full">
                         <p class="py-3">Latitude <span class="text-red-600">*</span></p>
                         <div class="">
-                            <input maxlength="20" class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary"
+                            <input oninput="validateLatitude(this)" maxlength="20" class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary"
                                 type="text" name="latitude" id="latitude" placeholder="">
                         </div>
 
@@ -117,7 +117,7 @@
                     <div class="flex flex-col w-full">
                         <p class="py-3">Longtitude <span class="text-red-600">*</span></p>
                         <div class="">
-                            <input maxlength="20" class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary"
+                            <input oninput="validateLatitude(this)" maxlength="20" class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary"
                                 type="text" name="longtitude" id="longtitude" placeholder="">
                         </div>
                     </div>
