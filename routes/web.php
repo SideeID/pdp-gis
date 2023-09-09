@@ -6,6 +6,7 @@ use App\Http\Controllers\FarmController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ParameterController;
 use App\Http\Controllers\PerhitunganController;
+use App\Http\Controllers\PlantController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -68,4 +69,13 @@ Route::prefix('perhitungan')->group(function () {
     Route::post('/delete-selection', [PerhitunganController::class, 'deleteSelection'])->name('perhitungan.delete.selection');
     Route::get('/delete/{kode}', [PerhitunganController::class, 'deleteData']);
     Route::get('/{search}', [PerhitunganController::class, 'search'])->where('search', '.*');
+});
+
+Route::prefix('plant')->group(function () {
+    Route::get('/', [PlantController::class, 'index'])->name('plant');
+    Route::post('/create', [PlantController::class, 'create'])->name('plant.create');
+    Route::post('/update', [PlantController::class, 'update'])->name('plant.update');
+    Route::post('/delete-selection', [PlantController::class, 'deleteSelection'])->name('plant.delete.selection');
+    Route::get('/delete/{kode}', [PlantController::class, 'deleteData']);
+    Route::get('/{search}', [PlantController::class, 'search'])->where('search', '.*');
 });

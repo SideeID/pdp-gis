@@ -67,7 +67,7 @@
 
     <div class="w-full h-full flex flex-col bg-white dark:bg-slate-700 dark:border-gray-500 duration-300 ease-in-out flex-grow mt-2 min-h-[400px] rounded-lg border-[2px] overflow-x-auto"
         style="opacity: 1;">
-        <div class="h-full rounded-lg w-full flex flex-1" id="container_map"></div>
+        <div class="h-full rounded-lg w-full flex flex-1 z-10" id="container_map"></div>
 
     </div>
     <div class="mt-4 flex  flex-col justify-center md:flex-row md:justify-between gap-2 py-2 items-center">

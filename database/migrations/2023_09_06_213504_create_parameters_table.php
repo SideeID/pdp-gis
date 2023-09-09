@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::create('parameters', function (Blueprint $table) {
             $table->id();
-            $table->string('color', 10);
             $table->double('ph_a');
             $table->double('ph_b');
             $table->double('suhu_a');
@@ -28,6 +27,7 @@ return new class extends Migration
             $table->tinyInteger('suhu_kelas');
             $table->tinyInteger('hujan_kelas');
             $table->tinyInteger('tinggi_kelas');
+            $table->foreignId('plant_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

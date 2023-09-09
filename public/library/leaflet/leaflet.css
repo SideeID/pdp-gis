@@ -525,6 +525,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
 :is(.dark .leaflet-popup-content-wrapper, .leaflet-popup-tip) {
 	background: rgb(71 85 105 / 1);
+	color: white;
 }
 
 .leaflet-container a.leaflet-popup-close-button {
