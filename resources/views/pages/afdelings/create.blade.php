@@ -109,7 +109,7 @@
                                 name="luas" id="luas" placeholder="">
                             <p
                                 class="absolute right-4 top-0 h-full text-xs text-center items-center flex justify-center">
-                                m2</p>
+                                Ha</p>
                         </div>
 
                     </div>

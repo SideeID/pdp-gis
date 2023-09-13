@@ -16,9 +16,10 @@ class AfdelingController extends Controller
         $data = Afdeling::with('farm')->orderBy('created_at', 'desc')->paginate(10);
 
         $kebun = Farm::all(['id', 'name', 'geojson_data', 'color']);
+        $afdeling = Afdeling::all();
 
 
-        return view('pages.afdelings.afdeling', compact('data', 'kebun'));
+        return view('pages.afdelings.afdeling', compact('data', 'kebun', 'afdeling'));
     }
 
     public function create(Request $request)

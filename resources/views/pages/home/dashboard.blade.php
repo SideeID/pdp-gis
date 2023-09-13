@@ -32,7 +32,7 @@
 @endsection
 
 @section('onstart')
-    setDataMap({{ json_encode($data) }}, {{ $kebun }})
+    setDataMap({{ json_encode($data) }}, {{ $kebun }}, {{ $afdeling }}, {{ $block }})
 @endsection
 
 @section('content')
@@ -59,8 +59,25 @@
             </li>
         </ol>
     </nav>
-    <div class="flex flex-col md:flex-row w-full h-fit mt-2 justify-between gap-4">
-
+    <div class="flex flex-col md:flex-row w-full h-fit mt-2 mb-4 justify-between gap-4">
+        <div class="flex flex-row gap-4 flex-wrap text-xs md:text-base dark:text-white">
+            <div class="flex flex-row gap-3 items-center">
+                <input onchange="checkFarm(this)" checked type="checkbox" id="checkfarm">
+                <label for="checkfarm">Farm</label>
+            </div>
+            <div class="flex flex-row gap-3 items-center">
+                <input onchange="checkAfdeling(this)" type="checkbox"  id="checkafdeling">
+                <label for="checkafdeling">Afdeling</label>
+            </div>
+            <div class="flex flex-row gap-3 items-center">
+                <input onchange="checkBlock(this)" checked type="checkbox" id="checkblock">
+                <label for="checkblock">Block</label>
+            </div>
+            <div class="flex flex-row gap-3 items-center">
+                <input onchange="checkResult(this)" checked type="checkbox" id="checkresult">
+                <label for="checkresult">Result</label>
+            </div>
+        </div>      
     </div>
 
 

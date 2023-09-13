@@ -31,9 +31,6 @@
     @include('pages.afdelings.map')
 @endsection
 
-@section('onstart')
-    dataFarm({{ json_encode($kebun) }}, {{ json_encode($data->items()) }})
-@endsection
 
 @section('content')
     <nav class="flex mt-0 overflow-x-auto py-4" aria-label="Breadcrumb">
@@ -64,7 +61,7 @@
             class="py-2 px-6 border-[2px] rounded-lg outline-none w-full md:flex-1 md:max-w-[400px]" placeholder="Search..."
             type="text">
         <div class="flex flex-row-reverse md:flex-row gap-2 cursor-default mt-4 md:mt-0 justify-between">
-            <div onclick="showMap({{ json_encode($data->items()) }})"
+            <div onclick="showMap({{ json_encode($afdeling) }}, {{ json_encode($kebun) }})"
                 class="bg-slate-600 hover:bg-slate-800 text-white px-3 rounded-md flex items-center dark:bg-slate-500">
                 <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="1em"
                     width="1em" xmlns="http://www.w3.org/2000/svg">
@@ -116,8 +113,8 @@
                             </td>
                             <td class="text-left px-4">{{ $item->farm->name }}</td>
                             <td class="text-left px-4">{{ $item->name }}</td>
-                            <td class="text-left px-4">{{ $item->area }}</td>
-                            <td class="text-left px-4">{{ $item->elevation }}</td>
+                            <td class="text-left px-4">{{ $item->area }} Ha</td>
+                            <td class="text-left px-4">{{ $item->elevation }} Mdpl</td>
                             <td class="text-left px-4">
                                 <div class="h-6 w-full max-w-[80px] rounded-sm"
                                     style="background-color: {{ $item->color }}">

@@ -394,7 +394,7 @@ $(document).keyup(function (event) {
     }
 });
 
-const showMap = (data) => {
+const showMap = (kebun, afdeling, block) => {
     handleMap();
     map.removeControl(drawControl);
     map.addLayer(allMap);
@@ -404,9 +404,36 @@ const showMap = (data) => {
 
     divmap.lastElementChild.classList.replace("flex", "hidden");
 
-    console.log(data);
+    kebun.forEach((element) => {
+        var layer = L.geoJSON(JSON.parse(element.geojson_data), {
+            style: {
+                color: element.color,
+                fillColor: element.color,
+                fillOpacity: 0.2,
+            },
+        })
+            .bindTooltip(element.name, {
+                permanent: true,
+            })
+            .bindPopup(element.name)
+            .addTo(map);
+    });
+    afdeling.forEach((element) => {
+        var layer = L.geoJSON(JSON.parse(element.geojson_data), {
+            style: {
+                color: element.color,
+                fillColor: element.color,
+                fillOpacity: 0.3,
+            },
+        })
+            .bindTooltip(element.name, {
+                permanent: true,
+            })
+            .bindPopup(element.name)
+            .addTo(map);
+    });
 
-    data.forEach((element) => {
+    block.forEach((element) => {
         L.marker([element.latitude, element.longtitude])
             .bindPopup(element.name)
             .bindTooltip(element.name, {
@@ -415,37 +442,7 @@ const showMap = (data) => {
             .addTo(allMap);
     });
 };
-const dataFarm = (data, afdeling) => {
-    afdeling.forEach((element) => {
-        var layer = L.geoJSON(JSON.parse(element.geojson_data), {
-            style: {
-                color: element.color,
-                fillColor: element.color,
-                fillOpacity: 0.5,
-            },
-        })
-            .bindTooltip(element.name, {
-                permanent: true,
-            })
-            .bindPopup(element.name)
-            .addTo(map);
-    });
 
-    data.forEach((element) => {
-        var layer = L.geoJSON(JSON.parse(element.geojson_data), {
-            style: {
-                color: element.color,
-                fillColor: element.color,
-                fillOpacity: 0.5,
-            },
-        })
-            .bindTooltip(element.name, {
-                permanent: true,
-            })
-            .bindPopup(element.name)
-            .addTo(map);
-    });
-};
 
 const pilihAfdeling = (e) => {
     if (e.children.length == 0) {

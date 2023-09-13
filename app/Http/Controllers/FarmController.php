@@ -12,8 +12,9 @@ class FarmController extends Controller
     public function index()
     {
         $data = Farm::orderBy('created_at', 'desc')->paginate(10);
+        $farm = Farm::all();
 
-        return view('pages.farms.farm', compact('data'));
+        return view('pages.farms.farm', compact('data', 'farm'));
     }
 
     public function create(Request $request)

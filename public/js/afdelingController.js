@@ -434,7 +434,7 @@ $(document).keyup(function (event) {
     }
 });
 
-const showMap = (data) => {
+const showMap = (data, kebun) => {
     handleMap();
     map.removeControl(drawControl);
     map.addLayer(allMap);
@@ -444,6 +444,21 @@ const showMap = (data) => {
 
     divmap.lastElementChild.classList.replace("flex", "hidden");
 
+    kebun.forEach((element) => {
+        var layer = L.geoJSON(JSON.parse(element.geojson_data), {
+            style: {
+                color: element.color,
+                fillColor: element.color,
+                fillOpacity: 0.3,
+            },
+        })
+            .bindTooltip(element.name, {
+                permanent: true,
+            })
+            .bindPopup(element.name)
+            .addTo(map);
+    });
+    
     data.forEach((element) => {
         var layer = L.geoJSON(JSON.parse(element.geojson_data), {
             style: {
@@ -458,20 +473,6 @@ const showMap = (data) => {
             .bindPopup(element.name)
             .addTo(allMap);
     });
-};
-const dataFarm = (data, afdeling) => {
-    console.log(afdeling);
-    data.forEach((element) => {
-        var layer = L.geoJSON(JSON.parse(element.geojson_data), {
-            style: {
-                color: element.color,
-                fillColor: element.color,
-                fillOpacity: 0.5,
-            },
-        })
-            .bindTooltip(element.name, {
-                permanent: true,
-            })
-            .addTo(map);
-    });
+
+    
 };

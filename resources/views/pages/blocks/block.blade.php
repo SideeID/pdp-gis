@@ -33,9 +33,6 @@
     @include('pages.blocks.map')
 @endsection
 
-@section('onstart')
-    dataFarm({{ json_encode($kebun) }}, {{ json_encode($afdeling) }} )
-@endsection
 
 @section('content')
     <nav class="flex mt-0 overflow-x-auto py-4" aria-label="Breadcrumb">
@@ -66,7 +63,7 @@
             class="py-2 px-6 border-[2px] rounded-lg outline-none w-full md:flex-1 md:max-w-[400px]" placeholder="Search..."
             type="text">
         <div class="flex flex-row-reverse md:flex-row gap-2 cursor-default mt-4 md:mt-0 justify-between">
-            <div onclick="showMap({{ json_encode($data->items()) }})"
+            <div onclick="showMap({{ json_encode($kebun) }}, {{ json_encode($afdeling) }}, {{ json_encode($block) }})"
                 class="bg-slate-600 hover:bg-slate-800 text-white px-3 rounded-md flex items-center dark:bg-slate-500">
                 <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="1em"
                     width="1em" xmlns="http://www.w3.org/2000/svg">
@@ -121,11 +118,13 @@
                             <td class="text-left px-4">{{ $item->name }}</td>
                             <td class="text-left px-4">{{ $item->afdeling->name }}</td>
                             <td class="text-left px-4">{{ $item->afdeling->farm->name }}</td>
-                            <td class="text-left px-4 line-clamp-3 py-2">{{ $item->description }} Lorem ipsum dolor sit,
-                                amet consectetur adipisicing elit. Quasi blanditiis voluptas quo quod eius commodi, officiis
-                                aut possimus distinctio sed.</td>
-                            <td class="text-left px-4">{{ $item->area }}m2</td>
-                            <td class="text-left px-4">{{ $item->elevation }}mdpl</td>
+                            <td class="text-left px-4">
+                                <div class="flex items-center">
+                                    <p class="line-clamp-3">{{ $item->description }}</p>
+                                </div>
+                            </td>
+                            <td class="text-left px-4">{{ $item->area }} Ha</td>
+                            <td class="text-left px-4">{{ $item->elevation }} mdpl</td>
                             <td class="px-4 py-2">
                                 <div class="flex flex-row gap-2 h-full justify-center">
                                     <div onclick="handleEdit({{ $item }}, {{ $kebun }})"
