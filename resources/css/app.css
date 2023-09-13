@@ -1,3 +1,58 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    @font-face {
+        font-family: "poppins-regular";
+        src: url(./fonts/Poppins-Regular.ttf);
+    }
+
+    @font-face {
+        font-family: "poppins-medium";
+        src: url(./fonts/Poppins-Medium.ttf);
+    }
+
+    @font-face {
+        font-family: "poppins-semibold";
+        src: url(./fonts/Poppins-SemiBold.ttf);
+    }
+
+    @font-face {
+        font-family: "poppins-bold";
+        src: url(./fonts/Poppins-Bold.ttf);
+    }
+
+    html {
+        @apply font-poppins-regular box-border;
+    }
+}
+
+.loadingspinner {
+    pointer-events: none;
+    width: 2.5em;
+    height: 2.5em;
+    border: 0.4em solid transparent;
+    border-color: #eee;
+    border-top-color: #00bdfe;
+    border-radius: 50%;
+    outline: none;
+    animation: loadingspin 1s linear infinite;
+}
+
+@keyframes loadingspin {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.body-loading {
+    border: none;
+    overflow: hidden;
+
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

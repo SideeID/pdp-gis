@@ -10,7 +10,13 @@ module.exports = {
     extend: {
       colors: {
         primary: '#00999F'
-      }
+      },
+      fontFamily: {
+        'poppins-regular': 'poppins-regular',
+        'poppins-semibold': 'poppins-semibold',
+        'poppins-bold': 'poppins-bold',
+        'poppins-medium': 'poppins-medium'
+      },
     },
   },
   plugins: [],
