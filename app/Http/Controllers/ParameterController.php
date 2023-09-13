@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\HitungLvq;
 use App\Models\Parameter;
+use App\Models\Plants;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -20,9 +21,12 @@ class ParameterController extends Controller
 
     public function index()
     {
-        $data = Parameter::orderBy('created_at', 'desc')->paginate(10);
+        $data = Parameter::with('plant')->orderBy('created_at', 'desc')->paginate(10);
+        $tanaman = Plants::whereNotIn('id', function($query){
+            $query->select('plant_id')->from('parameters');
+        })->get();
 
-        return view('pages.parameter.parameter', compact('data'));
+        return view('pages.parameter.parameter', compact('data', 'tanaman'));
     }
 
     public function create(Request $request)
@@ -37,7 +41,7 @@ class ParameterController extends Controller
             'hujan_atas' => 'required',
             'ketinggian_bawah' => 'required',
             'ketinggian_atas' => 'required',
-            'color' => 'required|max:10',
+            'tanaman' => 'required',
         ], [
             'required' => 'Field wajib diisi!'
         ]);
@@ -48,7 +52,7 @@ class ParameterController extends Controller
         }
 
         Parameter::create([
-            "color" => $request->color,
+            "plant_id" => $request->tanaman,
             "ph_a" => $request->ph_bawah,
             "ph_b" => $request->ph_atas,
             "suhu_a" => $request->suhu_bawah,
@@ -79,7 +83,7 @@ class ParameterController extends Controller
             'hujan_atas' => 'required',
             'ketinggian_bawah' => 'required',
             'ketinggian_atas' => 'required',
-            'color' => 'required|max:10',
+            'tanaman' => 'required',
         ], [
             'required' => 'Field wajib diisi!'
         ]);
@@ -90,7 +94,7 @@ class ParameterController extends Controller
         }
 
         Parameter::where('id', $request->id)->update([
-            "color" => $request->color,
+            "plant_id" => $request->tanaman,
             "ph_a" => $request->ph_bawah,
             "ph_b" => $request->ph_atas,
             "suhu_a" => $request->suhu_bawah,
@@ -145,7 +149,7 @@ class ParameterController extends Controller
 
     public function search($search)
     {
-        $data = Parameter::orderBy('created_at', 'desc')->paginate(10);
+        $data = Parameter::with('plant')->orderBy('created_at', 'desc')->paginate(10);
 
         return view('pages.parameter.parameter', compact('data', 'search'));
     }

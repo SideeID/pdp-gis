@@ -52,6 +52,7 @@ var baseMap = {
 L.control.layers(baseMap).addTo(map);
 
 const setDataMap = (data, kebun) => {
+    console.log(data);
     kebun.forEach((element) => {
         var ly = L.geoJSON(JSON.parse(element.geojson_data), {
             style: {
@@ -123,8 +124,8 @@ const setDataMap = (data, kebun) => {
 
         var ly = L.geoJSON(JSON.parse(element.afdeling.geojson_data), {
             style: {
-                color: element.parameter.color,
-                fillColor: element.parameter.color,
+                color: element.parameter.plant.color,
+                fillColor: element.parameter.plant.color,
                 fillOpacity: 0.5,
             },
         })
@@ -155,6 +156,11 @@ const setDataMap = (data, kebun) => {
                         <td class="">Ketinggian</td>
                         <td class="pr-1">:</td>
                         <td class="">${tinggi.description}</td>
+                    </tr>
+                    <tr>
+                        <td class="font-poppins-semibold">Hasil</td>
+                        <td class="pr-1">:</td>
+                        <td class="">${element.parameter.plant.name}</td>
                     </tr>
                 </table>`
             )

@@ -77,7 +77,7 @@
                         <div class=""><input class="h-4 w-4" type="checkbox" id="checkAll" name=""></div>
                     </th>
                     <th class="px-4 py-4 text-left">No</th>
-                    <th class="px-4 py-4 text-left">Warna</th>
+                    <th class="px-4 py-4 text-left">Tanaman</th>
                     <th class="px-4 py-4 text-left">PH Tanah</th>
                     <th class="px-4 py-4 text-left">Suhu</th>
                     <th class="px-4 py-4 text-left">Curah Hujan</th>
@@ -98,10 +98,7 @@
                                         value="{{ $item->id }}"></div>
                             </td>
                             <td class="text-left px-4">{{ $index + 1 }}</td>
-                            <td class="text-left px-4">
-                                <div class="h-6 w-full max-w-[80px] rounded-sm"
-                                    style="background-color: {{ $item->color }}">
-                                </div>
+                            <td class="text-left px-4">{{ $item->plant->name }}
                             </td>
                             <td class="text-left px-4">{{ $item->ph_a }} - {{ $item->ph_b }}</td>
                             <td class="text-left px-4">{{ $item->suhu_a }}°C - {{ $item->suhu_b }}°C </td>

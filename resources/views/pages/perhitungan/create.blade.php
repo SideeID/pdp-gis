@@ -8,7 +8,8 @@
         <div id="konten_modal"
             class="flex scale-0 flex-col duration-500 ease-in-out w-[90%] lg:w-[1000px] max-h-[90%] bg-white rounded-lg pointer-events-auto drop-shadow-lg overflow-hidden">
             <header>
-                <div class="flex w-full h-fit flex-row justify-between px-6 lg:px-12 py-6 items-center border-b-2 dark:border-b-gray-600">
+                <div
+                    class="flex w-full h-fit flex-row justify-between px-6 lg:px-12 py-6 items-center border-b-2 dark:border-b-gray-600">
                     <h1 id="titleModal" class="font-poppins-semibold">Tambah Data</h1>
                     <div onclick="handleModal()" class="bg-[#ED3237] py-2 flex items-center px-2 rounded-md">
                         <svg width="11" height="11" viewBox="0 0 11 11" fill="none"
@@ -26,41 +27,43 @@
                     <input maxlength="40" class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary"
                         type="hidden" name="id" id="id" placeholder="">
 
-                        <div class="flex flex-col w-full">
-                            <p class="py-3">Nama Kebun <span class="text-red-600">*</span></p>
-                            <div class="relative">
-                                <select key="kebun" onchange="pilihKebun({{$kebun}})" maxlength="40"
-                                    class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary appearance-none bg-transparent pr-10"
-                                    type="text" name="kebun" id="kebun" placeholder="">
-                                    <option disabled selected value=""></option>
-                                    @foreach ($kebun as $item)
-                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                    @endforeach
-                                </select>
-                                <svg class="absolute  flex h-full top-0 right-0 mr-4" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024"
-                                    height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M840.4 300H183.6c-19.7 0-30.7 20.8-18.5 35l328.4 380.8c9.4 10.9 27.5 10.9 37 0L858.9 335c12.2-14.2 1.2-35-18.5-35z">
-                                    </path>
-                                </svg>
-                            </div>
+                    <div class="flex flex-col w-full">
+                        <p class="py-3">Nama Kebun <span class="text-red-600">*</span></p>
+                        <div class="relative">
+                            <select key="kebun" onchange="pilihKebun({{ $kebun }})" maxlength="40"
+                                class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary appearance-none bg-transparent pr-10"
+                                type="text" name="kebun" id="kebun" placeholder="">
+                                <option disabled selected value=""></option>
+                                @foreach ($kebun as $item)
+                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                @endforeach
+                            </select>
+                            <svg class="absolute  flex h-full top-0 right-0 mr-4" stroke="currentColor"
+                                fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024" height="1em"
+                                width="1em" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M840.4 300H183.6c-19.7 0-30.7 20.8-18.5 35l328.4 380.8c9.4 10.9 27.5 10.9 37 0L858.9 335c12.2-14.2 1.2-35-18.5-35z">
+                                </path>
+                            </svg>
                         </div>
-    
-                        <div class="flex flex-col w-full">
-                            <p class="py-3">Nama Afdeling <span class="text-red-600">*</span></p>
-                            <div class="relative">
-                                <select key="afdeling" onclick="pilihAfdeling(this)" maxlength="40"
-                                    class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary appearance-none bg-transparent pr-10"
-                                    type="text" name="afdeling" id="afdeling" placeholder="">
-                                </select>
-                                <svg class="absolute  flex h-full top-0 right-0 mr-4" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024"
-                                    height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M840.4 300H183.6c-19.7 0-30.7 20.8-18.5 35l328.4 380.8c9.4 10.9 27.5 10.9 37 0L858.9 335c12.2-14.2 1.2-35-18.5-35z">
-                                    </path>
-                                </svg>
-                            </div>
+                    </div>
+
+                    <div class="flex flex-col w-full">
+                        <p class="py-3">Nama Afdeling <span class="text-red-600">*</span></p>
+                        <div class="relative">
+                            <select key="afdeling" onclick="pilihAfdeling(this)" maxlength="40"
+                                class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary appearance-none bg-transparent pr-10"
+                                type="text" name="afdeling" id="afdeling" placeholder="">
+                            </select>
+                            <svg class="absolute  flex h-full top-0 right-0 mr-4" stroke="currentColor"
+                                fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024" height="1em"
+                                width="1em" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M840.4 300H183.6c-19.7 0-30.7 20.8-18.5 35l328.4 380.8c9.4 10.9 27.5 10.9 37 0L858.9 335c12.2-14.2 1.2-35-18.5-35z">
+                                </path>
+                            </svg>
                         </div>
+                    </div>
 
                     <div class="flex flex-col w-full">
                         <p class="py-1 font-poppins-semibold">PH Tanah <span class="text-red-600">*</span></p>

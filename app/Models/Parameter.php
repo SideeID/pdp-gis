@@ -15,4 +15,10 @@ class Parameter extends Model
 
     // fillable mendevinisikan field mana saja yang dapat kita isikan
     protected $guarded = [];
+
+    public function plant(){
+        return $this->belongsTo(Plants::class, 'plant_id', 'id');
+    }
 }
+
+

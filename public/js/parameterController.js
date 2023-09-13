@@ -94,7 +94,7 @@ const handleData = () => {
         hujan_atas,
         ketinggian_bawah,
         ketinggian_atas,
-        warna,
+        tanaman,
     ]);
 
     if (err) {
@@ -133,6 +133,13 @@ const cekJikaKosong = (array) => {
 
 const handleEdit = (item) => {
     console.log(item);
+
+    var kontenHtml = ''
+    kontenHtml += tanaman.innerHTML
+    kontenHtml += `<option selected value="${item.plant.id}">${item.plant.name}</option>`
+
+    tanaman.innerHTML = kontenHtml
+
     id.value = item.id;
     ph_bawah.value = item.ph_a
     ph_atas.value = item.ph_b
@@ -142,7 +149,9 @@ const handleEdit = (item) => {
     hujan_atas.value = item.hujan_b
     ketinggian_bawah.value = item.tinggi_a
     ketinggian_atas.value = item.tinggi_b
-    warna.value = item.color;
+    tanaman.value = item.plant.id;
+
+
 
     title.innerHTML = "Ubah Data";
     titleButton.innerHTML = "Ubah Data";
@@ -163,7 +172,9 @@ const resetForm = () => {
     hujan_atas.value = ""
     ketinggian_bawah.value = ""
     ketinggian_atas.value = ""
-    warna.value = "";
+    tanaman.value = "";
+
+    tanaman.removeChild(tanaman.lastChild)
 };
 
 const form = document.getElementById("form_parameter");
@@ -176,7 +187,7 @@ const hujan_bawah = document.getElementById("hujan_bawah");
 const hujan_atas = document.getElementById("hujan_atas");
 const ketinggian_bawah = document.getElementById("ketinggian_bawah");
 const ketinggian_atas = document.getElementById("ketinggian_atas");
-const warna = document.getElementById("color");
+const tanaman = document.getElementById("tanaman");
 
 const title = document.getElementById("titleModal");
 const titleButton = document.getElementById("titleButton");

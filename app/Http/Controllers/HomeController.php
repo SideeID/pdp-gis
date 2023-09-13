@@ -14,7 +14,7 @@ class HomeController extends Controller
 
         $data = array();
         $data['kriteria'] = Criteria::with('detail_criteria')->get();
-        $data['data'] = Perhitungan::with(['afdeling', 'parameter'])->get();
+        $data['data'] = Perhitungan::with(['afdeling', 'parameter.plant'])->get();
 
         $kebun = Farm::all();
 
