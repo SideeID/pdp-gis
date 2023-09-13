@@ -277,13 +277,8 @@ const resetForm = () => {
     nama.value = "";
     email.value = "";
     id.value = "";
-    div_text.lastElementChild.innerHTML = "";
-
-    div_text.lastElementChild.classList.replace("flex", "hidden");
-    div_text.firstElementChild.classList.replace("hidden", "flex");
 };
 
-const div_text = document.getElementById("geojsonCon");
 
 const form = document.getElementById("form_user");
 const id = document.getElementById("id");
