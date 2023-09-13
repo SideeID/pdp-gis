@@ -91,7 +91,7 @@
                 @endif
                 <form class="" id="form_delete" action="{{ route('parameter.delete.selection') }}" method="post">
                     @csrf
-                    @foreach ($data as $index => $item)
+                    @foreach ($dataDesc as $index => $item)
                         <tr style="opacity: 1; transform: none;">
                             <td class="px-4 w-16 text-center">
                                 <div class=""><input class="h-4 w-4 idcheck" type="checkbox" name="ids[]"
@@ -100,10 +100,30 @@
                             <td class="text-left px-4">{{ $index + 1 }}</td>
                             <td class="text-left px-4">{{ $item->plant->name }}
                             </td>
-                            <td class="text-left px-4">{{ $item->ph_a }} - {{ $item->ph_b }}</td>
-                            <td class="text-left px-4">{{ $item->suhu_a }}°C - {{ $item->suhu_b }}°C </td>
-                            <td class="text-left px-4">{{ $item->hujan_a }} - {{ $item->hujan_b }}</td>
-                            <td class="text-left px-4 py-2">{{ $item->tinggi_a }} MDPL - {{ $item->tinggi_b }} MDPL</td>
+                            <td class="text-left px-4">
+                                <div class="min-w-[70px]">
+                                    <p>{{ $item->ph_a }} - {{ $item->ph_b }}</p>
+                                    <p class="text-xs italic">{{ $item->ph_res ? $item->ph_res : 'Tidak diketahui' }}</p>
+                                </div>
+                            </td>
+                            <td class="text-left px-4">
+                                <div class="min-w-[110px]">
+                                    <p>{{ $item->suhu_a }}°C - {{ $item->suhu_b }}°C </p>
+                                    <p class="text-xs italic">{{ $item->suhu_res ? $item->suhu_res : 'Tidak diketahui' }}</p>
+                                </div>
+                            </td>
+                            <td class="text-left px-4">
+                                <div class="min-w-[100px]">
+                                    <p>{{ $item->hujan_a }} - {{ $item->hujan_b }}</p>
+                                    <p class="text-xs italic">{{ $item->hujan_res ? $item->hujan_res : 'Tidak diketahui' }}</p>
+                                </div>
+                            </td>
+                            <td class="text-left px-4">
+                                <div class="min-w-[120px]">
+                                    <p>{{ $item->tinggi_a }} - {{ $item->tinggi_b }} Mdpl</p>
+                                    <p class="text-xs italic">{{ $item->tinggi_res ? $item->tinggi_res : 'Tidak diketahui' }}</p>
+                                </div>
+                            </td>
                             <td class="px-4 py-2">
                                 <div class="flex flex-row gap-2 justify-center h-full">
                                     <div onclick="handleEdit({{ $item }})"
