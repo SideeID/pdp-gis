@@ -32,7 +32,7 @@
 @endsection
 
 @section('onstart')
-    setDataMap({{ json_encode($data) }}, {{ $kebun }})
+    setDataMap({{ json_encode($data) }}, {{ $kebun }}, {{ $afdeling }}, {{ $block }})
 @endsection
 
 @section('content')
@@ -59,15 +59,32 @@
             </li>
         </ol>
     </nav>
-    <div class="flex flex-col md:flex-row w-full h-fit mt-2 justify-between gap-4">
-
+    <div class="flex flex-col md:flex-row w-full h-fit mt-2 mb-4 justify-between gap-4">
+        <div class="flex flex-row gap-4 flex-wrap text-xs md:text-base dark:text-white">
+            <div class="flex flex-row gap-3 items-center">
+                <input onchange="checkFarm(this)" checked type="checkbox" id="checkfarm">
+                <label for="checkfarm">Farm</label>
+            </div>
+            <div class="flex flex-row gap-3 items-center">
+                <input onchange="checkAfdeling(this)" type="checkbox"  id="checkafdeling">
+                <label for="checkafdeling">Afdeling</label>
+            </div>
+            <div class="flex flex-row gap-3 items-center">
+                <input onchange="checkBlock(this)" checked type="checkbox" id="checkblock">
+                <label for="checkblock">Block</label>
+            </div>
+            <div class="flex flex-row gap-3 items-center">
+                <input onchange="checkResult(this)" checked type="checkbox" id="checkresult">
+                <label for="checkresult">Result</label>
+            </div>
+        </div>      
     </div>
 
 
 
-    <div class="w-full h-full flex flex-col bg-white flex-grow mt-2 min-h-[400px] rounded-lg border-[2px] overflow-x-auto"
+    <div class="w-full h-full flex flex-col bg-white dark:bg-slate-700 dark:border-gray-500 duration-300 ease-in-out flex-grow mt-2 min-h-[400px] rounded-lg border-[2px] overflow-x-auto"
         style="opacity: 1;">
-        <div class="h-full rounded-lg w-full flex flex-1" id="container_map"></div>
+        <div class="h-full rounded-lg w-full flex flex-1 z-10" id="container_map"></div>
 
     </div>
     <div class="mt-4 flex  flex-col justify-center md:flex-row md:justify-between gap-2 py-2 items-center">

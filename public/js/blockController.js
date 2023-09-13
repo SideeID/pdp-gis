@@ -168,6 +168,37 @@ function validateNumberInput(input) {
     input.value = inputValue;
 }
 
+function validateLatitude(input) {
+    var inputValue = input.value;
+
+    // Menghilangkan semua karakter selain angka dan titik (.)
+    inputValue = inputValue.replace(/[^0-9.-]/g, "");
+
+    // Memastikan hanya ada satu titik (.) dalam input
+    if (inputValue.startsWith(".")) {
+        inputValue = inputValue.substring(1); // Hapus titik di awal karakter
+    }
+    
+    var parts = inputValue.split(".");
+    if (parts.length > 2) {
+        // Jika terdapat lebih dari satu titik (.), maka hanya gunakan yang pertama
+        inputValue = parts[0] + "." + parts.slice(1).join("");
+    }
+
+    var minupart = inputValue.split("-");
+    if (minupart.length > 2) {
+        inputValue = minupart[0] + "-" + minupart.slice(1).join("");
+    }
+    if(minupart[0] != ''){
+        if(minupart[1] == ''){
+            inputValue = minupart[0]
+        }
+    }
+
+    // Mengganti nilai input dengan hasil yang sudah diubah
+    input.value = inputValue;
+}
+
 const handleData = () => {
     const err = cekJikaKosong([
         kebun,
@@ -363,7 +394,7 @@ $(document).keyup(function (event) {
     }
 });
 
-const showMap = (data) => {
+const showMap = (kebun, afdeling, block) => {
     handleMap();
     map.removeControl(drawControl);
     map.addLayer(allMap);
@@ -373,9 +404,36 @@ const showMap = (data) => {
 
     divmap.lastElementChild.classList.replace("flex", "hidden");
 
-    console.log(data);
+    kebun.forEach((element) => {
+        var layer = L.geoJSON(JSON.parse(element.geojson_data), {
+            style: {
+                color: element.color,
+                fillColor: element.color,
+                fillOpacity: 0.2,
+            },
+        })
+            .bindTooltip(element.name, {
+                permanent: true,
+            })
+            .bindPopup(element.name)
+            .addTo(map);
+    });
+    afdeling.forEach((element) => {
+        var layer = L.geoJSON(JSON.parse(element.geojson_data), {
+            style: {
+                color: element.color,
+                fillColor: element.color,
+                fillOpacity: 0.3,
+            },
+        })
+            .bindTooltip(element.name, {
+                permanent: true,
+            })
+            .bindPopup(element.name)
+            .addTo(map);
+    });
 
-    data.forEach((element) => {
+    block.forEach((element) => {
         L.marker([element.latitude, element.longtitude])
             .bindPopup(element.name)
             .bindTooltip(element.name, {
@@ -384,37 +442,7 @@ const showMap = (data) => {
             .addTo(allMap);
     });
 };
-const dataFarm = (data, afdeling) => {
-    afdeling.forEach((element) => {
-        var layer = L.geoJSON(JSON.parse(element.geojson_data), {
-            style: {
-                color: element.color,
-                fillColor: element.color,
-                fillOpacity: 0.5,
-            },
-        })
-            .bindTooltip(element.name, {
-                permanent: true,
-            })
-            .bindPopup(element.name)
-            .addTo(map);
-    });
 
-    data.forEach((element) => {
-        var layer = L.geoJSON(JSON.parse(element.geojson_data), {
-            style: {
-                color: element.color,
-                fillColor: element.color,
-                fillOpacity: 0.5,
-            },
-        })
-            .bindTooltip(element.name, {
-                permanent: true,
-            })
-            .bindPopup(element.name)
-            .addTo(map);
-    });
-};
 
 const pilihAfdeling = (e) => {
     if (e.children.length == 0) {

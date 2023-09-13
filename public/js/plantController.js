@@ -1,3 +1,5 @@
+
+
 const handleModal = () => {
     const bg = document.getElementById("bg_modal");
     const konten = document.getElementById("konten_modal");
@@ -12,16 +14,16 @@ const handleModal = () => {
             ? (resetForm(),
               (title.innerHTML = "Tambah Data"),
               (titleButton.innerHTML = "Tambah Data"),
-              (form.action = "/parameter/create"))
+              (form.action = "/farm/create"))
             : undefined;
 
         bg.classList.replace("opacity-30", "opacity-0");
         bg.classList.replace("pointer-events-auto", "pointer-events-none");
 
         konten.classList.replace("scale-100", "scale-0");
-
     }
 };
+
 
 $(function () {
     $("#cp")
@@ -63,42 +65,15 @@ $(function () {
         });
 });
 
-function validateNumberInput(input) {
-    var inputValue = input.value;
-
-    // Menghilangkan semua karakter selain angka dan titik (.)
-    inputValue = inputValue.replace(/[^0-9.]/g, "");
-
-    // Memastikan hanya ada satu titik (.) dalam input
-    if (inputValue.startsWith(".")) {
-        inputValue = inputValue.substring(1); // Hapus titik di awal karakter
-    }
-
-    var parts = inputValue.split(".");
-    if (parts.length > 2) {
-        // Jika terdapat lebih dari satu titik (.), maka hanya gunakan yang pertama
-        inputValue = parts[0] + "." + parts.slice(1).join("");
-    }
-
-    // Mengganti nilai input dengan hasil yang sudah diubah
-    input.value = inputValue;
-}
 
 const handleData = () => {
     const err = cekJikaKosong([
-        ph_bawah, 
-        ph_atas,
-        suhu_bawah,
-        suhu_atas,
-        hujan_bawah,
-        hujan_atas,
-        ketinggian_bawah,
-        ketinggian_atas,
-        tanaman,
+        nama,
+        warna,
     ]);
 
     if (err) {
-        Swal.fire("Informasi", err, "warning")
+        Swal.fire("Informasi", err, "warning");
     } else {
         // jika tidak kosong
         Swal.fire({
@@ -124,7 +99,7 @@ const cekJikaKosong = (array) => {
     for (let index = 0; index < array.length; index++) {
         const element = array[index];
         if (element.value == "") {
-            return "Field " + element.getAttribute('key') + " tidak boleh kosong";
+            return "Field " + element.name + " tidak boleh kosong";
         }
     }
 
@@ -132,31 +107,16 @@ const cekJikaKosong = (array) => {
 };
 
 const handleEdit = (item) => {
-    console.log(item);
-
-    var kontenHtml = ''
-    kontenHtml += tanaman.innerHTML
-    kontenHtml += `<option selected value="${item.plant.id}">${item.plant.name}</option>`
-
-    tanaman.innerHTML = kontenHtml
 
     id.value = item.id;
-    ph_bawah.value = item.ph_a
-    ph_atas.value = item.ph_b
-    suhu_bawah.value = item.suhu_a
-    suhu_atas.value = item.suhu_b
-    hujan_bawah.value = item.hujan_a
-    hujan_atas.value = item.hujan_b
-    ketinggian_bawah.value = item.tinggi_a
-    ketinggian_atas.value = item.tinggi_b
-    tanaman.value = item.plant.id;
-
-
+    nama.value = item.name;
+    deskripsi.value = item.description;
+    warna.value = item.color;
 
     title.innerHTML = "Ubah Data";
     titleButton.innerHTML = "Ubah Data";
 
-    form.action = "/parameter/update";
+    form.action = "/plant/update";
 
     handleModal();
 };
@@ -164,33 +124,21 @@ const handleEdit = (item) => {
 const resetForm = () => {
 
     id.value = "";
-    ph_bawah.value = ""
-    ph_atas.value = ""
-    suhu_bawah.value = ""
-    suhu_atas.value = ""
-    hujan_bawah.value = ""
-    hujan_atas.value = ""
-    ketinggian_bawah.value = ""
-    ketinggian_atas.value = ""
-    tanaman.value = "";
-
-    tanaman.removeChild(tanaman.lastChild)
+    nama.value = "";
+    deskripsi.value = "";
+    warna.value = "";
 };
 
-const form = document.getElementById("form_parameter");
+
+const form = document.getElementById("form_plant");
 const id = document.getElementById("id");
-const ph_bawah = document.getElementById("ph_bawah");
-const ph_atas = document.getElementById("ph_atas");
-const suhu_bawah = document.getElementById("suhu_bawah");
-const suhu_atas = document.getElementById("suhu_atas");
-const hujan_bawah = document.getElementById("hujan_bawah");
-const hujan_atas = document.getElementById("hujan_atas");
-const ketinggian_bawah = document.getElementById("ketinggian_bawah");
-const ketinggian_atas = document.getElementById("ketinggian_atas");
-const tanaman = document.getElementById("tanaman");
+const nama = document.getElementById("tanaman");
+const deskripsi = document.getElementById("deskripsi");
+const warna = document.getElementById("color");
 
 const title = document.getElementById("titleModal");
 const titleButton = document.getElementById("titleButton");
+
 
 $("#checkAll").on("click", function () {
     $(this)
@@ -252,8 +200,9 @@ const deleteData = (url) => {
     });
 };
 
+
 $(document).keyup(function (event) {
     if ($("#keyword").is(":focus") && event.key == "Enter") {
-        location.replace("/parameter/" + $("#keyword").val());
+        location.replace("/plant/" + $("#keyword").val());
     }
 });

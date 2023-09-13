@@ -2,36 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Afdeling;
 use App\Models\Farm;
-use Illuminate\Http\Client\Response;
+use App\Models\Plants;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use RealRashid\SweetAlert\Facades\Alert;
 
-class AfdelingController extends Controller
+class PlantController extends Controller
 {
     public function index()
     {
-        $data = Afdeling::with('farm')->orderBy('created_at', 'desc')->paginate(10);
+        $data = Plants::orderBy('created_at', 'desc')->paginate(10);
 
-        $kebun = Farm::all(['id', 'name', 'geojson_data', 'color']);
-        $afdeling = Afdeling::all();
-
-
-        return view('pages.afdelings.afdeling', compact('data', 'kebun', 'afdeling'));
+        return view('pages.plants.plant', compact('data'));
     }
 
     public function create(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'kebun' => 'required',
-            'afdeling' => 'required|max:40',
-            'latitude' => 'required|max:40',
-            'longtitude' => 'required|max:40',
-            'ketinggian' => 'required',
-            'geojson' => 'required',
-            'luas' => 'required',
+            'tanaman' => 'required|max:40',
             'color' => 'required|max:10',
         ], [
             'required' => 'Field wajib diisi!'
@@ -42,31 +31,20 @@ class AfdelingController extends Controller
             return redirect()->back()->withInput();
         }
 
-        Afdeling::create([
-            "farm_id" => $request->kebun,
-            "name" => $request->afdeling,
-            "area" => $request->luas,
-            "latitude" => $request->latitude,
-            "longtitude" => $request->longtitude,
-            "elevation" => $request->ketinggian,
-            "geojson_data" => $request->geojson,
+        Plants::create([
+            "name" => $request->tanaman,
+            "description" => $request->deskripsi,
             "color" => $request->color
         ]);
 
         Alert::success('Berhasil', 'Berhasil menambahkan data');
-        return redirect()->route('afdeling');
+        return redirect()->route('plant');
     }
 
     public function update(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'kebun' => 'required',
-            'afdeling' => 'required|max:40',
-            'latitude' => 'required|max:40',
-            'longtitude' => 'required|max:40',
-            'ketinggian' => 'required',
-            'geojson' => 'required',
-            'luas' => 'required',
+            'tanaman' => 'required|max:40',
             'color' => 'required|max:10',
         ], [
             'required' => 'Field wajib diisi!'
@@ -77,29 +55,24 @@ class AfdelingController extends Controller
             return redirect()->back()->withInput();
         }
 
-        Afdeling::where('id', $request->id)->update([
-            "farm_id" => $request->kebun,
-            "name" => $request->afdeling,
-            "area" => $request->luas,
-            "latitude" => $request->latitude,
-            "longtitude" => $request->longtitude,
-            "elevation" => $request->ketinggian,
-            "geojson_data" => $request->geojson,
+        Plants::where('id', $request->id)->update([
+            "name" => $request->tanaman,
+            "description" => $request->deskripsi,
             "color" => $request->color
         ]);
 
         Alert::success('Berhasil', 'Berhasil mengubah data');
-        return redirect()->route('afdeling');
+        return redirect()->route('plant');
     }
 
     public function deleteSelection(Request $request)
     {
         for ($i = 0; $i < count($request->ids); $i++) {
-            Afdeling::where('id', '=', $request->ids[$i])->delete();
+            Plants::where('id', '=', $request->ids[$i])->delete();
         }
 
         Alert::success('Berhasil', 'Berhasil menghapus data');
-        return redirect()->route('afdeling');
+        return redirect()->route('plant');
     }
 
     public function deleteData($kode, Request $request)
@@ -114,31 +87,26 @@ class AfdelingController extends Controller
                 // seperti memaksa menggunakan token yang telah dipakai sebelumnya untuk menghapus data yang lain
                 $request->session()->regenerateToken();
 
-                Afdeling::find($kode)->delete();
+                Plants::find($kode)->delete();
 
                 alert()->success('Berhasil', 'Berhasil Menghapus Data');
-                return redirect()->route('afdeling');
+                return redirect()->route('plant');
             } else {
-                return redirect()->route('afdeling');
+                return redirect()->route('plant');
             }
         } else {
-            return redirect()->route('afdeling');
+            return redirect()->route('plant');
         }
     }
 
     public function search($search)
     {
-        $data = Afdeling::where(function ($query) use ($search) {
+        $data = Plants::where(function ($query) use ($search) {
             $query->Where('name', 'LIKE', '%' . $search . '%');
         })
-            ->orWhereHas('farm', function ($query) use ($search) {
-                $query->Where('name', 'LIKE', '%' . $search . '%');
-            })
             ->orderBy('created_at', 'desc')
             ->paginate(10);
 
-        $kebun = Farm::all(['id', 'name', 'geojson_data', 'color']);
-
-        return view('pages.afdelings.afdeling', compact('data', 'kebun', 'search'));
+        return view('pages.plants.plant', compact('data', 'search'));
     }
 }

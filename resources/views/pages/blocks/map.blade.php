@@ -6,7 +6,7 @@
     <div id="konten_modal_map"
         class="flex scale-0 flex-col duration-500 ease-in-out w-[90%] lg:w-[70%] max-h-[90%] bg-white rounded-lg pointer-events-auto drop-shadow-lg overflow-hidden">
         <header>
-            <div class="flex w-full h-fit flex-row justify-between px-6 lg:px-12 py-6 items-center border-b-2">
+            <div class="flex w-full h-fit flex-row justify-between px-6 lg:px-12 py-6 items-center border-b-2 dark:border-b-gray-600">
                 <h1 class="font-poppins-semibold">Peta</h1>
                 <div onclick="handleMap()" class="bg-[#ED3237] py-2 flex items-center px-2 rounded-md">
                     <svg width="11" height="11" viewBox="0 0 11 11" fill="none"

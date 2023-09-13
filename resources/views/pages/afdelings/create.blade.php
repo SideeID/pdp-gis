@@ -8,7 +8,7 @@
         <div id="konten_modal"
             class="flex scale-0 flex-col duration-500 ease-in-out w-[90%] lg:w-[500px] max-h-[90%] bg-white rounded-lg pointer-events-auto drop-shadow-lg overflow-hidden">
             <header>
-                <div class="flex w-full h-fit flex-row justify-between px-6 lg:px-12 py-6 items-center border-b-2">
+                <div class="flex w-full h-fit flex-row justify-between px-6 lg:px-12 py-6 items-center border-b-2 dark:border-b-gray-600">
                     <h1 id="titleModal" class="font-poppins-semibold">Tambah Data</h1>
                     <div onclick="handleModal()" class="bg-[#ED3237] py-2 flex items-center px-2 rounded-md">
                         <svg width="11" height="11" viewBox="0 0 11 11" fill="none"
@@ -55,7 +55,7 @@
                     <div class="flex flex-col w-full">
                         <p class="py-3">Latitude <span class="text-red-600">*</span></p>
                         <div class="">
-                            <input maxlength="50" class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary"
+                            <input oninput="validateLatitude(this)" maxlength="50" class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary"
                                 type="text" name="latitude" id="latitude" placeholder="">
                         </div>
 
@@ -63,7 +63,7 @@
                     <div class="flex flex-col w-full">
                         <p class="py-3">Longtitude <span class="text-red-600">*</span></p>
                         <div class="">
-                            <input maxlength="50" class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary"
+                            <input oninput="validateLatitude(this)" maxlength="50" class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary"
                                 type="text" name="longtitude" id="longtitude" placeholder="">
                         </div>
                     </div>
@@ -109,7 +109,7 @@
                                 name="luas" id="luas" placeholder="">
                             <p
                                 class="absolute right-4 top-0 h-full text-xs text-center items-center flex justify-center">
-                                m2</p>
+                                Ha</p>
                         </div>
 
                     </div>

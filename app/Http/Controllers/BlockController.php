@@ -18,9 +18,10 @@ class BlockController extends Controller
 
         $kebun = Farm::with('afdeling')->get();
         $afdeling = Afdeling::all();
+        $block = Block::all();
 
 
-        return view('pages.blocks.block', compact('data', 'kebun', 'afdeling'));
+        return view('pages.blocks.block', compact('data', 'kebun', 'afdeling', 'block'));
     }
 
     public function create(Request $request)

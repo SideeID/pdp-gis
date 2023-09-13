@@ -60,8 +60,8 @@
             class="py-2 px-6 border-[2px] rounded-lg outline-none w-full md:flex-1 md:max-w-[400px]" placeholder="Search..."
             type="text">
         <div class="flex flex-row-reverse md:flex-row gap-2 cursor-default mt-4 md:mt-0 justify-between">
-            <div onclick="showMap({{ json_encode($data->items()) }})"
-                class="bg-slate-600 hover:bg-slate-800 text-white px-3 rounded-md flex items-center">
+            <div onclick="showMap({{ json_encode($farm) }})"
+                class="bg-slate-600 hover:bg-slate-800 dark:bg-slate-500 text-white px-3 rounded-md flex items-center">
                 <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="1em"
                     width="1em" xmlns="http://www.w3.org/2000/svg">
                     <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"></path>
@@ -82,7 +82,7 @@
 
 
 
-    <div class="w-full h-full flex flex-col bg-white flex-grow mt-8 min-h-[400px] rounded-lg px-6 py-4 border-[2px] overflow-x-auto"
+    <div class="w-full h-full flex flex-col bg-white dark:bg-slate-700 dark:border-gray-500 duration-300 ease-in-out flex-grow mt-8 min-h-[400px] rounded-lg px-6 py-4 border-[2px] overflow-x-auto"
         style="opacity: 1;">
         <table class="border-separate border-spacing-y-3">
             <thead>
@@ -115,7 +115,7 @@
                             <td class="text-left px-4">{{ $item->address }}</td>
                             <td class="text-left px-4">{{ $item->subdistrict }}</td>
                             <td class="text-left px-4">{{ $item->city }}</td>
-                            <td class="text-left px-4">{{ $item->area }} m2</td>
+                            <td class="text-left px-4">{{ $item->area }} Ha</td>
                             <td class="text-left px-4">
                                 <div class="h-6 w-full max-w-[80px] rounded-sm"
                                     style="background-color: {{ $item->color }}">

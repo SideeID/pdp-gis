@@ -151,6 +151,7 @@ $(function () {
         .colorpicker({
             inline: true,
             container: true,
+            customClass: 'colorpicker-2x',
             extensions: [
                 {
                     name: "swatches",
@@ -204,6 +205,37 @@ function validateNumberInput(input) {
     if (parts.length > 2) {
         // Jika terdapat lebih dari satu titik (.), maka hanya gunakan yang pertama
         inputValue = parts[0] + "." + parts.slice(1).join("");
+    }
+
+    // Mengganti nilai input dengan hasil yang sudah diubah
+    input.value = inputValue;
+}
+
+function validateLatitude(input) {
+    var inputValue = input.value;
+
+    // Menghilangkan semua karakter selain angka dan titik (.)
+    inputValue = inputValue.replace(/[^0-9.-]/g, "");
+
+    // Memastikan hanya ada satu titik (.) dalam input
+    if (inputValue.startsWith(".")) {
+        inputValue = inputValue.substring(1); // Hapus titik di awal karakter
+    }
+    
+    var parts = inputValue.split(".");
+    if (parts.length > 2) {
+        // Jika terdapat lebih dari satu titik (.), maka hanya gunakan yang pertama
+        inputValue = parts[0] + "." + parts.slice(1).join("");
+    }
+
+    var minupart = inputValue.split("-");
+    if (minupart.length > 2) {
+        inputValue = minupart[0] + "-" + minupart.slice(1).join("");
+    }
+    if(minupart[0] != ''){
+        if(minupart[1] == ''){
+            inputValue = minupart[0]
+        }
     }
 
     // Mengganti nilai input dengan hasil yang sudah diubah
@@ -402,7 +434,7 @@ $(document).keyup(function (event) {
     }
 });
 
-const showMap = (data) => {
+const showMap = (data, kebun) => {
     handleMap();
     map.removeControl(drawControl);
     map.addLayer(allMap);
@@ -412,6 +444,21 @@ const showMap = (data) => {
 
     divmap.lastElementChild.classList.replace("flex", "hidden");
 
+    kebun.forEach((element) => {
+        var layer = L.geoJSON(JSON.parse(element.geojson_data), {
+            style: {
+                color: element.color,
+                fillColor: element.color,
+                fillOpacity: 0.3,
+            },
+        })
+            .bindTooltip(element.name, {
+                permanent: true,
+            })
+            .bindPopup(element.name)
+            .addTo(map);
+    });
+    
     data.forEach((element) => {
         var layer = L.geoJSON(JSON.parse(element.geojson_data), {
             style: {
@@ -426,20 +473,6 @@ const showMap = (data) => {
             .bindPopup(element.name)
             .addTo(allMap);
     });
-};
-const dataFarm = (data, afdeling) => {
-    console.log(afdeling);
-    data.forEach((element) => {
-        var layer = L.geoJSON(JSON.parse(element.geojson_data), {
-            style: {
-                color: element.color,
-                fillColor: element.color,
-                fillOpacity: 0.5,
-            },
-        })
-            .bindTooltip(element.name, {
-                permanent: true,
-            })
-            .addTo(map);
-    });
+
+    
 };
