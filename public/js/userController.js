@@ -199,6 +199,15 @@ const handleModal = () => {
         bg.classList.replace("pointer-events-none", "pointer-events-auto");
 
         konten.classList.replace("scale-0", "scale-100");
+
+        if (title.innerHTML == "Ubah Data") {
+            hidePassword();
+            showBtnPassword();
+        } else {
+            showPassword();
+            hideBtnPassword();
+        }
+        
     } else {
         title.innerHTML == "Ubah Data"
             ? (resetForm(),
@@ -216,7 +225,7 @@ const handleModal = () => {
 
 
 function validateNumberInput(input) {
-    input.value = input.value.replace(/[^0-9]/g, ""); // Remove non-numeric characters
+    input.value = input.value.replace(/[^0-9]/g, "");
 }
 
 const handleData = () => {
@@ -228,7 +237,6 @@ const handleData = () => {
     if (err) {
         Swal.fire("Informasi", err, "warning");
     } else {
-        // jika tidak kosong
         Swal.fire({
             title: "Konfirmasi",
             text: `Apakah anda yakin ingin ${
@@ -288,6 +296,8 @@ const email = document.getElementById("email");
 const title = document.getElementById("titleModal");
 const titleButton = document.getElementById("titleButton");
 
+document.getElementById("showPasswordButton").style.cursor = "pointer";
+
 $("#checkAll").on("click", function () {
     $(this)
         .closest("table")
@@ -298,7 +308,7 @@ $("#checkAll").on("click", function () {
 });
 
 $("tbody :checkbox").on("click", function () {
-    $(this).closest("tr").toggleClass("selected", this.checked); //Classe de seleção na row
+    $(this).closest("tr").toggleClass("selected", this.checked);
 
     $(this)
         .closest("table")
@@ -307,7 +317,7 @@ $("tbody :checkbox").on("click", function () {
             "checked",
             $(this).closest("table").find("tbody :checkbox:checked").length ==
                 $(this).closest("table").find("tbody :checkbox").length
-        ); //Tira / coloca a seleção no .checkAll
+        );
 });
 
 const deleteSelection = () => {
@@ -353,3 +363,32 @@ $(document).keyup(function (event) {
         location.replace("/user/" + $("#keyword").val());
     }
 });
+
+function hidePassword() {
+    var passwordContainer = document.getElementById("password-container");
+    if (passwordContainer) {
+        passwordContainer.style.display = "none";    
+    }
+}
+
+function showPassword() {
+    var passwordContainer = document.getElementById("password-container");
+    if (passwordContainer) {
+        passwordContainer.style.display = "flex";
+    }
+}
+
+function hideBtnPassword() {
+    var showPasswordButton = document.getElementById("showPasswordButton");
+    if (showPasswordButton) {
+        showPasswordButton.style.display = "none";
+    }
+}
+
+function showBtnPassword() {
+    var showPasswordButton = document.getElementById("showPasswordButton");
+    if (showPasswordButton) {
+        showPasswordButton.style.display = "flex";
+    }
+}
+

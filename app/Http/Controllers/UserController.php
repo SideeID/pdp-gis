@@ -49,7 +49,8 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'id' => 'required|max:40',
             'nama' => 'required|max:50',
-            'email' => 'required|email|unique:users,email,' . $request->id, // Validasi unik dengan mengabaikan email saat ini
+            'password' => 'required|max:50',
+            'email' => 'required|email|unique:users,email,' . $request->id,
         ], [
             'required' => 'Field wajib diisi!',
             'unique' => 'Email telah digunakan!',
@@ -64,6 +65,7 @@ class UserController extends Controller
             'id' => $request->id,
             'name' => $request->nama,
             'email' => $request->email,
+            'password' => bcrypt($request->password)
         ]);
 
         Alert::success('Berhasil', 'Berhasil mengubah pengguna');
