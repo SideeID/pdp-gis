@@ -69,7 +69,7 @@
         </div>
     </div>
 
-    <div class="w-full h-full flex flex-col bg-white flex-grow mt-8 min-h-[400px] rounded-lg px-6 py-4 border-[2px] overflow-x-auto">
+    <div class="w-full h-full flex flex-col bg-white dark:bg-slate-700 dark:border-gray-500 duration-300 ease-in-out flex-grow mt-8 min-h-[400px] rounded-lg px-6 py-4 border-[2px] overflow-x-auto">
         <table class="border-collapse w-full">
             <thead>
                 <tr>
