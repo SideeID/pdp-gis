@@ -7,7 +7,6 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ParameterController;
 use App\Http\Controllers\PerhitunganController;
 use App\Http\Controllers\PlantController;
-use App\Http\Controllers\FarmController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
