@@ -26,7 +26,7 @@ public function login(Request $request)
         $user = Auth::user();
         $name = $user->name;
         notify()->success("Selamat datang, $name!");
-        return redirect()->intended('/dashboard');
+        return redirect()->intended('/home');
     }
 
     notify()->error('Email atau kata sandi salah.');
