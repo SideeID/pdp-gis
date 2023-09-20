@@ -7,9 +7,9 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    public function showLoginForm()
+
+public function showLoginForm()
 {
-    // dd('Show Login Form');
     return view('login.login');
 }
 
@@ -23,16 +23,21 @@ public function login(Request $request)
     $credentials = $request->only('email', 'password');
 
     if (Auth::attempt($credentials)) {
+        $user = Auth::user();
+        $name = $user->name;
+        notify()->success("Selamat datang, $name!");
         return redirect()->intended('/dashboard');
     }
 
-    return redirect()->route('login')->with('error', 'Login gagal. Email atau password salah.');
+    notify()->error('Email atau kata sandi salah.');
+    return redirect()->route('login')->withInput($request->only('email'));
 }
+
 
 public function logout()
 {
-    // dd('Logout');
     Auth::logout();
+    notify()->success('Berhasil keluar!');
     return redirect()->route('login');
 }
 

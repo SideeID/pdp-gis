@@ -21,11 +21,11 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'nama' => 'required|max:50',
             'email' => 'required|email|unique:users',
-            // 'password' => 'required|min:6|confirmed',
+            'password' => 'required|min:6',
         ], [
             'required' => 'Field wajib diisi!',
             'unique' => 'Email telah digunakan!',
-            // 'confirmed' => 'Konfirmasi password tidak cocok!',
+            'min' => 'Password harus memiliki minimal 6 karakter!',
         ]);
 
         if ($validator->fails()) {
@@ -45,32 +45,45 @@ class UserController extends Controller
     }
 
     public function update(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'id' => 'required|max:40',
-            'nama' => 'required|max:50',
-            'password' => 'required|max:50',
-            'email' => 'required|email|unique:users,email,' . $request->id,
-        ], [
-            'required' => 'Field wajib diisi!',
-            'unique' => 'Email telah digunakan!',
-        ]);
+{
+    $rules = [
+        'id' => 'required|max:40',
+        'nama' => 'required|max:50',
+        'email' => 'required|email|unique:users,email,' . $request->id,
+    ];
 
-        if ($validator->fails()) {
-            Alert::error('Gagal', $validator->errors()->first());
-            return redirect()->back()->withInput();
-        }
-
-        User::where('id', $request->id)->update([
-            'id' => $request->id,
-            'name' => $request->nama,
-            'email' => $request->email,
-            'password' => bcrypt($request->password)
-        ]);
-
-        Alert::success('Berhasil', 'Berhasil mengubah pengguna');
-        return redirect()->route('user');
+    if ($request->filled('password')) {
+        $rules['password'] = 'max:50|min:6';
     }
+
+    $validator = Validator::make($request->all(), $rules, [
+        'required' => 'Field wajib diisi!',
+        'unique' => 'Email telah digunakan!',
+        'min' => 'Password harus memiliki minimal 6 karakter!',
+    ]);
+
+    if ($validator->fails()) {
+        Alert::error('Gagal', $validator->errors()->first());
+        return redirect()->back()->withInput();
+    }
+
+    $user = User::find($request->id);
+    if (!$user) {
+        Alert::error('Gagal', 'Pengguna tidak ditemukan');
+        return redirect()->back();
+    }
+
+    if ($request->filled('password')) {
+        $user->password = bcrypt($request->password);
+    }
+
+    $user->name = $request->nama;
+    $user->email = $request->email;
+    $user->save();
+
+    Alert::success('Berhasil', 'Berhasil mengubah pengguna');
+    return redirect()->route('user');
+}
 
     public function deleteSelection(Request $request)
     {

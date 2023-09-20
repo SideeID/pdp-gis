@@ -10,30 +10,34 @@
             @yield('header') |
         @endif PDP Jember
     </title>
+    @notifyCss
     @yield('othercss')
     @vite(['resources/css/app.css'])
 </head>
 
 <body>
+    <div class="z-[999] fixed">
+        @include('notify::components.notify')
+    </div>
     @include('sweetalert::alert')
     {{-- Sidebar --}}
     @include('components.sidebar')
     {{-- End sidebar --}}
-
+    
     {{-- Modal --}}
     <div class="z-[999] fixed">
         @yield('modal')
     </div>
     {{-- End Modal --}}
-
+    
     <div class="flex flex-col w-full md:pl-[320px] lg:pl-[290px] min-h-screen duration-300 ease-in-out">
         @include('components.header')
-
+        
         <div class="h-fit flex-grow flex flex-col py-4 px-6 md:px-12 bg-gray-100">
             @yield('content')
         </div>
     </div>
-
+    @notifyJs
     <script src="{{ asset('js/sidebar.js') }}"></script>
     <script src="{{ asset('vendor/sweetalert/sweetalert.all.js') }}"></script>
     @yield('otherjs')
