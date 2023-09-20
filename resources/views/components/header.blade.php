@@ -1,5 +1,4 @@
-<div
-    class="flex flex-row items-center gap-3 h-fit bg-white dark:bg-slate-700 w-full py-6 px-6 md:px-12 border-b-[2px] dark:border-b-gray-600 sticky top-0 z-[90]">
+<div class="flex flex-row items-center justify-between gap-3 dark:bg-slate-700 h-fit bg-white w-full py-6 px-6 md:px-12 border-b-[2px] sticky top-0 z-[90]"> 
     <div onclick="handleSidebar()" class="md:hidden p-2">
         <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" aria-hidden="true" height="1em"
             width="1em" xmlns="http://www.w3.org/2000/svg">
