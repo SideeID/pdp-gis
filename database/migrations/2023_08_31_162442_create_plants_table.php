@@ -13,15 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('afdelings', function (Blueprint $table) {
+        Schema::create('plants', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('farm_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->string('name', 40);
-            $table->double('area')->nullable();
-            $table->string('latitude', 20)->nullable();
-            $table->string('longtitude', 20)->nullable();
-            $table->integer('elevation')->nullable();
-            $table->text('geojson_data')->nullable();
+            $table->text('description')->nullable();
             $table->string('color', 10)->nullable();
             $table->timestamps();
         });
@@ -34,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('afdelings');
+        Schema::dropIfExists('plants');
     }
 };

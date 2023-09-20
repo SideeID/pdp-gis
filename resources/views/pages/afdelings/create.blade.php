@@ -2,7 +2,7 @@
     class="flex duration-500 w-full h-full bg-black opacity-0 fixed justify-center items-center pointer-events-none">
 </div>
 
-<form id="form_farm" action="{{ route('farm.create') }}" method="POST">
+<form id="form_afdeling" action="{{ route('afdeling.create') }}" method="POST">
     @csrf
     <div class="flex flex-col w-full h-full justify-center items-center pointer-events-none fixed">
         <div id="konten_modal"
@@ -23,20 +23,49 @@
 
             <div class="flex flex-col flex-grow w-full px-6 lg:px-12 mt-4 overflow-y-auto">
                 <div class="grid grid-cols-1 h-full gap-4">
-                    <input maxlength="40"
-                                class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary" type="hidden"
-                                name="id" id="id" placeholder="">
+                    <input maxlength="40" class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary"
+                        type="hidden" name="id" id="id" placeholder="">
                     <div class="flex flex-col w-full">
                         <p class="py-3">Nama Kebun <span class="text-red-600">*</span></p>
-                        <div class=""><input maxlength="40"
-                                class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary" type="text"
-                                name="nama" id="nama" placeholder=""></div>
+                        <div class="relative">
+                            <select maxlength="40"
+                                class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary appearance-none bg-transparent pr-10"
+                                type="text" name="kebun" id="kebun" placeholder="">
+                                <option disabled selected value=""></option>
+                                @foreach ($kebun as $item)
+                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                @endforeach
+                            </select>
+                            <svg class="absolute  flex h-full top-0 right-0 mr-4" stroke="currentColor"
+                                fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024" height="1em"
+                                width="1em" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M840.4 300H183.6c-19.7 0-30.7 20.8-18.5 35l328.4 380.8c9.4 10.9 27.5 10.9 37 0L858.9 335c12.2-14.2 1.2-35-18.5-35z">
+                                </path>
+                            </svg>
+                        </div>
                     </div>
                     <div class="flex flex-col w-full">
-                        <p class="py-3">Alamat Kebun <span class="text-red-600">*</span></p>
+                        <p class="py-3">Nama Afdeling <span class="text-red-600">*</span></p>
                         <div class=""><input maxlength="50"
                                 class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary" type="text"
-                                name="alamat" id="alamat" placeholder=""></div>
+                                name="afdeling" id="afdeling" placeholder=""></div>
+                    </div>
+
+                    <div class="flex flex-col w-full">
+                        <p class="py-3">Latitude <span class="text-red-600">*</span></p>
+                        <div class="">
+                            <input oninput="validateLatitude(this)" maxlength="50" class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary"
+                                type="text" name="latitude" id="latitude" placeholder="">
+                        </div>
+
+                    </div>
+                    <div class="flex flex-col w-full">
+                        <p class="py-3">Longtitude <span class="text-red-600">*</span></p>
+                        <div class="">
+                            <input oninput="validateLatitude(this)" maxlength="50" class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary"
+                                type="text" name="longtitude" id="longtitude" placeholder="">
+                        </div>
                     </div>
                     <div class="flex flex-col w-full">
                         <p class="py-3">Geojson Data <span class="text-red-600">*</span></p>
@@ -62,18 +91,13 @@
                         </div>
                     </div>
                     <div class="flex flex-col w-full">
-                        <p class="py-3">Kecamatan <span class="text-red-600">*</span></p>
-                        <div class="">
-                            <input maxlength="50" class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary"
-                                type="text" name="kecamatan" id="kecamatan" placeholder="">
-                        </div>
-
-                    </div>
-                    <div class="flex flex-col w-full">
-                        <p class="py-3">Kota <span class="text-red-600">*</span></p>
-                        <div class="">
-                            <input maxlength="50" class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary"
-                                type="text" name="kota" id="kota" placeholder="">
+                        <p class="py-3">Ketinggian <span class="text-red-600">*</span></p>
+                        <div class="relative">
+                            <input oninput="onlyNumber(this)" maxlength="50" class="w-full border-[2px] px-3 pr-12 py-2 rounded-lg outline-primary"
+                                type="text" name="ketinggian" id="ketinggian" placeholder="">
+                            <p
+                                class="absolute right-4 top-0 h-full text-xs text-center items-center flex justify-center">
+                                Mdpl</p>
                         </div>
 
                     </div>
@@ -83,10 +107,13 @@
                             <input oninput="validateNumberInput(this)" maxlength="13"
                                 class="w-full border-[2px] px-3 py-2 pr-12 rounded-lg outline-primary" type="text"
                                 name="luas" id="luas" placeholder="">
-                                <p class="absolute right-4 top-0 h-full text-xs text-center items-center flex justify-center">Ha</p>
+                            <p
+                                class="absolute right-4 top-0 h-full text-xs text-center items-center flex justify-center">
+                                Ha</p>
                         </div>
 
                     </div>
+
                     <div id="cp" class="flex flex-col w-full">
                         <p class="py-3">Warna <span class="text-red-600">*</span></p>
                         <div class="">

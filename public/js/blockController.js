@@ -1,4 +1,5 @@
-var map = L.map("container_map", {}).setView(
+var map = L.map("container_map", {
+}).setView(
     [-8.171530486265675, 113.69888061802416],
     12
 );
@@ -44,12 +45,12 @@ var allMap = new L.layerGroup();
 map.addLayer(drawnItems);
 var drawControl = new L.Control.Draw({
     draw: {
-        polygon: true,
-        polyline: true,
-        rectangle: true,
+        polygon: false,
+        polyline: false,
+        rectangle: false,
         circle: false,
         marker: true,
-        circlemarker: false
+        circlemarker: false,
     },
     edit: {
         featureGroup: drawnItems,
@@ -68,16 +69,23 @@ map.on("draw:created", function (e) {
 
 const setDataMap = () => {
     var geojsonMap = drawnItems.toGeoJSON();
+    // console.log(geojsonMap);
 
     if (geojsonMap.features.length != 0) {
         div_text.lastElementChild.innerHTML = JSON.stringify(geojsonMap);
         geojson.value = JSON.stringify(geojsonMap);
+
+        latitude.value = geojsonMap.features[0].geometry.coordinates[1];
+        longtitude.value = geojsonMap.features[0].geometry.coordinates[0];
 
         div_text.firstElementChild.classList.replace("flex", "hidden");
         div_text.lastElementChild.classList.replace("hidden", "flex");
     } else {
         div_text.lastElementChild.innerHTML = "";
         geojson.value = "";
+
+        latitude.value = "";
+        longtitude.value = "";
 
         div_text.lastElementChild.classList.replace("flex", "hidden");
         div_text.firstElementChild.classList.replace("hidden", "flex");
@@ -99,7 +107,7 @@ const handleModal = () => {
             ? (resetForm(),
               (title.innerHTML = "Tambah Data"),
               (titleButton.innerHTML = "Tambah Data"),
-              (form.action = "/farm/create"))
+              (form.action = "/block/create"))
             : undefined;
 
         bg.classList.replace("opacity-30", "opacity-0");
@@ -112,67 +120,32 @@ const handleModal = () => {
 const handleMap = () => {
     const bg = document.getElementById("bg_modal_map");
     const konten = document.getElementById("konten_modal_map");
-    map.removeLayer(allMap)
-    
+    map.removeLayer(allMap);
+
     if (bg.classList.contains("opacity-0")) {
-        divmap.lastElementChild.classList.replace('hidden', 'flex')
-        map.addControl(drawControl)
+        divmap.lastElementChild.classList.replace("hidden", "flex");
+        map.addControl(drawControl);
         bg.classList.replace("opacity-0", "opacity-30");
         bg.classList.replace("pointer-events-none", "pointer-events-auto");
 
         konten.classList.replace("scale-0", "scale-100");
     } else {
-        map.removeControl(drawControl)
+        map.removeControl(drawControl);
         bg.classList.replace("opacity-30", "opacity-0");
         bg.classList.replace("pointer-events-auto", "pointer-events-none");
 
         konten.classList.replace("scale-100", "scale-0");
 
-        allMap.eachLayer(function(layer){
-            allMap.removeLayer(layer)
-        })
+        allMap.eachLayer(function (layer) {
+            allMap.removeLayer(layer);
+        });
     }
 };
 
-$(function () {
-    $("#cp")
-        .colorpicker({
-            inline: true,
-            container: true,
-            customClass: 'colorpicker-2x',
-            extensions: [
-                {
-                    name: "swatches",
-                    options: {
-                        colors: {
-                            tetrad1: "#000",
-                            tetrad2: "#000",
-                            tetrad3: "#000",
-                            tetrad4: "#000",
-                        },
-                        namesAsValues: false,
-                    },
-                },
-            ],
-        })
-        .on("colorpickerChange colorpickerCreate", function (e) {
-            e.preventDefault();
-            var colors = e.color.generate("tetrad");
 
-            colors.forEach(function (color, i) {
-                var colorStr = color.string(),
-                    swatch = e.colorpicker.picker.find(
-                        '.colorpicker-swatch[data-name="tetrad' + (i + 1) + '"]'
-                    );
-
-                swatch
-                    .attr("data-value", colorStr)
-                    .attr("title", colorStr)
-                    .find("> i")
-                    .css("background-color", colorStr);
-            });
-        });
-});
+function onlyNumber(input) {
+    input.value = input.value.replace(/[^0-9]/g, ""); // Remove non-numeric characters
+}
 
 function validateNumberInput(input) {
     var inputValue = input.value;
@@ -195,15 +168,46 @@ function validateNumberInput(input) {
     input.value = inputValue;
 }
 
+function validateLatitude(input) {
+    var inputValue = input.value;
+
+    // Menghilangkan semua karakter selain angka dan titik (.)
+    inputValue = inputValue.replace(/[^0-9.-]/g, "");
+
+    // Memastikan hanya ada satu titik (.) dalam input
+    if (inputValue.startsWith(".")) {
+        inputValue = inputValue.substring(1); // Hapus titik di awal karakter
+    }
+    
+    var parts = inputValue.split(".");
+    if (parts.length > 2) {
+        // Jika terdapat lebih dari satu titik (.), maka hanya gunakan yang pertama
+        inputValue = parts[0] + "." + parts.slice(1).join("");
+    }
+
+    var minupart = inputValue.split("-");
+    if (minupart.length > 2) {
+        inputValue = minupart[0] + "-" + minupart.slice(1).join("");
+    }
+    if(minupart[0] != ''){
+        if(minupart[1] == ''){
+            inputValue = minupart[0]
+        }
+    }
+
+    // Mengganti nilai input dengan hasil yang sudah diubah
+    input.value = inputValue;
+}
+
 const handleData = () => {
     const err = cekJikaKosong([
-        nama,
-        alamat,
-        geojson,
-        kecamatan,
-        kota,
+        kebun,
+        afdeling,
+        deskripsi,
+        latitude,
+        longtitude,
+        ketinggian,
         luas,
-        warna,
     ]);
 
     if (err) {
@@ -240,42 +244,43 @@ const cekJikaKosong = (array) => {
     return;
 };
 
-const handleEdit = (item) => {
+const handleEdit = (item, kebunnn) => {
     drawnItems.eachLayer(function (layer) {
         drawnItems.removeLayer(layer);
     });
 
-    var ly = L.geoJSON(JSON.parse(item.geojson_data), {
-        style: {
-            color: item.color,
-            fillColor: item.color,
-            fillOpacity: 0.5,
-        },
-    }).bindPopup(item.name);
+    var ly = L.marker([item.latitude, item.longtitude]);
 
-    // Aktifkan mode edit
-    ly.eachLayer(function (layer) {
-        drawnItems.addLayer(layer);
-    });
 
+    const afdel = kebunnn.filter(
+        (elemen) => elemen.id == item.afdeling.farm.id
+    )[0];
+    var kontenHtml = "";
+
+    if (afdel) {
+        afdel.afdeling.forEach((element) => {
+            kontenHtml += `<option value="${element.id}">${element.name}</option>`;
+        });
+    }
+
+    afdeling.innerHTML = kontenHtml;
+
+    drawnItems.addLayer(ly);
     id.value = item.id;
-    nama.value = item.name;
-    alamat.value = item.address;
-    geojson.value = item.geojson_data;
-    kecamatan.value = item.subdistrict;
-    kota.value = item.city;
+    kebun.value = item.afdeling.farm.id;
+    afdeling.value = item.afdeling.id;
+
+    deskripsi.value = item.description;
+    blok.value = item.name;
+    latitude.value = item.latitude;
+    longtitude.value = item.longtitude;
+    ketinggian.value = item.elevation;
     luas.value = item.area;
-    warna.value = item.color;
 
     title.innerHTML = "Ubah Data";
     titleButton.innerHTML = "Ubah Data";
 
-    div_text.lastElementChild.innerHTML = item.geojson_data;
-
-    div_text.firstElementChild.classList.replace("flex", "hidden");
-    div_text.lastElementChild.classList.replace("hidden", "flex");
-
-    form.action = "/farm/update";
+    form.action = "/block/update";
 
     handleModal();
 };
@@ -286,13 +291,17 @@ const resetForm = () => {
     });
 
     id.value = "";
-    nama.value = "";
-    alamat.value = "";
+    kebun.value = "";
+    afdeling.value = "";
+    deskripsi.value = "";
+    blok.value = "";
+    latitude.value = "";
+    longtitude.value = "";
     geojson.value = "";
-    kecamatan.value = "";
-    kota.value = "";
+    ketinggian.value = "";
     luas.value = "";
-    warna.value = "";
+
+    afdeling.innerHTML = "";
 
     div_text.lastElementChild.innerHTML = "";
 
@@ -302,20 +311,22 @@ const resetForm = () => {
 
 const div_text = document.getElementById("geojsonCon");
 
-const form = document.getElementById("form_farm");
+const form = document.getElementById("form_block");
 const id = document.getElementById("id");
-const nama = document.getElementById("nama");
-const alamat = document.getElementById("alamat");
+const blok = document.getElementById("blok");
+const kebun = document.getElementById("kebun");
+const deskripsi = document.getElementById("deskripsi");
+const afdeling = document.getElementById("afdeling");
+const latitude = document.getElementById("latitude");
 const geojson = document.getElementById("geojson");
-const kecamatan = document.getElementById("kecamatan");
-const kota = document.getElementById("kota");
+const longtitude = document.getElementById("longtitude");
+const ketinggian = document.getElementById("ketinggian");
 const luas = document.getElementById("luas");
-const warna = document.getElementById("color");
 
 const title = document.getElementById("titleModal");
 const titleButton = document.getElementById("titleButton");
 
-const divmap = document.getElementById("konten_modal_map")
+const divmap = document.getElementById("konten_modal_map");
 
 $("#checkAll").on("click", function () {
     $(this)
@@ -377,33 +388,81 @@ const deleteData = (url) => {
     });
 };
 
-
 $(document).keyup(function (event) {
     if ($("#keyword").is(":focus") && event.key == "Enter") {
-        location.replace("/farm/" + $("#keyword").val());
+        location.replace("/block/" + $("#keyword").val());
     }
 });
 
-const showMap = (data) => {
-    
-    handleMap()
-    map.removeControl(drawControl)
-    map.addLayer(allMap)
+const showMap = (kebun, afdeling, block) => {
+    handleMap();
+    map.removeControl(drawControl);
+    map.addLayer(allMap);
     drawnItems.eachLayer(function (layer) {
         drawnItems.removeLayer(layer);
     });
 
-    divmap.lastElementChild.classList.replace('flex', 'hidden')
+    divmap.lastElementChild.classList.replace("flex", "hidden");
 
-    data.forEach(element => {
+    kebun.forEach((element) => {
         var layer = L.geoJSON(JSON.parse(element.geojson_data), {
             style: {
                 color: element.color,
                 fillColor: element.color,
-                fillOpacity: 0.5,
+                fillOpacity: 0.2,
             },
-        }).bindTooltip(element.name, {
-            permanent: true,
-        }).bindPopup(element.name).addTo(allMap)
+        })
+            .bindTooltip(element.name, {
+                permanent: true,
+            })
+            .bindPopup(element.name)
+            .addTo(map);
     });
-}
+    afdeling.forEach((element) => {
+        var layer = L.geoJSON(JSON.parse(element.geojson_data), {
+            style: {
+                color: element.color,
+                fillColor: element.color,
+                fillOpacity: 0.3,
+            },
+        })
+            .bindTooltip(element.name, {
+                permanent: true,
+            })
+            .bindPopup(element.name)
+            .addTo(map);
+    });
+
+    block.forEach((element) => {
+        L.marker([element.latitude, element.longtitude])
+            .bindPopup(element.name)
+            .bindTooltip(element.name, {
+                permanent: true,
+            })
+            .addTo(allMap);
+    });
+};
+
+
+const pilihAfdeling = (e) => {
+    if (e.children.length == 0) {
+        Swal.fire(
+            "Informasi",
+            "Tidak ada data afdeling pada kebun yang dipilih",
+            "info"
+        );
+    }
+};
+
+const pilihKebun = (e) => {
+    const afdel = e.filter((elemen) => elemen.id == kebun.value)[0];
+    var kontenHtml = "";
+
+    if (afdel) {
+        afdel.afdeling.forEach((element) => {
+            kontenHtml += `<option value="${element.id}">${element.name}</option>`;
+        });
+    }
+
+    afdeling.innerHTML = kontenHtml;
+};

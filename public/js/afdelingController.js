@@ -10,34 +10,46 @@ L.control
     })
     .addTo(map);
 
-var street = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {}).addTo(map)
-var dark =  L.tileLayer('https://{s}.tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token={accessToken}', {
-	attribution: '',
-	minZoom: 0,
-	maxZoom: 22,
-	subdomains: 'abcd',
-	accessToken: 'PyTJUlEU1OPJwCJlW1k0NC8JIt2CALpyuj7uc066O7XbdZCjWEL3WYJIk6dnXtps'
-});
-var light = L.tileLayer('https://{s}.tile.jawg.io/jawg-light/{z}/{x}/{y}{r}.png?access-token={accessToken}', {
-	attribution: '',
-	minZoom: 0,
-	maxZoom: 22,
-	subdomains: 'abcd',
-	accessToken: 'PyTJUlEU1OPJwCJlW1k0NC8JIt2CALpyuj7uc066O7XbdZCjWEL3WYJIk6dnXtps'
-});
+var street = L.tileLayer(
+    "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+    {}
+).addTo(map);
+var dark = L.tileLayer(
+    "https://{s}.tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token={accessToken}",
+    {
+        attribution: "",
+        minZoom: 0,
+        maxZoom: 22,
+        subdomains: "abcd",
+        accessToken:
+            "PyTJUlEU1OPJwCJlW1k0NC8JIt2CALpyuj7uc066O7XbdZCjWEL3WYJIk6dnXtps",
+    }
+);
+var light = L.tileLayer(
+    "https://{s}.tile.jawg.io/jawg-light/{z}/{x}/{y}{r}.png?access-token={accessToken}",
+    {
+        attribution: "",
+        minZoom: 0,
+        maxZoom: 22,
+        subdomains: "abcd",
+        accessToken:
+            "PyTJUlEU1OPJwCJlW1k0NC8JIt2CALpyuj7uc066O7XbdZCjWEL3WYJIk6dnXtps",
+    }
+);
 
-var world = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{}); 
+var world = L.tileLayer(
+    "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    {}
+);
 
 var baseMap = {
-    "Street": street,
-    "Light": light,
-    "Dark": dark,
-    "World": world
-}
+    Street: street,
+    Light: light,
+    Dark: dark,
+    World: world,
+};
 
 L.control.layers(baseMap).addTo(map);
-
-
 // FeatureGroup is to store editable layers
 var drawnItems = new L.FeatureGroup();
 var allMap = new L.layerGroup();
@@ -49,7 +61,7 @@ var drawControl = new L.Control.Draw({
         rectangle: true,
         circle: false,
         marker: true,
-        circlemarker: false
+        circlemarker: false,
     },
     edit: {
         featureGroup: drawnItems,
@@ -99,7 +111,7 @@ const handleModal = () => {
             ? (resetForm(),
               (title.innerHTML = "Tambah Data"),
               (titleButton.innerHTML = "Tambah Data"),
-              (form.action = "/farm/create"))
+              (form.action = "/afdeling/create"))
             : undefined;
 
         bg.classList.replace("opacity-30", "opacity-0");
@@ -112,25 +124,25 @@ const handleModal = () => {
 const handleMap = () => {
     const bg = document.getElementById("bg_modal_map");
     const konten = document.getElementById("konten_modal_map");
-    map.removeLayer(allMap)
-    
+    map.removeLayer(allMap);
+
     if (bg.classList.contains("opacity-0")) {
-        divmap.lastElementChild.classList.replace('hidden', 'flex')
-        map.addControl(drawControl)
+        divmap.lastElementChild.classList.replace("hidden", "flex");
+        map.addControl(drawControl);
         bg.classList.replace("opacity-0", "opacity-30");
         bg.classList.replace("pointer-events-none", "pointer-events-auto");
 
         konten.classList.replace("scale-0", "scale-100");
     } else {
-        map.removeControl(drawControl)
+        map.removeControl(drawControl);
         bg.classList.replace("opacity-30", "opacity-0");
         bg.classList.replace("pointer-events-auto", "pointer-events-none");
 
         konten.classList.replace("scale-100", "scale-0");
 
-        allMap.eachLayer(function(layer){
-            allMap.removeLayer(layer)
-        })
+        allMap.eachLayer(function (layer) {
+            allMap.removeLayer(layer);
+        });
     }
 };
 
@@ -174,6 +186,10 @@ $(function () {
         });
 });
 
+function onlyNumber(input) {
+    input.value = input.value.replace(/[^0-9]/g, ""); // Remove non-numeric characters
+}
+
 function validateNumberInput(input) {
     var inputValue = input.value;
 
@@ -195,13 +211,45 @@ function validateNumberInput(input) {
     input.value = inputValue;
 }
 
+function validateLatitude(input) {
+    var inputValue = input.value;
+
+    // Menghilangkan semua karakter selain angka dan titik (.)
+    inputValue = inputValue.replace(/[^0-9.-]/g, "");
+
+    // Memastikan hanya ada satu titik (.) dalam input
+    if (inputValue.startsWith(".")) {
+        inputValue = inputValue.substring(1); // Hapus titik di awal karakter
+    }
+    
+    var parts = inputValue.split(".");
+    if (parts.length > 2) {
+        // Jika terdapat lebih dari satu titik (.), maka hanya gunakan yang pertama
+        inputValue = parts[0] + "." + parts.slice(1).join("");
+    }
+
+    var minupart = inputValue.split("-");
+    if (minupart.length > 2) {
+        inputValue = minupart[0] + "-" + minupart.slice(1).join("");
+    }
+    if(minupart[0] != ''){
+        if(minupart[1] == ''){
+            inputValue = minupart[0]
+        }
+    }
+
+    // Mengganti nilai input dengan hasil yang sudah diubah
+    input.value = inputValue;
+}
+
 const handleData = () => {
     const err = cekJikaKosong([
-        nama,
-        alamat,
+        kebun,
+        afdeling,
+        latitude,
+        longtitude,
         geojson,
-        kecamatan,
-        kota,
+        ketinggian,
         luas,
         warna,
     ]);
@@ -259,11 +307,12 @@ const handleEdit = (item) => {
     });
 
     id.value = item.id;
-    nama.value = item.name;
-    alamat.value = item.address;
+    kebun.value = item.farm.id;
+    afdeling.value = item.name;
+    latitude.value = item.latitude;
+    longtitude.value = item.longtitude;
     geojson.value = item.geojson_data;
-    kecamatan.value = item.subdistrict;
-    kota.value = item.city;
+    ketinggian.value = item.elevation;
     luas.value = item.area;
     warna.value = item.color;
 
@@ -275,7 +324,7 @@ const handleEdit = (item) => {
     div_text.firstElementChild.classList.replace("flex", "hidden");
     div_text.lastElementChild.classList.replace("hidden", "flex");
 
-    form.action = "/farm/update";
+    form.action = "/afdeling/update";
 
     handleModal();
 };
@@ -286,11 +335,12 @@ const resetForm = () => {
     });
 
     id.value = "";
-    nama.value = "";
-    alamat.value = "";
+    kebun.value = "";
+    afdeling.value = "";
+    latitude.value = "";
+    longtitude.value = "";
     geojson.value = "";
-    kecamatan.value = "";
-    kota.value = "";
+    ketinggian.value = "";
     luas.value = "";
     warna.value = "";
 
@@ -302,20 +352,21 @@ const resetForm = () => {
 
 const div_text = document.getElementById("geojsonCon");
 
-const form = document.getElementById("form_farm");
+const form = document.getElementById("form_afdeling");
 const id = document.getElementById("id");
-const nama = document.getElementById("nama");
-const alamat = document.getElementById("alamat");
+const kebun = document.getElementById("kebun");
+const afdeling = document.getElementById("afdeling");
+const latitude = document.getElementById("latitude");
 const geojson = document.getElementById("geojson");
-const kecamatan = document.getElementById("kecamatan");
-const kota = document.getElementById("kota");
+const longtitude = document.getElementById("longtitude");
+const ketinggian = document.getElementById("ketinggian");
 const luas = document.getElementById("luas");
 const warna = document.getElementById("color");
 
 const title = document.getElementById("titleModal");
 const titleButton = document.getElementById("titleButton");
 
-const divmap = document.getElementById("konten_modal_map")
+const divmap = document.getElementById("konten_modal_map");
 
 $("#checkAll").on("click", function () {
     $(this)
@@ -377,33 +428,51 @@ const deleteData = (url) => {
     });
 };
 
-
 $(document).keyup(function (event) {
     if ($("#keyword").is(":focus") && event.key == "Enter") {
-        location.replace("/farm/" + $("#keyword").val());
+        location.replace("/afdeling/" + $("#keyword").val());
     }
 });
 
-const showMap = (data) => {
-    
-    handleMap()
-    map.removeControl(drawControl)
-    map.addLayer(allMap)
+const showMap = (data, kebun) => {
+    handleMap();
+    map.removeControl(drawControl);
+    map.addLayer(allMap);
     drawnItems.eachLayer(function (layer) {
         drawnItems.removeLayer(layer);
     });
 
-    divmap.lastElementChild.classList.replace('flex', 'hidden')
+    divmap.lastElementChild.classList.replace("flex", "hidden");
 
-    data.forEach(element => {
+    kebun.forEach((element) => {
+        var layer = L.geoJSON(JSON.parse(element.geojson_data), {
+            style: {
+                color: element.color,
+                fillColor: element.color,
+                fillOpacity: 0.3,
+            },
+        })
+            .bindTooltip(element.name, {
+                permanent: true,
+            })
+            .bindPopup(element.name)
+            .addTo(map);
+    });
+    
+    data.forEach((element) => {
         var layer = L.geoJSON(JSON.parse(element.geojson_data), {
             style: {
                 color: element.color,
                 fillColor: element.color,
                 fillOpacity: 0.5,
             },
-        }).bindTooltip(element.name, {
-            permanent: true,
-        }).bindPopup(element.name).addTo(allMap)
+        })
+            .bindTooltip(element.name, {
+                permanent: true,
+            })
+            .bindPopup(element.name)
+            .addTo(allMap);
     });
-}
+
+    
+};
