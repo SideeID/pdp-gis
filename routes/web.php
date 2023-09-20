@@ -27,18 +27,14 @@ Route::get('/', function () {
     return redirect()->route('home');
 });
 
-Route::get('/', [AuthController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [AuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-
+Route::middleware(['guest'])->group(function () {
+    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [AuthController::class, 'login']);
+});
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('layouts.app');
-    })->name('dashboard');
-
     Route::get('/home', [HomeController::class, 'index'])->name('home');
-
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::prefix('user')->group(function () {
         Route::get('/', [UserController::class, 'index'])->name('user');
         Route::post('/create', [UserController::class, 'create'])->name('user.create');
