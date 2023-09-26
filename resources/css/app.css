@@ -70,7 +70,7 @@ input,select, textarea {
 }
 
 
-$geojsonCon, #geojsonCon :nth-child(1) {
+#geojsonCon :nth-child(1) {
     @apply dark:bg-slate-700 dark:text-white dark:border-gray-600
 }
 

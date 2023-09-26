@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('name', 40);
             $table->text('description')->nullable();
             $table->string('latitude', 20);
-            $table->string('longtitude', 20);
+            $table->string('longitude', 20);
             $table->double('area');
             $table->integer('elevation');
             $table->timestamps();

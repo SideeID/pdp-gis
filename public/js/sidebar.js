@@ -20,6 +20,24 @@ window.addEventListener("resize", () => {
     }
 });
 
+document.getElementById('logout-button').addEventListener('click', function(e) {
+    e.preventDefault();
+    
+    Swal.fire({
+        title: 'Keluar',
+        text: 'Apakah Anda yakin ingin keluar dari akun Anda?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Ya',
+        cancelButtonText: 'Tidak',
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.getElementById('form-logout').submit();
+        }
+    });
+});
 // It's best to inline this in `head` to avoid FOUC (flash of unstyled content) when changing pages or themes
 if (
     localStorage.getItem("color-theme") === "dark" ||

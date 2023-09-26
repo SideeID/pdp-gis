@@ -8,6 +8,9 @@ use App\Http\Controllers\ParameterController;
 use App\Http\Controllers\PerhitunganController;
 use App\Http\Controllers\PlantController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -24,9 +27,24 @@ Route::get('/', function () {
     return redirect()->route('home');
 });
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::middleware(['guest'])->group(function () {
+    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [AuthController::class, 'login']);
+});
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::prefix('user')->group(function () {
+        Route::get('/', [UserController::class, 'index'])->name('user');
+        Route::post('/create', [UserController::class, 'create'])->name('user.create');
+        Route::post('/update', [UserController::class, 'update'])->name('user.update');
+        Route::post('/delete-selection', [UserController::class, 'deleteSelection'])->name('user.delete.selection');
+        Route::get('/delete/{kode}', [UserController::class, 'deleteData']);
+        Route::get('/{search}', [UserController::class, 'search'])->where('search', '.*');
+    });
 
+    
 Route::prefix('farm')->group(function () {
     Route::get('/', [FarmController::class, 'index'])->name('farm');
     Route::post('/create', [FarmController::class, 'create'])->name('farm.create');
@@ -78,4 +96,6 @@ Route::prefix('plant')->group(function () {
     Route::post('/delete-selection', [PlantController::class, 'deleteSelection'])->name('plant.delete.selection');
     Route::get('/delete/{kode}', [PlantController::class, 'deleteData']);
     Route::get('/{search}', [PlantController::class, 'search'])->where('search', '.*');
+});
+
 });
