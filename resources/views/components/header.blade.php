@@ -1,5 +1,4 @@
-<div
-    class="flex flex-row items-center gap-3 h-fit bg-white dark:bg-slate-700 w-full py-6 px-6 md:px-12 border-b-[2px] dark:border-b-gray-600 sticky top-0 z-[90]">
+<div class="flex flex-row items-center justify-between dark:bg-slate-700 h-fit bg-white w-full py-6 px-6 md:px-12 border-b-[2px] dark:border-gray-500 sticky top-0 z-[90]"> 
     <div onclick="handleSidebar()" class="md:hidden p-2">
         <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" aria-hidden="true" height="1em"
             width="1em" xmlns="http://www.w3.org/2000/svg">
@@ -8,11 +7,21 @@
                 clip-rule="evenodd"></path>
         </svg>
     </div>
-    <div class="font-semibold dark:text-white">
+    <div class="font-semibold dark:text-white flex-1 text-center md:text-left">
         @hasSection('header')
             @yield('header')
         @else
             Dashboard
         @endif
     </div>
+    <form class="" action="{{ route('logout') }}" method="POST" class="flex" id="form-logout">
+        @csrf
+        <button type="submit" id="logout-button" class="transform hover:scale-110 p-2">
+            <svg xmlns="http://www.w3.org/2000/svg" height="1em" class="dark:text-gray-50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                <polyline points="16 17 21 12 16 7"></polyline>
+                <line x1="21" y1="12" x2="9" y2="12"></line>
+            </svg>
+        </button> 
+    </form>
 </div>

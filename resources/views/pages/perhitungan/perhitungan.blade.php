@@ -92,7 +92,7 @@
                 @endif
                 <form class="" id="form_delete" action="{{ route('perhitungan.delete.selection') }}" method="post">
                     @csrf
-                    @foreach ($data as $index => $item)
+                    @foreach ($dataDesc as $index => $item)
                         <tr style="opacity: 1; transform: none;">
                             <td class="px-4 w-16 text-center">
                                 <div class=""><input class="h-4 w-4 idcheck" type="checkbox" name="ids[]"
@@ -100,14 +100,31 @@
                             </td>
                             <td class="text-left px-4">{{ $item->afdeling->farm->name }}</td>
                             <td class="text-left px-4">{{ $item->afdeling->name }}</td>
-                            <td class="text-left px-4">{{ $item->ph }}</td>
-                            <td class="text-left px-4">{{ $item->suhu_a }}°C - {{ $item->suhu_b }}°C </td>
-                            <td class="text-left px-4">{{ $item->hujan }}</td>
-                            <td class="text-left px-4 py-2">{{ $item->tinggi }} MDPL</td>
                             <td class="text-left px-4">
-                                <div class="h-6 w-full max-w-[80px] rounded-sm"
-                                    style="background-color: {{ $item->parameter->color }}">
+                                <div>
+                                    <p>{{ $item->ph }}</p>
+                                    <p class="text-xs italic">{{ $item->ph_res ? $item->ph_res : 'Tidak diketahui' }}</p>
                                 </div>
+                            </td>
+                            <td class="text-left px-4">
+                                <div class="w-28">
+                                    <p>{{ $item->suhu_a }}°C - {{ $item->suhu_b }}°C</p>
+                                    <p class="text-xs italic">{{ $item->suhu_res ? $item->suhu_res : 'Tidak diketahui' }}</p>
+                                </div>
+                            </td>
+                            <td class="text-left px-4">
+                                <div>
+                                    <p>{{ $item->hujan }}</p>
+                                    <p class="text-xs italic">{{ $item->hujan_res ? $item->hujan_res : 'Tidak diketahui' }}</p>
+                                </div>
+                            </td>
+                            <td class="text-left px-4">
+                                <div>
+                                    <p>{{ $item->tinggi }} Mdpl</p>
+                                    <p class="text-xs italic">{{ $item->tinggi_res ? $item->tinggi_res : 'Tidak diketahui' }}</p>
+                                </div>
+                            </td>
+                            <td class="text-left px-4">{{ $item->parameter->plant->name }}
                             </td>
                             <td class="px-4 py-2">
                                 <div class="flex flex-row gap-2 justify-center h-full">

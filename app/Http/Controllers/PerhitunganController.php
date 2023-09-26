@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\HitungLvq;
+use App\Models\DetailCriteria;
 use App\Models\Farm;
 use App\Models\Parameter;
 use App\Models\Perhitungan;
@@ -29,10 +30,35 @@ class PerhitunganController extends Controller
             });
         }])->get();
 
+        $criteria = DetailCriteria::all();
+
+        $dataDesc = array();
+        foreach ($data as $key => $value) {
+            $dataDesc[$key] = $value;
+            foreach ($criteria as $keyy => $valuee) {
+
+                if($value['ph_kelas'] == $valuee['class'] && $valuee['criteria_id'] == 4){
+                    $dataDesc[$key]['ph_res'] = $valuee['description'];
+                }
+
+                if($value['suhu_kelas'] == $valuee['class'] && $valuee['criteria_id'] == 3){
+                    $dataDesc[$key]['suhu_res'] = $valuee['description'];
+                }
+
+                if($value['hujan_kelas'] == $valuee['class'] && $valuee['criteria_id'] == 2){
+                    $dataDesc[$key]['hujan_res'] = $valuee['description'];
+                }
+
+                if($value['tinggi_kelas'] == $valuee['class'] && $valuee['criteria_id'] == 1){
+                    $dataDesc[$key]['tinggi_res'] = $valuee['description'];
+                }
+            }
+        }
+
 
         $parameter = Parameter::all();
 
-        return view('pages.perhitungan.perhitungan', compact('data', 'kebun', 'parameter'));
+        return view('pages.perhitungan.perhitungan', compact('data', 'kebun', 'parameter', 'dataDesc'));
     }
 
     public function create(Request $request)
@@ -242,9 +268,33 @@ class PerhitunganController extends Controller
             });
         }])->get();
 
+        $criteria = DetailCriteria::all();
+
+        $dataDesc = array();
+        foreach ($data as $key => $value) {
+            $dataDesc[$key] = $value;
+            foreach ($criteria as $keyy => $valuee) {
+
+                if($value['ph_kelas'] == $valuee['class'] && $valuee['criteria_id'] == 4){
+                    $dataDesc[$key]['ph_res'] = $valuee['description'];
+                }
+
+                if($value['suhu_kelas'] == $valuee['class'] && $valuee['criteria_id'] == 3){
+                    $dataDesc[$key]['suhu_res'] = $valuee['description'];
+                }
+
+                if($value['hujan_kelas'] == $valuee['class'] && $valuee['criteria_id'] == 2){
+                    $dataDesc[$key]['hujan_res'] = $valuee['description'];
+                }
+
+                if($value['tinggi_kelas'] == $valuee['class'] && $valuee['criteria_id'] == 1){
+                    $dataDesc[$key]['tinggi_res'] = $valuee['description'];
+                }
+            }
+        }
 
         $parameter = Parameter::all();
 
-        return view('pages.perhitungan.perhitungan', compact('data', 'kebun', 'parameter', 'search'));
+        return view('pages.perhitungan.perhitungan', compact('data', 'kebun', 'parameter', 'dataDesc', 'search'));
     }
 }

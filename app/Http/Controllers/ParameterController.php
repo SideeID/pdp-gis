@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\HitungLvq;
+use App\Models\DetailCriteria;
 use App\Models\Parameter;
 use App\Models\Plants;
 use Illuminate\Http\Request;
@@ -22,11 +23,36 @@ class ParameterController extends Controller
     public function index()
     {
         $data = Parameter::with('plant')->orderBy('created_at', 'desc')->paginate(10);
-        $tanaman = Plants::whereNotIn('id', function($query){
+        $tanaman = Plants::whereNotIn('id', function ($query) {
             $query->select('plant_id')->from('parameters');
         })->get();
 
-        return view('pages.parameter.parameter', compact('data', 'tanaman'));
+        $criteria = DetailCriteria::all();
+
+        $dataDesc = array();
+        foreach ($data as $key => $value) {
+            $dataDesc[$key] = $value;
+            foreach ($criteria as $keyy => $valuee) {
+
+                if($value['ph_kelas'] == $valuee['class'] && $valuee['criteria_id'] == 4){
+                    $dataDesc[$key]['ph_res'] = $valuee['description'];
+                }
+
+                if($value['suhu_kelas'] == $valuee['class'] && $valuee['criteria_id'] == 3){
+                    $dataDesc[$key]['suhu_res'] = $valuee['description'];
+                }
+
+                if($value['hujan_kelas'] == $valuee['class'] && $valuee['criteria_id'] == 2){
+                    $dataDesc[$key]['hujan_res'] = $valuee['description'];
+                }
+
+                if($value['tinggi_kelas'] == $valuee['class'] && $valuee['criteria_id'] == 1){
+                    $dataDesc[$key]['tinggi_res'] = $valuee['description'];
+                }
+            }
+        }
+
+        return view('pages.parameter.parameter', compact('data', 'tanaman', 'dataDesc'));
     }
 
     public function create(Request $request)
@@ -66,7 +92,7 @@ class ParameterController extends Controller
             "hujan_kelas" => $this->hitungLvq->process_hitung_kriteria('Curah Hujan', $request->hujan_bawah, $request->hujan_atas),
             "tinggi_kelas" => $this->hitungLvq->process_hitung_kriteria('Tinggi Tanah', $request->ketinggian_bawah, $request->ketinggian_atas),
         ]);
-        
+
 
         Alert::success('Berhasil', 'Berhasil menambahkan data');
         return redirect()->route('parameter');
@@ -149,8 +175,39 @@ class ParameterController extends Controller
 
     public function search($search)
     {
-        $data = Parameter::with('plant')->orderBy('created_at', 'desc')->paginate(10);
+        $data = Parameter::with(['plant'])->whereHas('plant', function($query) use ($search){
+            $query->where('name', 'LIKE', '%' . $search . '%');
+        })->orderBy('created_at', 'desc')->paginate(10);
 
-        return view('pages.parameter.parameter', compact('data', 'search'));
+        $tanaman = Plants::whereNotIn('id', function ($query) {
+            $query->select('plant_id')->from('parameters');
+        })->get();
+
+        $criteria = DetailCriteria::all();
+
+        $dataDesc = array();
+        foreach ($data as $key => $value) {
+            $dataDesc[$key] = $value;
+            foreach ($criteria as $keyy => $valuee) {
+
+                if($value['ph_kelas'] == $valuee['class'] && $valuee['criteria_id'] == 4){
+                    $dataDesc[$key]['ph_res'] = $valuee['description'];
+                }
+
+                if($value['suhu_kelas'] == $valuee['class'] && $valuee['criteria_id'] == 3){
+                    $dataDesc[$key]['suhu_res'] = $valuee['description'];
+                }
+
+                if($value['hujan_kelas'] == $valuee['class'] && $valuee['criteria_id'] == 2){
+                    $dataDesc[$key]['hujan_res'] = $valuee['description'];
+                }
+
+                if($value['tinggi_kelas'] == $valuee['class'] && $valuee['criteria_id'] == 1){
+                    $dataDesc[$key]['tinggi_res'] = $valuee['description'];
+                }
+            }
+        }
+
+        return view('pages.parameter.parameter', compact('data', 'tanaman', 'dataDesc', 'search'));
     }
 }

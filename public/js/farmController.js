@@ -377,7 +377,6 @@ const deleteData = (url) => {
     });
 };
 
-
 $(document).keyup(function (event) {
     if ($("#keyword").is(":focus") && event.key == "Enter") {
         location.replace("/farm/" + $("#keyword").val());

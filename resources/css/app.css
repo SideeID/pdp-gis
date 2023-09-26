@@ -70,7 +70,7 @@ input,select, textarea {
 }
 
 
-$geojsonCon, #geojsonCon :nth-child(1) {
+#geojsonCon :nth-child(1) {
     @apply dark:bg-slate-700 dark:text-white dark:border-gray-600
 }
 
@@ -80,4 +80,9 @@ table {
 
 tbody {
     @apply  dark:bg-slate-600 duration-300 ease-in-out
+}
+
+.required::after {
+    content: '*';
+    @apply text-red-600 px-1
 }
