@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -15,10 +16,19 @@ public function showLoginForm()
 
 public function login(Request $request)
 {
-    $request->validate([
+    $validator = Validator::make($request->all(), [
         'email' => 'required|email',
         'password' => 'required',
+    ], [
+        'email.required' => 'Field Email wajib diisi!',
+        'password.required' => 'Field Password wajib diisi!'
     ]);
+
+    if ($validator->fails()) {
+        notify()->error($validator->errors()->first(), 'Gagal');
+        return redirect()->back()->withInput();
+    }
+
 
     $credentials = $request->only('email', 'password');
 
@@ -29,7 +39,7 @@ public function login(Request $request)
         return redirect()->intended('/home');
     }
 
-    notify()->error('Email atau kata sandi salah.');
+    notify()->error('Email atau kata sandi salah.', 'Gagal');
     return redirect()->route('login')->withInput($request->only('email'));
 }
 

@@ -81,3 +81,8 @@ table {
 tbody {
     @apply  dark:bg-slate-600 duration-300 ease-in-out
 }
+
+.required::after {
+    content: '*';
+    @apply text-red-600 px-1
+}
