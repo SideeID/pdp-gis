@@ -44,6 +44,11 @@ Generate APP Key with artisan
   php artisan key:generate
 ```
 
+## Migrate
+```bash
+  php artisan migrate
+```
+
 ## Seeder
 ```bash
   php artisan db:seed --class=DatabaseSeeder  
