@@ -44,6 +44,16 @@ Generate APP Key with artisan
   php artisan key:generate
 ```
 
+## Seeder
+```bash
+  php artisan db:seed --class=DatabaseSeeder  
+```
+
+```bash
+  php artisan db:seed --class=UsersTableSeeder
+```
+
+
 ## Run locally
 Start the vite
 
