@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Afdeling;
 use App\Models\User;
 
 use App\Models\Criteria;
@@ -24,7 +26,29 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
+
         // ]);
+
+        // Add users
+        $this->call(UsersTableSeeder::class);
+
+        // Add plant
+        $this->call(PlantSeeder::class);
+
+        // Add parameter from plant
+        $this->call(ParameterSeeder::class);
+
+        // Add farm
+        $this->call(FarmSeeder::class);
+
+        // Add afdelings
+        $this->call(AfdelingSeeder::class);
+
+        // Add Block
+        $this->call(BlockSeeder::class);
+
+        // Add afdeling
+        // $this->call(Afdeling::class);
 
         // Start here
         // Data criterias
@@ -113,5 +137,8 @@ class DatabaseSeeder extends Seeder
                 "class" => $ph_kelas[$k]
             ]);
         }
+
+        // Add perhitungan
+        $this->call(PerhitunganSeeder::class);
     }
 }

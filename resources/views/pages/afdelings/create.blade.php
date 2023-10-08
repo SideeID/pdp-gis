@@ -90,7 +90,7 @@
                                 type="hidden" name="geojson" id="geojson" placeholder="">
                         </div>
                     </div>
-                    <div class="flex flex-col w-full">
+                    {{-- <div class="flex flex-col w-full">
                         <p class="py-3">Ketinggian <span class="text-red-600">*</span></p>
                         <div class="relative">
                             <input oninput="onlyNumber(this)" maxlength="50" class="w-full border-[2px] px-3 pr-12 py-2 rounded-lg outline-primary"
@@ -100,7 +100,7 @@
                                 Mdpl</p>
                         </div>
 
-                    </div>
+                    </div> --}}
                     <div class="flex flex-col w-full">
                         <p class="py-3">Luas <span class="text-red-600">*</span></p>
                         <div class="relative">
