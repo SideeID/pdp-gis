@@ -94,7 +94,7 @@
                     <th class="px-4 py-4 text-left">Nama Kebun</th>
                     <th class="px-4 py-4 text-left">Nama Afdeling</th>
                     <th class="px-4 py-4 text-left">Luas</th>
-                    <th class="px-4 py-4 text-left">Ketinggian</th>
+                    {{-- <th class="px-4 py-4 text-left">Ketinggian</th> --}}
                     <th class="px-4 py-4 text-left">Warna</th>
                     <th class="px-4 py-4 text-center">Aksi</th>
                 </tr>
@@ -114,7 +114,7 @@
                             <td class="text-left px-4">{{ $item->farm->name }}</td>
                             <td class="text-left px-4">{{ $item->name }}</td>
                             <td class="text-left px-4">{{ $item->area }} Ha</td>
-                            <td class="text-left px-4">{{ $item->elevation }} Mdpl</td>
+                            {{-- <td class="text-left px-4">{{ $item->elevation }} Mdpl</td> --}}
                             <td class="text-left px-4">
                                 <div class="h-6 w-full max-w-[80px] rounded-sm"
                                     style="background-color: {{ $item->color }}">

@@ -29,7 +29,6 @@ class AfdelingController extends Controller
             'afdeling' => 'required|max:40',
             'latitude' => 'required|max:40',
             'longtitude' => 'required|max:40',
-            'ketinggian' => 'required',
             'geojson' => 'required',
             'luas' => 'required',
             'color' => 'required|max:10',
@@ -48,7 +47,6 @@ class AfdelingController extends Controller
             "area" => $request->luas,
             "latitude" => $request->latitude,
             "longtitude" => $request->longtitude,
-            "elevation" => $request->ketinggian,
             "geojson_data" => $request->geojson,
             "color" => $request->color
         ]);
@@ -64,7 +62,6 @@ class AfdelingController extends Controller
             'afdeling' => 'required|max:40',
             'latitude' => 'required|max:40',
             'longtitude' => 'required|max:40',
-            'ketinggian' => 'required',
             'geojson' => 'required',
             'luas' => 'required',
             'color' => 'required|max:10',
@@ -83,7 +80,6 @@ class AfdelingController extends Controller
             "area" => $request->luas,
             "latitude" => $request->latitude,
             "longtitude" => $request->longtitude,
-            "elevation" => $request->ketinggian,
             "geojson_data" => $request->geojson,
             "color" => $request->color
         ]);

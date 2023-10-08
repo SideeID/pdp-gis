@@ -123,8 +123,7 @@
                                     class="w-full border-[2px] px-3 py-2 rounded-lg outline-primary" type="text"
                                     name="ketinggian" id="ketinggian" placeholder="">
                                 {{-- <p class="absolute top-2 px-2 bg-white left-6 text-xs">Batas Bawah</p> --}}
-                                <p
-                                    class="absolute right-4 top-2 h-full text-xs text-center items-center flex justify-center">
+                                <p class="absolute right-4 top-2 h-full text-xs text-center items-center flex justify-center">
                                     MDPL</p>
                             </div>
                         </div>

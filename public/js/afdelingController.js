@@ -249,7 +249,7 @@ const handleData = () => {
         latitude,
         longtitude,
         geojson,
-        ketinggian,
+        // ketinggian,
         luas,
         warna,
     ]);
@@ -312,7 +312,7 @@ const handleEdit = (item) => {
     latitude.value = item.latitude;
     longtitude.value = item.longtitude;
     geojson.value = item.geojson_data;
-    ketinggian.value = item.elevation;
+    // ketinggian.value = item.elevation;
     luas.value = item.area;
     warna.value = item.color;
 
@@ -340,7 +340,7 @@ const resetForm = () => {
     latitude.value = "";
     longtitude.value = "";
     geojson.value = "";
-    ketinggian.value = "";
+    // ketinggian.value = "";
     luas.value = "";
     warna.value = "";
 
@@ -359,7 +359,7 @@ const afdeling = document.getElementById("afdeling");
 const latitude = document.getElementById("latitude");
 const geojson = document.getElementById("geojson");
 const longtitude = document.getElementById("longtitude");
-const ketinggian = document.getElementById("ketinggian");
+// const ketinggian = document.getElementById("ketinggian");
 const luas = document.getElementById("luas");
 const warna = document.getElementById("color");
 
